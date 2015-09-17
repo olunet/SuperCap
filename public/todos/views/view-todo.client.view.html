@@ -1,0 +1,56 @@
+<div data-ng-controller="TodosController">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#page-top">MEAN TODO</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+
+					<li class="page-scroll" data-ng-show="!authentication.user">
+                        <a href="/login">Login</a>
+                    </li>
+                    <li class="page-scroll" data-ng-show="!authentication.user">
+                        <a href="/register">Register</a>
+                    </li>
+                    
+                    <li class="page-scroll" data-ng-show="authentication.user">
+                        <a href="/#!/todos/create">CREATE</a>
+                    </li>
+                    <li class="page-scroll" data-ng-show="authentication.user">
+                        <a href="/#!/todos">TODOs</a>
+                    </li>
+                    <li class="page-scroll" data-ng-show="authentication.user">
+                        <a href="/logout">Hello <span data-ng-bind="authentication.user.name" data-ng-show="authentication.user"></span>, Logout?</a>
+                    </li>                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+	<section data-ng-init="findOne()" class="container">
+		<h1 data-ng-bind="todo.title" ng-class="todo.completed?'completed':''"></h1>
+		<div data-ng-show="authentication.user._id == todo.creator._id">
+			<a href="/#!/todos/{{todo._id}}/edit">edit</a>
+			<a href="#" data-ng-click="delete();">delete</a>
+		</div>
+		<small>
+		<em data-ng-bind="todo.created | date:'mediumDate'"></em>
+		</small>
+		<p data-ng-bind="todo.comment"></p>
+	</section>
+</div>
