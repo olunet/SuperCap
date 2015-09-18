@@ -4,12 +4,12 @@ var users = require('../../app/controllers/users.server.controller'),
 module.exports = function(app) {
 	app.route('/api/todos')
 		.get(todos.list)
-		.post(users.requiresLogin, todos.create);
+		.post(todos.create);
 
 	app.route('/api/todos/:todoId')
 		.get(todos.read)
-		.put(users.requiresLogin, todos.hasAuthorization, todos.update)
-		.delete(users.requiresLogin, todos.hasAuthorization, todos.delete);
+		.put(todos.update)
+		.delete(todos.delete);
 
 	app.param('todoId', todos.todoByID);
 };
