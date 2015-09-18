@@ -15,26 +15,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-
-					<li class="page-scroll" data-ng-show="!authentication.user">
-                        <a href="/login">Login</a>
-                    </li>
-                    <li class="page-scroll" data-ng-show="!authentication.user">
-                        <a href="/register">Register</a>
-                    </li>
-
-                    <li class="page-scroll" data-ng-show="authentication.user">
-                        <a href="/#!/todos/create">CREATE</a>
-                    </li>
-                    <li class="page-scroll" data-ng-show="authentication.user">
-                        <a href="/#!/todos">TODOs</a>
-                    </li>
-                    <li class="page-scroll" data-ng-show="authentication.user">
-                        <a href="/logout">Hello <span data-ng-bind="authentication.user.name" data-ng-show="authentication.user"></span>, Logout?</a>
-                    </li>                   
+                   <li class="page-scroll">
+                        <a href="/#!/about">About Page</a>
+                    </li>                     
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
