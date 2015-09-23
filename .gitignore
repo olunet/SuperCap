@@ -27,3 +27,4 @@ build/Release
 node_modules
 nbproject/private/private.properties
 nbproject/private/private.xml
+nbproject/
