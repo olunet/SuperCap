@@ -2,7 +2,9 @@ language: node_js
 
 node_js:
   - 0.10.33
+  
+services:
+   - mongodb
 
 after_success:
-  - if [ "$BRANCH" == "master" ]; then git remote add dokku dokku@46.101.254.135:demo; fi
-  - if [ "$BRANCH" == "master" ]; then git push dokku master; fi
+    - git push git@heroku.com:peaceful-scrubland-7377.git master

@@ -1,0 +1,20 @@
+<h2>Books</h2>
+<div ng-repeat="book in books">
+    <strong>{{book.title}}</strong> ({{book.author}})
+    <a ng-click="book.editMode = true">Edit</a>
+    <div ng-show="book.editMode">
+        <input type="text" ng-model="book.title">
+        <input type="text" ng-model="book.author">
+        <input type="text" ng-model="book.isbn">
+        <input type="text" ng-model="book.price">
+        <button class="btn btn-default" ng-click="save(book)">Save</button>
+        <button class="btn btn-default" ng-click="book.editMode = false">Cancel</button>
+    </div>
+</div>
+<div>
+    Title: <input type="text" ng-model="newbook.title">
+    Author: <input type="text" ng-model="newbook.author">
+    ISBN: <input type="text" ng-model="newbook.isbn">
+    Price: <input type="text" ng-model="newbook.price">
+    <button class="btn btn-default" ng-click="createBook(newbook)">Save</button>
+</div>
