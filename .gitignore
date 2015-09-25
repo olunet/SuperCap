@@ -1,1 +1,5 @@
 /node_modules
+.ntvs_analysis.dat
+.vs/Develop/v14/.suo
+Develop.njsproj
+Develop.sln
