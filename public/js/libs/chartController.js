@@ -21,7 +21,10 @@ createChart = function() {
 		]
 	}
 
-	var context = document.getElementById('chart').getContext('2d');
+        var canvas = document.getElementById('chart');
+        canvas.width = $("#canvasParent").width();
+        
+	var context = canvas.getContext('2d');
 	var chart = new Chart(context).Line(data);
         this.chart = chart;
 }

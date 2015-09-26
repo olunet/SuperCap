@@ -12,9 +12,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.electrolytes = response.data;
     });
 
-
-    createChart();
-
     $scope.inputChanged = function() {
         if($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrolyte) {
             refreshChart($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrolyte);
@@ -32,4 +29,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 //            $scope.books.push(newbook);
 //        })
 //    }
+
+    createChart();
+
 });
+

@@ -1,63 +1,83 @@
-<!--<h2>Books</h2>
-<div ng-repeat="book in books">
-    <strong>{{book.title}}</strong> ({{book.author}})
-    <a ng-click="book.editMode = true">Edit</a>
-    <div ng-show="book.editMode">
-        <input type="text" ng-model="book.title">
-        <input type="text" ng-model="book.author">
-        <input type="text" ng-model="book.isbn">
-        <input type="text" ng-model="book.price">
-        <button class="btn btn-default" ng-click="save(book)">Save</button>
-        <button class="btn btn-default" ng-click="book.editMode = false">Cancel</button>
-    </div>
-</div>
-<div>
-    Title: <input type="text" ng-model="newbook.title">
-    Author: <input type="text" ng-model="newbook.author">
-    ISBN: <input type="text" ng-model="newbook.isbn">
-    Price: <input type="text" ng-model="newbook.price">
-    <button class="btn btn-default" ng-click="createBook(newbook)">Save</button>
-</div>
------------------------------------------------>
-<div ng-repeat="anion in anions">
-    <strong>{{anion.name}}</strong> ({{anion.value}})
-</div>
------------------------------------------------
-<div ng-repeat="cation in cations">
-    <strong>{{cation.name}}</strong> ({{cation.value}})
-</div>
------------------------------------------------
-<div ng-repeat="electrolyte in electrolytes">
-    <strong>{{electrolyte.name}}</strong> ({{electrolyte.value}})
-</div>
------------------------------------------------
-<div class="container  custom-valign50">
-    <div class="row">
-        
-        <!-- INPUT PARAMETERS -->
-        <div class="left-panel card large red lighten-5 col s12 m4">
-            <br>
+<div id="wrapper">
+    <!-- SIDEBAR -->
+    <div id="sidebar-wrapper">
+        <div class="sidebar-title">
+            Inputs
+        </div>
+        <div class="input-panel">
+            Si - Hg - BMIm
+            <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>
+        </div>
+        <div class="input-panel input-panel-active">
+            Li - Ag - BMIm
+            <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>
+        </div>
+        <div class="input-panel">
+            Li - Hg - BMIm
+            <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>
+        </div>
+        <div class="input-panel">
+            Li4Ti5O12 - Bi - BMIm
+            <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>
+        </div>
+        <button type="button" class="btn pull-right">Add another</button>
+        <div class="clearifx" />
+        <div class="bottom">
             <div class="row">
-                <select class="browser-default col s12 m6" ng-model="selectedAnion" ng-options="anion.value as anion.name for anion in anions" ng-change="inputChanged()">
-                    <option value="" disabled>Select anion</option>
-                </select>
+                <div class="col-xs-12 col-sm-6">
+                    <button type="button" class="btn btn-info btn-lg">Print</button>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <button type="button" class="btn btn-info btn-lg">Export</button>
+                </div>
+            </div>
+        </div>
 
-                <select class="browser-default col s12 m6" ng-model="selectedCation" ng-options="cation.value as cation.name for cation in cations" ng-change="inputChanged()">
-                    <option value="" disabled>Select cation</option>
+    </div>
+
+    <!-- MAIN PAGE -->
+    <div id="page-content-wrapper" class="lighter-grey-background">
+        <div ng-repeat="anion in anions">
+            <strong>{{anion.name}}</strong> ({{anion.value}})
+        </div>
+        --------
+        <div class="container">
+
+            <!-- INPUT PARAMETERS -->
+            <div class="col-xs-12 col-md-6 light-grey-background input-container">
+                <br>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <select class="form-control" ng-model="selectedAnion" ng-options="anion.value as anion.name for anion in anions" ng-change="inputChanged()">
+                            <option value="">Select anion</option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <select class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.value as cation.name for cation in cations" ng-change="inputChanged()">
+                            <option value="">Select cation</option>
+                        </select>
+                    </div>
+                </div>
+                <h4>or</h4>
+                <input id="cas" type="text" class="form-control" placeholder="Enter a CAS number">
+                <hr>
+                <select class="form-control"  data-width="100%" ng-model="selectedElectrolyte" ng-options="electrolyte.value as electrolyte.name for electrolyte in electrolytes" ng-change="inputChanged()">
+                    <option value="" disabled>Select electrolyte</option>
                 </select>
             </div>
-            <h5 class="grey-text text-darken-4">or</h5>
-            <input id="cas" type="text" placeholder="Enter a CAS number">
-            <br>
-            <select class="browser-default" ng-model="selectedElectrolyte" ng-options="electrolyte.value as electrolyte.name for electrolyte in electrolytes" ng-change="inputChanged()">
-                <option value="" disabled>Select electrolyte</option>
-            </select>
-        </div>
-        
-        <!-- GRAPH CANVAS -->
-        <div class="right-panel card large col s12 m8">
-            <canvas id="chart" width="850" height="500"></canvas>
-        </div>
 
+            <!-- 3D MODEL -->
+            <div class="col-xs-12 col-md-6">
+                3D model will be here
+            </div>
+
+            <div class="clearfix" />
+
+            <!-- GRAPH CANVAS --> 
+            <div id="canvasParent">
+                <canvas id="chart" class="white-background" width="100%" height="500"></canvas>
+            </div>
+        </div>
     </div>
 </div>
