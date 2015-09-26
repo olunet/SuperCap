@@ -1,0 +1,33 @@
+.custom-valign25 {
+    height: 25%;
+    
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+.custom-valign50 {
+    height: 50%;
+    
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+.left-panel {
+    height: 100%;   
+}
+
+.right-panel {
+    height: 100%;   
+}
+
+

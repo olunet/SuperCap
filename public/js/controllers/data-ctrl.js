@@ -12,6 +12,14 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.electrolytes = response.data;
     });
 
+
+    $scope.inputChanged = function() {
+        if($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrolyte) {
+            refreshChart($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrolyte);
+        }
+    };
+
+
 //    $scope.save = function(book) {
 //        BookService.editBook(book).then(function(response) {
 //            book = response.data;

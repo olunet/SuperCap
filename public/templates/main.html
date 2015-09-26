@@ -30,3 +30,34 @@
 <div ng-repeat="electrolyte in electrolytes">
     <strong>{{electrolyte.name}}</strong> ({{electrolyte.value}})
 </div>
+-----------------------------------------------
+<div class="container  custom-valign50">
+    <div class="row">
+        
+        <!-- INPUT PARAMETERS -->
+        <div class="left-panel card large red lighten-5 col s12 m4">
+            <br>
+            <div class="row">
+                <select class="browser-default col s12 m6" ng-model="selectedAnion" ng-options="anion.value as anion.name for anion in anions" ng-change="inputChanged()">
+                    <option value="" disabled>Select anion</option>
+                </select>
+
+                <select class="browser-default col s12 m6" ng-model="selectedCation" ng-options="cation.value as cation.name for cation in cations" ng-change="inputChanged()">
+                    <option value="" disabled>Select cation</option>
+                </select>
+            </div>
+            <h5 class="grey-text text-darken-4">or</h5>
+            <input id="cas" type="text" placeholder="Enter a CAS number">
+            <br>
+            <select class="browser-default" ng-model="selectedElectrolyte" ng-options="electrolyte.value as electrolyte.name for electrolyte in electrolytes" ng-change="inputChanged()">
+                <option value="" disabled>Select electrolyte</option>
+            </select>
+        </div>
+        
+        <!-- GRAPH CANVAS -->
+        <div class="right-panel card large col s12 m8">
+            <canvas id="chart" width="850" height="500"></canvas>
+        </div>
+
+    </div>
+</div>
