@@ -1,9 +1,9 @@
-var app = angular.module('VirtualBook', ['ngRoute']);
+var app = angular.module('SuperCap', ['ngRoute']);
 
 app.config(function($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: '/templates/books.html',
-            controller: 'BookCtrl'
+            templateUrl: '/templates/main.html',
+            controller: 'DataCtrl'
         });
 });

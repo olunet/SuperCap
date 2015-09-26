@@ -1,4 +1,4 @@
-<h2>Books</h2>
+<!--<h2>Books</h2>
 <div ng-repeat="book in books">
     <strong>{{book.title}}</strong> ({{book.author}})
     <a ng-click="book.editMode = true">Edit</a>
@@ -17,4 +17,16 @@
     ISBN: <input type="text" ng-model="newbook.isbn">
     Price: <input type="text" ng-model="newbook.price">
     <button class="btn btn-default" ng-click="createBook(newbook)">Save</button>
+</div>
+----------------------------------------------->
+<div ng-repeat="anion in anions">
+    <strong>{{anion.name}}</strong> ({{anion.value}})
+</div>
+-----------------------------------------------
+<div ng-repeat="cation in cations">
+    <strong>{{cation.name}}</strong> ({{cation.value}})
+</div>
+-----------------------------------------------
+<div ng-repeat="electrolyte in electrolytes">
+    <strong>{{electrolyte.name}}</strong> ({{electrolyte.value}})
 </div>

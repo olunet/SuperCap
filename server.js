@@ -1,7 +1,10 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var Book = require('./models/book');
+
+var Anion = require('./models/anion');
+var Cation = require('./models/cation');
+var Electrolyte = require('./models/electrolyte');
 
 var config = require('./config.js');
 mongoose.connect(config.db);
@@ -10,49 +13,69 @@ var app = express();
 app.use(bodyParser.json());
 app.use(express.static(__dirname+'/public'));
 
-//add more books
-app.post('/api/books', function(req, res) {
-    var book = new Book({
-        title: req.body.title,
-        isbn: req.body.isbn,
-        author: req.body.author,
-        price: req.body.price
-    });
-    book.save(function(err, book) {
-        if (!err) {
-            return res.status(200).end();
-        }
-        return res.status(400).end();
+////add more books
+//app.post('/api/books', function(req, res) {
+//    var book = new Book({
+//        title: req.body.title,
+//        isbn: req.body.isbn,
+//        author: req.body.author,
+//        price: req.body.price
+//    });
+//    book.save(function(err, book) {
+//        if (!err) {
+//            return res.status(200).end();
+//        }
+//        return res.status(400).end();
+//    });
+//});
+//
+////edit books
+//app.put('/api/books/:id', function(req, res) {
+//    Book.findById(req.param('id'), function(err, book) {
+//        if (err || !book) {
+//            return res.status(404).end();
+//        } 
+//        book.title = req.body.title;
+//        book.isbn = req.body.isbn;
+//        book.author = req.body.author;
+//        book.price = req.body.price;
+//        book.save(function(err, book) {
+//            if (!err) {
+//                return res.status(200).end();
+//            } 
+//            return res.status(400).end();
+//        });
+//    });
+//});
+
+/** OUR APPLICATION **/
+
+//Fetches all the available anions
+app.get('/api/anions', function(req, res) {
+    Anion.find({}, function(err, anions) {
+        return res.json(anions);
     });
 });
 
-//edit books
-app.put('/api/books/:id', function(req, res) {
-    Book.findById(req.param('id'), function(err, book) {
-        if (err || !book) {
-            return res.status(404).end();
-        } 
-        book.title = req.body.title;
-        book.isbn = req.body.isbn;
-        book.author = req.body.author;
-        book.price = req.body.price;
-        book.save(function(err, book) {
-            if (!err) {
-                return res.status(200).end();
-            } 
-            return res.status(400).end();
-        });
+//Fetches all the available cations
+app.get('/api/cations', function(req, res) {
+    Cation.find({}, function(err, cations) {
+        return res.json(cations);
     });
 });
 
-//get list of books
-app.get('/api/books', function(req, res) {
-    Book.find({}, function(err, books) {
-        return res.json(books);
+//Fetches all the available electrolytes
+app.get('/api/electrolytes', function(req, res) {
+    Electrolyte.find({}, function(err, electrolytes) {
+        return res.json(electrolytes);
     });
 });
 
 
 app.listen(process.env.PORT || 3000, function(){
-  console.log('listening on', process.env.PORT);
+    if(process.env.PORT) {
+        console.log('listening on', process.env.PORT);
+    } else {
+        console.log('listening on 3000.');
+    }
 });
