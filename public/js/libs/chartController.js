@@ -1,34 +1,42 @@
-refreshChart = function(anion, cation, electrolyte) {
+createChart = function() {
+    
         var labels = [];
-        var data = [];
-        
+        var data = []
+    
         for(var i = 0; i <= 20; i++) {
             labels.push(i);
-            
-            var alt = i / 10;
-            
-            var val = Math.sin(cation * i) * 10 + Math.cos(anion * alt) * 7 + Math.sin(electrolyte * alt) * 12;
-            
-            
-            data.push(val);
+            data.push(0);
         }
-        
-        console.log(data);
- 
-	var data = {
-		labels : labels,
+    
+    	var data = {
+                labels : labels,
 		datasets : [
 			{
 				fillColor : "rgba(0, 0, 0,0.4)",
 				strokeColor : "#444444",
 				pointColor : "#fff",
 				pointStrokeColor : "#444444",
-				data : data
+                                data: data
 			}
 		]
 	}
 
 	var context = document.getElementById('chart').getContext('2d');
-	new Chart(context).Line(data);
+	var chart = new Chart(context).Line(data);
+        this.chart = chart;
+}
+
+refreshChart = function(anion, cation, electrolyte) {
+        
+        for(var i = 0; i < chart.datasets[0].points.length; i++) {
+            
+            var alt = i / 10;
+            
+            var val = Math.sin(cation * i) * 10 + Math.cos(anion * alt) * 7 + Math.sin(electrolyte * alt) * 12;
+
+            chart.datasets[0].points[i].value = val;
+        }
+        
+        chart.update();
 
 }
