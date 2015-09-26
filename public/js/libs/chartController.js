@@ -12,8 +12,8 @@ createChart = function() {
                 labels : labels,
 		datasets : [
 			{
-				fillColor : "rgba(0, 0, 0,0.4)",
-				strokeColor : "#444444",
+				fillColor : "rgba(0, 0, 0,0)",
+				strokeColor : "#ff0000",
 				pointColor : "#fff",
 				pointStrokeColor : "#444444",
                                 data: data
