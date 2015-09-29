@@ -39,6 +39,16 @@
     bottom:8px;
 }
 
+#glmol {
+    width: 300px;
+    height: 200px;
+    background-color: #eeeeee;
+}
+
+#glmol_src {
+    display: none;
+}
+
 hr {
     color: #888888;
     height: 1px !important;
