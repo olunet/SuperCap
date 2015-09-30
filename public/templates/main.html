@@ -44,7 +44,7 @@
         <div class="container">
 
             <!-- INPUT PARAMETERS -->
-            <div class="col-xs-12 col-md-6 light-grey-background input-container">
+            <div class="col-xs-12 col-md-6 light-grey-background input-container" id="inputContainer">
                 <br>
                 <div class="row">
                     <div class="col-xs-6">
@@ -68,8 +68,10 @@
             </div>
 
             <!-- 3D MODEL -->
-            <div class="col-xs-12 col-md-6" id="glmol">  
-                <textarea id="glmol_src"></textarea>
+            <div class="col-xs-12 col-md-6" id="glmolParent"> 
+                <div id="glmol">  
+                  <textarea id="glmol_src"></textarea>
+                </div>
             </div>
             
 

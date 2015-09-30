@@ -59,4 +59,9 @@ function load3Dmodel() {
         $("#glmol_src").val(ret);
         glmol.loadMolecule();
     });
+    
+    window.addEventListener('resize', function() {
+        //console.log($("#inputContainer").height());
+    }, true);
+    
 }
