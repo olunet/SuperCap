@@ -102,6 +102,7 @@ hr {
     padding: 0px;
 }
 
+
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
     margin-right: -250px;
@@ -148,6 +149,10 @@ hr {
     
     #wrapper.toggled {
         padding-left: 0;
+    }
+    
+    #canvasParent {
+        width: calc(100% - 250px);
     }
 
     #sidebar-wrapper {
