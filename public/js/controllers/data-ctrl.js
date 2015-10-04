@@ -17,7 +17,15 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             refreshChart($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrolyte);
         }
     };
-
+    
+    
+    var inputsList = [];
+    $(document).ready(function() {
+        $('#add-input-set').click(function() {
+            addNewInputSet(inputsList.length, inputsList);
+            inputsList.push(inputsList.length);
+        });
+    });
 
 //    $scope.save = function(book) {
 //        BookService.editBook(book).then(function(response) {
@@ -32,7 +40,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
     createChart();
     load3Dmodel();
-
+    
 
 });
 
@@ -64,4 +72,22 @@ function load3Dmodel() {
         //console.log($("#inputContainer").height());
     }, true);
     
+}
+
+function addNewInputSet(id, list) {
+    var html = '<div id="input-panel-' + id + '" class="input-panel">' +
+               'Si - Hg - BMIm' +
+                '<span id="input-panel-delete-' + id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
+            '</div>';
+    $("#input-panels").append(html);
+    $("#input-panel-delete-" + id).click(function(){
+        $("#input-panel-" + id).remove();
+        list.splice(id, 1);
+        console.log("Removing id " + id);
+        for(var i = id; i < list.length; i++) {
+            console.log("Reducing " + list[i] + " by 1");
+            $("#input-panel-" + id).attr('id', "input-panel-" + (i - 1));
+            list[i] = list[i] - 1;
+        }
+    });
 }
