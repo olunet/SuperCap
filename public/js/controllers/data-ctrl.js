@@ -41,6 +41,22 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     createChart();
     load3Dmodel();
     
+    //Slider handling
+     $("#epsilonSlider").on("input", function(){
+         document.getElementById("epsilonValue").innerHTML = this.value;
+     });
+     $("#a0AnionSlider").on("input", function(){
+         document.getElementById("a0AnionValue").innerHTML = this.value;
+     });
+     $("#a0CationSlider").on("input", function(){
+         document.getElementById("a0CationValue").innerHTML = this.value;
+     });
+     $("#gammaAnionSlider").on("input", function(){
+         document.getElementById("gammaAnionValue").innerHTML = this.value;
+     });
+     $("#gammaCationSlider").on("input", function(){
+         document.getElementById("gammaCationValue").innerHTML = this.value;
+     });
 
 });
 
