@@ -1,6 +1,8 @@
 # SuperCap
 A toy-model of a SuperCapacitor
 
-In order to jump-start, uses [Nikola Brežnjak's blog post](https://hackhands.com/finishing-Angular-TODO-application-deploying-production/) as MEAN stack skeleton code.
+Our development repository is located at: https://github.com/SuperCap/SuperCap
+
+Test server: https://peaceful-scrubland-7377.herokuapp.com/#/
 
 [Our wiki] (https://github.com/vladislavivanistsev/SuperCap/wiki)
