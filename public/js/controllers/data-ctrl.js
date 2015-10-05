@@ -8,16 +8,15 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.cations = response.data;
     });
 
-    DataService.getElectrolytes().then(function (response) {
-        $scope.electrolytes = response.data;
+    DataService.getElectrodes().then(function (response) {
+        $scope.electrodes = response.data;
     });
 
     $scope.inputChanged = function () {
-        if ($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrolyte) {
-            refreshChart($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrolyte);
+        if ($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
+            updateCalculations($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode);
         }
     };
-    
     
     var inputsList = [];
     $(document).ready(function() {

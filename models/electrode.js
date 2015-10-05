@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var ElectrolyteSchema = mongoose.Schema({
+var ElectrodeSchema = mongoose.Schema({
     label: String,
     d: Number,
     f1: Number,
@@ -11,6 +11,6 @@ var ElectrolyteSchema = mongoose.Schema({
     g3: Number
 });
 
-var Electrolyte = mongoose.model('Electrolyte', ElectrolyteSchema);
+var Electrode = mongoose.model('Electrode', ElectrodeSchema);
 
-module.exports = Electrolyte;
+module.exports = Electrode;

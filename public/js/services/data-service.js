@@ -8,8 +8,8 @@ angular.module('SuperCap').service('DataService', function($http) {
         return $http({method:'GET', url:'/api/cations'});
     };
     
-    this.getElectrolytes = function() {
-        return $http({method:'GET', url:'/api/electrolytes'});
+    this.getElectrodes = function() {
+        return $http({method:'GET', url:'/api/electrodes'});
     };
     
 //        this.editBook = function(book) {

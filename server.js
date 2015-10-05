@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 var Anion = require('./models/anion');
 var Cation = require('./models/cation');
-var Electrolyte = require('./models/electrolyte');
+var Electrode = require('./models/electrode');
 
 var config = require('./config.js');
 mongoose.connect(config.db);
@@ -64,10 +64,10 @@ app.get('/api/cations', function(req, res) {
     });
 });
 
-//Fetches all the available electrolytes
-app.get('/api/electrolytes', function(req, res) {
-    Electrolyte.find({}, function(err, electrolytes) {
-        return res.json(electrolytes);
+//Fetches all the available electrodes
+app.get('/api/electrodes', function(req, res) {
+    Electrode.find({}, function(err, electrodes) {
+        return res.json(electrodes);
     });
 });
 

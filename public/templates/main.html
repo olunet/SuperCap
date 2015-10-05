@@ -31,21 +31,21 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <select class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged()">
-                            <option value="">Select anion</option>
+                            <option value="" disabled>Select anion</option>
                         </select>
                     </div>
 
                     <div class="col-xs-6">
                         <select class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged()">
-                            <option value="">Select cation</option>
+                            <option value="" disabled>Select cation</option>
                         </select>
                     </div>
                 </div>
                 <h4>or</h4>
                 <input id="cas" type="text" class="form-control" placeholder="Enter a CAS number">
                 <hr>
-                <select class="form-control"  data-width="100%" ng-model="selectedElectrolyte" ng-options="electrolyte.label for electrolyte in electrolytes" ng-change="inputChanged()">
-                    <option value="" disabled>Select electrolyte</option>
+                <select class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged()">
+                    <option value="" disabled>Select electrode</option>
                 </select>
             </div>
 
