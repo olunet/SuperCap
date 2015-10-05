@@ -205,7 +205,7 @@ GLmol.prototype.parseXYZ = function(str) {
    for (var i = 1; i <= atomCount; i++) {
       var line = lines[offset++];
       var tokens = line.replace(/^\s+/, "").replace(/\s+/g," ").split(" ");
-      console.log(tokens);
+      //console.log(tokens);
       var atom = {};
       atom.serial = i;
       atom.atom = atom.elem = tokens[0];
@@ -1446,7 +1446,7 @@ GLmol.prototype.drawSymmetryMates2 = function(group, asu, matrices) {
    for (var i = 0; i < matrices.length; i++) {
       var mat = matrices[i];
       if (mat == undefined || mat.isIdentity()) continue;
-      console.log(mat);
+      //console.log(mat);
       var symmetryMate = THREE.SceneUtils.cloneObject(asu);
       symmetryMate.matrix = mat;
       group.add(symmetryMate);
@@ -1564,7 +1564,7 @@ GLmol.prototype.rebuildScene = function() {
    this.defineRepresentation();
    this.setView(view);
 
-   console.log("builded scene in " + (+new Date() - time) + "ms");
+   //console.log("builded scene in " + (+new Date() - time) + "ms");
 };
 
 GLmol.prototype.loadMolecule = function(repressZoom) {
@@ -1579,7 +1579,7 @@ GLmol.prototype.loadMoleculeStr = function(repressZoom, source) {
 
    this.parsePDB2(source);
    if (!this.parseSDF(source)) this.parseXYZ(source);
-   console.log("parsed in " + (+new Date() - time) + "ms");
+   //console.log("parsed in " + (+new Date() - time) + "ms");
    
    var title = $('#' + this.id + '_pdbTitle');
    var titleStr = '';
@@ -1648,7 +1648,7 @@ GLmol.prototype.enableMouse = function() {
       } else if (ev.originalEvent.wheelDelta) { // Firefox
          me.rotationGroup.position.z -= scaleFactor * ev.originalEvent.wheelDelta / 400;
       }
-      console.log(ev.originalEvent.wheelDelta, ev.originalEvent.detail, me.rotationGroup.position.z);
+      //console.log(ev.originalEvent.wheelDelta, ev.originalEvent.detail, me.rotationGroup.position.z);
       me.show();
    });
    glDOM.bind("contextmenu", function(ev) {ev.preventDefault();});
@@ -1713,7 +1713,7 @@ GLmol.prototype.show = function() {
    this.setSlabAndFog();
    if (!this.webglFailed) this.renderer.render(this.scene, this.camera);
    else this.render2d();
-   console.log("rendered in " + (+new Date() - time) + "ms");
+   //console.log("rendered in " + (+new Date() - time) + "ms");
 };
 
 GLmol.prototype.render2d = function() {
