@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
 
 var CationSchema = mongoose.Schema({
-    name: String,
-    value: Number
+    label: String,
+    r: Number,
+    a0: Number,
+    gamma: Number,
+    xyz: String
 });
 
 var Cation = mongoose.model('Cation', CationSchema);
