@@ -57,6 +57,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
          document.getElementById("gammaCationValue").innerHTML = this.value;
      });
 
+     
+    
 });
 
 function load3Dmodel() {
@@ -82,11 +84,7 @@ function load3Dmodel() {
         $("#glmol_src").val(ret);
         glmol.loadMolecule();
     });
-    
-    window.addEventListener('resize', function() {
-        //console.log($("#inputContainer").height());
-    }, true);
-    
+       
 }
 
 function addNewInputSet(id, list) {
