@@ -1,13 +1,23 @@
-<div id="wrapper">
+<div id="wrapper" >
     <!-- SIDEBAR -->
     <div id="sidebar-wrapper">
-        <div class="sidebar-title">
-            Inputs
+        <br>
+        <div>
+            <button  
+                data-toggle="modal" 
+                data-target="#basicModal" 
+                type="button" 
+                class="btn btn-lg btn-info center-block">
+                How to use this app
+            </button>
         </div>
-        <div id="input-panels">
+        <div class="sidebar-title text-center ">
+            <h3>Inputs</h3>
         </div>
-        <button id="add-input-set" type="button" class="btn pull-right">Add another</button>
-        <div class="clearifx" />
+        <div id="input-panels"></div>
+        <div>
+            <button id="add-input-set" type="button" class="btn pull-right">Add another</button>
+        </div>
         <div class="bottom">
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
@@ -18,7 +28,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- MAIN PAGE -->
@@ -56,14 +65,11 @@
                 </div>
             </div>
 
-
-            
-
             <!-- GRAPH CANVAS --> 
             <div id="canvasParent">
-                <canvas id="chart" class="white-background" width="100%" height="300px"></canvas>
+                <canvas id="chart" class="white-background"></canvas>
             </div>
-            
+
             <div class="row" id="slidersContainer">
                 <div class="col-xs-1">
                     <p>E</p>
@@ -72,15 +78,15 @@
                     <p>&gamma;<sub>anion</sub></p>
                     <p>&gamma;<sub>cation</sub></p>
                 </div>
-                
+
                 <div class="col-xs-9">
-                <input type="range" class="slider" id="epsilonSlider" min="0" max="4" step="0.25">
-                <input type="range" class="slider" id="a0AnionSlider" min="0.5" max="1" step="0.05">
-                <input type="range" class="slider" id="a0CationSlider" min="0.5" max="1" step="0.05">
-                <input type="range" class="slider" id="gammaAnionSlider" min="0" max="10" step="1">
-                <input type="range" class="slider" id="gammaCationSlider" min="0" max="10" step="1">
+                    <input type="range" class="slider" id="epsilonSlider" min="0" max="4" step="0.25">
+                    <input type="range" class="slider" id="a0AnionSlider" min="0.5" max="1" step="0.05">
+                    <input type="range" class="slider" id="a0CationSlider" min="0.5" max="1" step="0.05">
+                    <input type="range" class="slider" id="gammaAnionSlider" min="0" max="10" step="1">
+                    <input type="range" class="slider" id="gammaCationSlider" min="0" max="10" step="1">
                 </div>
-                
+
                 <div class="col-xs-2"> 
                     <p id="epsilonValue">2</p>
                     <p id="a0AnionValue">0.75</p>
@@ -90,6 +96,30 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+    <!-- HOWTOUSETHISAPP MODAL PAGE -->
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">A toy-model of a SuperCapacitor</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>The following content will soon be informative</h3>
+                    Lorem ipsum dolor sit amet, ex molestie recteque vel, mei no habeo nobis, deserunt definitionem eos eu. Mea te ipsum apeirian, at vitae doctus reprimique cum. Eos cibo porro animal an, in sea justo maiestatis. Te liber nostro his, nisl percipit no his. Epicurei ocurreret quo an, forensibus voluptaria repudiandae sed an.
+
+                    Nisl velit mea te. Te nec docendi fastidii. Munere evertitur consectetuer ea est, an cum nonumes perpetua mnesarchum. Vix ubique invidunt maluisset ea, ad nisl deleniti eam.
+
+                    Erat partiendo an cum, sit eius possit persecuti ne. Nec soluta libris dolores id, nec ut decore accusamus. Ut dolorem tincidunt per, et eos mundi saperet postulant. Quaeque efficiantur vis ut. Ne mazim timeam hendrerit vis.
+
+                    Per in semper accusamus efficiantur. Mel ei lorem fastidii. Ea omnis primis vim. Appetere convenire nec eu, mazim ridens maiorum mel ex, sea illud putent persequeris ut. Eos utinam singulis assueverit te.
+
+                    Vim inermis euripidis omittantur eu, has viris maiestatis quaerendum at, cu his fugit melius. Vocibus complectitur an eos, ne vix corpora apeirian inimicus. Laoreet prodesset disputationi ad est. Sea cu quot singulis, ut vix diam idque regione. Ignota graeci essent eos ei.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
