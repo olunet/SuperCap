@@ -30,13 +30,13 @@
                 <br>
                 <div class="row">
                     <div class="col-xs-6">
-                        <select class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged()">
+                        <select class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged();anionChanged()">
                             <option value="" disabled>Select anion</option>
                         </select>
                     </div>
 
                     <div class="col-xs-6">
-                        <select class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged()">
+                        <select class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged();cationChanged()">
                             <option value="" disabled>Select cation</option>
                         </select>
                     </div>
@@ -44,7 +44,7 @@
                 <h4>or</h4>
                 <input id="cas" type="text" class="form-control" placeholder="Enter a CAS number">
                 <hr>
-                <select class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged()">
+                <select class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged();electrodeChanged()">
                     <option value="" disabled>Select electrode</option>
                 </select>
             </div>

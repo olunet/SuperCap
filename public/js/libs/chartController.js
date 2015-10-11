@@ -1,11 +1,11 @@
 
 
-createChart = function () {
+createChart = function (voltages) {
     var labels = [];
     var data = []
 
-    for (var i = 0; i <= 20; i++) {
-        labels.push(i);
+    for (var i = 0; i < voltages.length; i++) {
+        labels.push(voltages[i]);
         data.push(0);
     }
 
@@ -31,15 +31,11 @@ createChart = function () {
 }
 
 
-refreshChart = function (anion, cation, electrolyte) {
+refreshChart = function (values) {
 
     for (var i = 0; i < chart.datasets[0].points.length; i++) {
 
-        var alt = i / 10;
-
-        var val = Math.sin(cation * i) * 10 + Math.cos(anion * alt) * 7 + Math.sin(electrolyte * alt) * 12;
-
-        chart.datasets[0].points[i].value = val;
+        chart.datasets[0].points[i].value = values[i];
     }
 
     chart.update();

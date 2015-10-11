@@ -1,33 +1,44 @@
-updateCalculations = function (anion, cation, electrode) {
-    
-    //Minimum voltage on the X axis
-    var min = -2;
-    //Maximum voltage on the X axis
-    var max = 2;
-    //Number of subdivisions on the X axis
-    var numSteps = 20;
-    
+updateCalculations = function (anion, cation, electrode, voltages) {
+        
     //Epsilon - relative permittivity, hardcoded for now
-    var epsilon = 2;
+    var epsilon = Number(document.getElementById("epsilonValue").innerHTML);
     
-    //Calculate the size of 1 step on the X axis
-    var steps = calculateVoltageSteps(min, max, numSteps);
+    var a0_anion = Number(document.getElementById("a0AnionValue").innerHTML);
+    
+    var a0_cation = Number(document.getElementById("a0CationValue").innerHTML);
+    
+    var gamma_anion = Number(document.getElementById("gammaAnionValue").innerHTML);
+    
+    var gamma_cation = Number(document.getElementById("gammaCationValue").innerHTML);
     
     //Also known as sigma anion
-    var anionCharges = calculateSurfaceCharge(anion, electrode, epsilon, steps);
+    var anionCharges = calculateSurfaceCharges(anion.r, a0_anion, gamma_anion, electrode, epsilon, voltages);
     
     //Also known as sigma cation
-    var cationCharges = calculateSurfaceCharge(cation, electrode, epsilon, steps);
+    var cationCharges = calculateSurfaceCharges(cation.r, a0_cation, gamma_cation, electrode, epsilon, voltages);
     
-    var charges = mergeSurfaceCharges(anionCharges, cationCharges, anion, cation, steps);
+    var charges = mergeSurfaceCharges(anionCharges, cationCharges, anion, cation, voltages);
     
-    console.log(charges);
+            
+    //TODO: Find better names for these
+    //Equation 2 stuff
+    var u2s = calculateU2s(charges, electrode, epsilon);
+    
+    var cs = calculateCs(charges, voltages, u2s);
+    
+    //TODO: Do differentiation
+    
+    refreshChart(charges);
+    
 }
 
 //Used for calculating anion and cation surface charge.
 //Same function is used for both since their models are similar
 //(at least the values relevant to the calculation are named the same)
-calculateSurfaceCharge = function(ion, electrode, epsilon, steps) {
+calculateSurfaceCharges = function(r, a0, gamma, electrode, epsilon, voltages) {
+    
+    console.log(r + " " + a0 + " " + gamma);
+    
     //Constant value
     var c1 = 1;
     //Constant value
@@ -36,15 +47,15 @@ calculateSurfaceCharge = function(ion, electrode, epsilon, steps) {
     var e = 2.71828;
     
     //theta max is equal to c1 / r^2
-    var thetaMax = c1 / Math.pow(ion.r, 2);
+    var thetaMax = c1 / Math.pow(r, 2);
     
     //u max is equal to theta max * (d + r) * c2 / epsilon
-    var uMax = thetaMax * (electrode.d + ion.r) * c2 / epsilon;
+    var uMax = thetaMax * (electrode.d + r) * c2 / epsilon;
     
     var values = [];
     
-    for(var i = 0; i < steps.length; i++) {
-        var u1 = steps[i];
+    for(var i = 0; i < voltages.length; i++) {
+        var u1 = voltages[i];
         
         var u = u1 / uMax;
         
@@ -52,29 +63,30 @@ calculateSurfaceCharge = function(ion, electrode, epsilon, steps) {
         var stepFunction = u1 > 0 ? 1 : -1;
         
         //exponent is equal to e ^ [ a0 + (1 - a0) * e^(- gamma * u^2) ]
-        var exponent = Math.pow(  e, ion.a0 + (1 - ion.a0) * Math.pow( e, - ion.gamma * Math.pow(u, 2) )  );
+        var exponent = Math.pow(  e, a0 + (1 - a0) * Math.pow( e, - gamma * Math.pow(u, 2) )  );
         
         //The surface charge of the ion, marked with sigma usually
         var charge = stepFunction * thetaMax * Math.abs(u) * exponent;
-        
+
         values.push(charge);
     }
+    
+    console.log(values);
+    
     return values;
 }
 
-mergeSurfaceCharges = function(anionCharges, cationCharges, anion, cation, steps) {
-    
+mergeSurfaceCharges = function(anionCharges, cationCharges, anion, cation, voltages) {
     var gamma = Math.sqrt(anion.gamma * cation.gamma);
     
     var values = [];
     
-    for(var i = 0; i < steps.length; i++) {
-        var u1 = steps[i];
+    for(var i = 0; i < voltages.length; i++) {
+        var u1 = voltages[i];
 
-        //TODO: Use the proper u value
-        var anionWeight = 0.5;// + Math.tanh(gamma * u)/2;
+        var anionWeight = 0.5 + Math.tanh(gamma * u1)/2;
         
-        var cationWeight = 0.5;// - Math.tanh(gamma * u)/2;
+        var cationWeight = 0.5 - Math.tanh(gamma * u1)/2;
         
         var charge = anionCharges[i] * anionWeight + cationCharges[i] * cationWeight;
 
@@ -84,14 +96,35 @@ mergeSurfaceCharges = function(anionCharges, cationCharges, anion, cation, steps
     return values;
 }
 
-calculateVoltageSteps = function(min, max, numSteps) {
-    var step = (max - min) / numSteps;
+//TODO: Find a better name for this
+calculateU2s = function(surfaceCharges, electrode, epsilon) {
+    //Constant value
+    var c2 = 0.8854;
     
-    var steps = [];
+     var values = [];
     
-    for(var i = 0; i < numSteps; i++) {
-        steps.push(min + step * i);
+    for(var i = 0; i < surfaceCharges.length; i++) {
+        
+        var sigma = surfaceCharges[i];
+
+        var f_sigma = electrode.f1 + (electrode.f2 - electrode.f1) * (Math.tanh(sigma/electrode.f3) + 1) / 2;
+
+        var g_sigma = electrode.g1 * Math.pow((sigma - electrode.g2), 2) + electrode.g3;
+        
+        //Hardcoded for now
+        var s = 1;
+        
+        var u2 = -s / ( 1 /f_sigma + 1/g_sigma) * c2 / epsilon;
+
+        values.push(u2);
     }
     
-    return steps;
+    return values;
+}
+
+//TODO: Find a better name for this
+calculateCs = function(sigmas, u1s, u2s) {
+    
+    
+    
 }

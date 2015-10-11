@@ -1,5 +1,17 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
 
+    //Number of subdivisions on the X axis
+    var numSteps = 21;
+    //Minimum voltage on the X axis
+    var min = -2;
+    //Maximum voltage on the X axis
+    var max = 2;
+
+    //Calculate the size of 1 step on the X axis, equal to u1s
+    var voltages = calculateVoltageSteps(min, max, numSteps);
+
+    createChart(voltages);
+
     DataService.getAnions().then(function (response) {
         $scope.anions = response.data;
     });
@@ -13,51 +25,86 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     });
 
     $scope.inputChanged = function () {
-        if ($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
-            updateCalculations($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode);
+        $scope.updateGraph();
+    };
+
+    $scope.anionChanged = function () {
+        if ($scope.selectedAnion) {
+            $("#a0CationSlider").value = $scope.selectedAnion.a0;
+            document.getElementById("a0AnionValue").innerHTML = $scope.selectedAnion.a0;
+
+            $("#gammaAnionSlider").value = $scope.selectedAnion.gamma;
+            document.getElementById("gammaAnionValue").innerHTML = $scope.selectedAnion.gamma;
         }
+        $scope.updateGraph();
+    };
+
+    $scope.cationChanged = function () {
+        if ($scope.selectedCation) {
+            $("#a0CationSlider").value = $scope.selectedCation.a0;
+            document.getElementById("a0CationValue").innerHTML = $scope.selectedCation.a0;
+
+            $("#gammaCationSlider").value = $scope.selectedCation.gamma;
+            document.getElementById("gammaCationValue").innerHTML = $scope.selectedCation.gamma;
+        }
+        $scope.updateGraph();
     };
     
+    $scope.electrodeChanged = function () {
+        $scope.updateGraph();
+    };
+
     var inputsList = [];
-    $(document).ready(function() {
-        $('#add-input-set').click(function() {
+    $(document).ready(function () {
+        $('#add-input-set').click(function () {
             addNewInputSet(inputsList.length, inputsList);
             inputsList.push(inputsList.length);
         });
     });
 
-//    $scope.save = function(book) {
-//        BookService.editBook(book).then(function(response) {
-//            book = response.data;
-//        })
-//    }
-//    $scope.createBook = function(newbook) {
-//        BookService.addBook(newbook).then(function(response) {
-//            $scope.books.push(newbook);
-//        })
-//    }
-
-    createChart();
     load3Dmodel();
-    
+
     //Slider handling
-     $("#epsilonSlider").on("input", function(){
-         document.getElementById("epsilonValue").innerHTML = this.value;
-     });
-     $("#a0AnionSlider").on("input", function(){
-         document.getElementById("a0AnionValue").innerHTML = this.value;
-     });
-     $("#a0CationSlider").on("input", function(){
-         document.getElementById("a0CationValue").innerHTML = this.value;
-     });
-     $("#gammaAnionSlider").on("input", function(){
-         document.getElementById("gammaAnionValue").innerHTML = this.value;
-     });
-     $("#gammaCationSlider").on("input", function(){
-         document.getElementById("gammaCationValue").innerHTML = this.value;
-     });
+    $("#epsilonSlider").on("input", function () {
+        document.getElementById("epsilonValue").innerHTML = this.value;
+        $scope.updateGraph();
+    });
+    $("#a0AnionSlider").on("input", function () {
+        document.getElementById("a0AnionValue").innerHTML = this.value;
+        $scope.updateGraph();
+    });
+    $("#a0CationSlider").on("input", function () {
+        document.getElementById("a0CationValue").innerHTML = this.value;
+        $scope.updateGraph();
+    });
+    $("#gammaAnionSlider").on("input", function () {
+        document.getElementById("gammaAnionValue").innerHTML = this.value;
+        $scope.updateGraph();
+    });
+    $("#gammaCationSlider").on("input", function () {
+        document.getElementById("gammaCationValue").innerHTML = this.value;
+        $scope.updateGraph();
+    });
+    
+    $scope.updateGraph = function() {
+        if ($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
+            updateCalculations($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, voltages);
+        }
+    }
 
 });
+
+calculateVoltageSteps = function (min, max, numSteps) {
+    var step = (max - min) / (numSteps - 1);
+
+    var steps = [];
+
+    for (var i = 0; i < numSteps; i++) {
+        steps.push(Number(min + step * i).toFixed(1));
+    }
+
+    return steps;
+}
 
 function load3Dmodel() {
     var glmol = new GLmol('glmol', true);
@@ -82,24 +129,24 @@ function load3Dmodel() {
         $("#glmol_src").val(ret);
         glmol.loadMolecule();
     });
-    
-    window.addEventListener('resize', function() {
+
+    window.addEventListener('resize', function () {
         //console.log($("#inputContainer").height());
     }, true);
-    
+
 }
 
 function addNewInputSet(id, list) {
     var html = '<div id="input-panel-' + id + '" class="input-panel">' +
-               'Si - Hg - BMIm' +
-                '<span id="input-panel-delete-' + id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
+            'Si - Hg - BMIm' +
+            '<span id="input-panel-delete-' + id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
             '</div>';
     $("#input-panels").append(html);
-    $("#input-panel-delete-" + id).click(function(){
+    $("#input-panel-delete-" + id).click(function () {
         $("#input-panel-" + id).remove();
         list.splice(id, 1);
         console.log("Removing id " + id);
-        for(var i = id; i < list.length; i++) {
+        for (var i = id; i < list.length; i++) {
             console.log("Reducing " + list[i] + " by 1");
             $("#input-panel-" + id).attr('id', "input-panel-" + (i - 1));
             list[i] = list[i] - 1;
