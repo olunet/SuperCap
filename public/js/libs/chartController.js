@@ -25,6 +25,7 @@ createChart = function (voltages) {
 
     var canvas = document.getElementById('chart');
     canvas.width = $("#canvasParent").width();
+    canvas.height = 350;
     var context = canvas.getContext('2d');
     var chart = new Chart(context).Line(data);
     this.chart = chart;
