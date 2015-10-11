@@ -1,24 +1,16 @@
 {
   "name": "SuperCap",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A toy-model of a SuperCapacitor",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vladislavivanistsev/SuperCap.git"
-  },
-  "homepage": "",
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.10.1",
-    "connect-flash": "^0.1.1",
-    "ejs": "^2.0.6",
-    "express": "^4.10.7",
-    "express-session": "^1.10.1",
+    "express": "~4.10.0",
     "mongoose": "4.1.7",
-    "passport": "^0.2.1",
-    "passport-local": "^1.0.0"
+    "body-parser": "~1.9.2"
   }
 }
