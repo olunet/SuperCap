@@ -92,6 +92,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         }
     }
 
+     
+    
 });
 
 calculateVoltageSteps = function (min, max, numSteps) {
