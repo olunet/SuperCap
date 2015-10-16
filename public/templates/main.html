@@ -1,32 +1,33 @@
 <div id="wrapper">
     <!-- SIDEBAR -->
     <div id="sidebar-wrapper" class="hidden-print">
-        <br>
         <div>
-            <button  
-                data-toggle="modal" 
-                data-target="#basicModal" 
-                type="button" 
-                class="btn btn-lg btn-info center-block">
-                How to use this app
-            </button>
+            <div class="row">
+                <a 
+                    data-toggle="modal" 
+                    data-target="#basicModal" 
+                    class="btn btn-lg btn-info center-block">
+                    How to use this app
+                </a>
+                <a href="javascript:if(window.print)window.print()">
+                    <div>
+                        <div class="btn btn-info btn-lg center-block"> Print</div>
+                    </div>
+                </a>
+                <a href="">
+                    <div>
+                        <div class="btn btn-info btn-lg center-block"> Export</div>
+                    </div>
+                </a>
+            </div>
+
         </div>
         <div class="sidebar-title text-center ">
-            <h3>Inputs</h3>
+            Inputs
         </div>
         <div id="input-panels"></div>
         <div>
             <button id="add-input-set" type="button" class="btn pull-right">Add another</button>
-        </div>
-        <div class="bottom">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <a href="javascript:if(window.print)window.print()" class="btn btn-info btn-lg ">Print</a>
-                </div>
-                <div class="col-xs-12 col-sm-6">
-                    <button type="button" class="btn btn-info btn-lg">Export</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -39,13 +40,15 @@
                 <br>
                 <div class="row">
                     <div class="col-xs-6">
-                        <select class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged();anionChanged()">
+                        <select id ="selectAnion" class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged();
+                                        anionChanged()">
                             <option value="" disabled>Select anion</option>
                         </select>
                     </div>
 
                     <div class="col-xs-6">
-                        <select class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged();cationChanged()">
+                        <select id ="selectCation"  class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged();
+                                        cationChanged()">
                             <option value="" disabled>Select cation</option>
                         </select>
                     </div>
@@ -53,7 +56,8 @@
                 <h4>or</h4>
                 <input id="cas" type="text" class="form-control" placeholder="Enter a CAS number">
                 <hr>
-                <select class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged();electrodeChanged()">
+                <select id ="selectCation" class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged();
+                                electrodeChanged()">
                     <option value="" disabled>Select electrode</option>
                 </select>
             </div>
