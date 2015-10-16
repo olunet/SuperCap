@@ -1,6 +1,7 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
-
-//Number of subdivisions on the X axis
+    // List for storing multiple inputs
+    $scope.inputs = [];
+    //Number of subdivisions on the X axis
     var numSteps = 21;
     //Minimum voltage on the X axis
     var min = -2;
@@ -88,19 +89,47 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             var anion = $scope.selectedAnion.label;
             var cation = $scope.selectedCation.label;
             var electrode = $scope.selectedElectrode.label;
-            
+            var input =
+                    [
+                        id,
+                        $scope.selectedAnion,
+                        $scope.selectedCation,
+                        $scope.selectedElectrode,
+                        Number(document.getElementById("epsilonValue").innerHTML),
+                        Number(document.getElementById("a0AnionValue").innerHTML),
+                        Number(document.getElementById("a0CationValue").innerHTML),
+                        Number(document.getElementById("gammaAnionValue").innerHTML),
+                        Number(document.getElementById("gammaCationValue").innerHTML)
+                    ];
+
+            $scope.inputs.push(input);
+
             var html = '<div id="input-panel-'
                     + id +
                     '" class="input-panel">' +
-                    anion + ' - ' + cation + ' - ' + electrode +
                     '<span id="input-panel-delete-'
                     + id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
+                    '<a href="">' +
+                    '<div>' +
+                    '<div class="btn btn-default btn-lg center-block">' +
+                    anion + ' - ' + cation + ' - ' + electrode
+                    + '</div>' +
+                    '</div>' +
+                    '</a>' +
                     '</div>';
             $("#input-panels").append(html);
             $("#input-panel-delete-" + id).click(function () {
                 $("#input-panel-" + id).remove();
                 list.splice(id, 1);
                 console.log("Removing id " + id);
+
+                // Remove from inputs.
+                for (var i = id; i < $scope.inputs.length; i++) {
+                    if ((($scope.inputs[i])[0]) === id) {
+                        ($scope.inputs).splice(i, 1);
+                    }
+                }
+
                 for (var i = id; i < list.length; i++) {
                     console.log("Reducing " + list[i] + " by 1");
                     $("#input-panel-" + id).attr('id', "input-panel-" + (i - 1));
@@ -110,30 +139,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
             );
         }
-    }
-
-    $scope.removeInputFromSidebar = function (id, list) {
-        var anion = $scope.selectedAnion.label;
-        var cation = $scope.selectedCation.label;
-        var electrode = $scope.selectedElectrode.label;
-        var html = '<div id="input-panel-'
-                + id +
-                '" class="input-panel">' +
-                anion + ' - ' + cation + ' - ' + electrode +
-                '<span id="input-panel-delete-'
-                + id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
-                '</div>';
-        $("#input-panels").append(html);
-        $("#input-panel-delete-" + id).click(function () {
-            $("#input-panel-" + id).remove();
-            list.splice(id, 1);
-            console.log("Removing id " + id);
-            for (var i = id; i < list.length; i++) {
-                console.log("Reducing " + list[i] + " by 1");
-                $("#input-panel-" + id).attr('id', "input-panel-" + (i - 1));
-                list[i] = list[i] - 1;
-            }
-        });
     }
 });
 calculateVoltageSteps = function (min, max, numSteps) {
