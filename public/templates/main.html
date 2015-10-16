@@ -1,6 +1,6 @@
 <div id="wrapper">
     <!-- SIDEBAR -->
-    <div id="sidebar-wrapper">
+    <div id="sidebar-wrapper" class="hidden-print">
         <br>
         <div>
             <button  
@@ -35,7 +35,7 @@
         <div class="container1">
 
             <!-- INPUT PARAMETERS -->
-            <div class="col-xs-12 col-md-6 light-grey-background input-container" id="inputContainer">
+            <div class="col-xs-12 col-md-6 light-grey-background input-container hidden-print" id="inputContainer">
                 <br>
                 <div class="row">
                     <div class="col-xs-6">
@@ -59,7 +59,7 @@
             </div>
 
             <!-- 3D MODEL -->
-            <div class="col-xs-12 col-md-6" id="glmolParent"> 
+            <div class="col-xs-12 col-md-6 hidden-print" id="glmolParent"> 
                 <div id="glmol">  
                     <textarea id="glmol_src"></textarea>
                 </div>
@@ -71,7 +71,7 @@
             </div>
 
             <div class="row" id="slidersContainer">
-                <div class="col-xs-1">
+                <div class="col-xs-1 hidden-print">
                     <p>E</p>
                     <p>a<sub>0,anion</sub></p>
                     <p>a<sub>0,cation</sub></p>
@@ -79,7 +79,7 @@
                     <p>&gamma;<sub>cation</sub></p>
                 </div>
 
-                <div class="col-xs-9">
+                <div class="col-xs-9 hidden-print">
                     <input type="range" class="slider" id="epsilonSlider" min="0" max="4" step="0.25">
                     <input type="range" class="slider" id="a0AnionSlider" min="0.5" max="1" step="0.05">
                     <input type="range" class="slider" id="a0CationSlider" min="0.5" max="1" step="0.05">
@@ -87,7 +87,7 @@
                     <input type="range" class="slider" id="gammaCationSlider" min="0" max="10" step="1">
                 </div>
 
-                <div class="col-xs-2"> 
+                <div class="col-xs-2 hidden-print"> 
                     <p id="epsilonValue">2</p>
                     <p id="a0AnionValue">0.75</p>
                     <p id="a0CationValue">0.75</p>
