@@ -1,5 +1,5 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
-    // List for storing multiple inputs
+// List for storing multiple inputs
     $scope.inputs = [];
     //Number of subdivisions on the X axis
     var numSteps = 21;
@@ -80,7 +80,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     }
 
     $scope.existingInputToSidebar = function (id, list) {
-        console.log($scope.selectedCation === undefined);
         if ($scope.selectedCation === undefined
                 || $scope.selectedAnion === undefined
                 || $scope.selectedElectrode === undefined) {
@@ -101,9 +100,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                         Number(document.getElementById("gammaAnionValue").innerHTML),
                         Number(document.getElementById("gammaCationValue").innerHTML)
                     ];
-
             $scope.inputs.push(input);
-
             var html = '<div id="input-panel-'
                     + id +
                     '" class="input-panel">' +
@@ -117,12 +114,47 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                     '</div>' +
                     '</a>' +
                     '</div>';
+
+            var html2 = '<div id="printingInfo-'
+                    + id +
+                    '" class="printingInfo">' +
+                    '<div>' +
+                    '<div class = "panel panel-default col-xs-2 col-md-2">' +
+                    '<table class = "table" style="font-size:70%">' +
+                    '<tr>' +
+                    '<td>Anion: ' + anion + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Cation: ' + cation + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>Electorde: ' + electrode + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>E: ' + input[4] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>a0 anion: ' + input[5] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>a0 cation: ' + input[6] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>y0 anion: ' + input[7] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>y0 cation: ' + input[8] + '</td>' +
+                    '</tr>' +
+                    '</table>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            $("#printingInfo").append(html2);
             $("#input-panels").append(html);
             $("#input-panel-delete-" + id).click(function () {
                 $("#input-panel-" + id).remove();
                 list.splice(id, 1);
                 console.log("Removing id " + id);
-
                 // Remove from inputs.
                 for (var i = id; i < $scope.inputs.length; i++) {
                     if ((($scope.inputs[i])[0]) === id) {
