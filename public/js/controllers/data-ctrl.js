@@ -111,7 +111,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                     + id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
                     '<a href="">' +
                     '<div>' +
-                    '<div class="btn btn-default btn-lg center-block">' +
+                    '<div class="btn btn-primary btn-lg center-block">' +
                     anion + ' - ' + cation + ' - ' + electrode
                     + '</div>' +
                     '</div>' +
