@@ -106,7 +106,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                     '" class="input-panel">' +
                     '<span id="input-panel-delete-'
                     + id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
-                    '<a href="">' +
+                    '<a>' +
                     '<div>' +
                     '<div class="btn btn-primary btn-lg center-block">' +
                     anion + ' - ' + cation + ' - ' + electrode
@@ -152,7 +152,10 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             $("#printingInfo").append(html2);
             $("#input-panels").append(html);
             $("#input-panel-delete-" + id).click(function () {
+                // Remove from sidebar
                 $("#input-panel-" + id).remove();
+                // Remove from printview
+                $("#printingInfo-" + id).remove();               
                 list.splice(id, 1);
                 console.log("Removing id " + id);
                 // Remove from inputs.
@@ -161,7 +164,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                         ($scope.inputs).splice(i, 1);
                     }
                 }
-
+                
+                // Remove from sidebar list
                 for (var i = id; i < list.length; i++) {
                     console.log("Reducing " + list[i] + " by 1");
                     $("#input-panel-" + id).attr('id', "input-panel-" + (i - 1));
