@@ -1,6 +1,11 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
-// List for storing multiple inputs
-    $scope.inputs = [];
+    //List for storing multiple input sets
+    $scope.inputSets = [];
+    //Currently active input set
+    $scope.activeInputSet; 
+    //Add a new empty input set as the currently active input set.
+    addNewInputSet();
+
     //Number of subdivisions on the X axis
     var numSteps = 21;
     //Minimum voltage on the X axis
@@ -29,6 +34,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             $("#gammaAnionSlider").value = $scope.selectedAnion.gamma;
             document.getElementById("gammaAnionValue").innerHTML = $scope.selectedAnion.gamma;
         }
+        $scope.activeInputSet.anion = $scope.selectedAnion;
+        updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
     };
     $scope.cationChanged = function () {
@@ -38,20 +45,18 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             $("#gammaCationSlider").value = $scope.selectedCation.gamma;
             document.getElementById("gammaCationValue").innerHTML = $scope.selectedCation.gamma;
         }
+        $scope.activeInputSet.cation = $scope.selectedCation;
+        updateInputSetHTML($scope.activeInputSet);    
         $scope.updateGraph();
     };
     $scope.electrodeChanged = function () {
+        $scope.activeInputSet.electrode = $scope.selectedElectrode;
+        updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
     };
-    var inputsList = [];
-    $(document).ready(function () {
-        $('#add-input-set').click(function () {
 
-            $scope.existingInputToSidebar(inputsList.length, inputsList);
-            inputsList.push(inputsList.length);
-        });
-    });
     load3Dmodel();
+
     //Slider handling
     $("#epsilonSlider").on("input", function () {
         document.getElementById("epsilonValue").innerHTML = this.value;
@@ -77,7 +82,53 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         if ($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
             updateCalculations($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, voltages);
         }
+    };
+
+    $scope.addNewInputSet = function () {
+        addNewInputSet()
+    };
+    function addNewInputSet() {
+        var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode);
+        $scope.inputSets.push(inputSet);
+        addNewInputSetHTML(inputSet);
+        
+        $("#input-panel-" + inputSet.id).click(function () {
+            switchToInputSet(inputSet);
+        });
+
+        setActiveInputSet(inputSet);
+
+        return inputSet;
     }
+    
+    function switchToInputSet(inputSet) {
+        setActiveInputSet(inputSet);
+
+        $scope.selectedAnion = inputSet.anion;
+        $scope.selectedCation = inputSet.cation;
+        $scope.selectedElectrode = inputSet.electrode;
+
+        if (inputSet.anion) {
+            $("#a0CationSlider").value = inputSet.anion.a0;
+            document.getElementById("a0AnionValue").innerHTML = inputSet.anion.a0;
+            $("#gammaAnionSlider").value = inputSet.anion.gamma;
+            document.getElementById("gammaAnionValue").innerHTML = inputSet.anion.gamma;
+        }
+        if (inputSet.cation) {
+            $("#a0CationSlider").value = inputSet.cation.a0;
+            document.getElementById("a0CationValue").innerHTML = inputSet.cation.a0;
+            $("#gammaCationSlider").value = inputSet.cation.gamma;
+            document.getElementById("gammaCationValue").innerHTML = inputSet.cation.gamma;
+        }
+
+        //Force update on the fields
+        $scope.$apply()
+    }
+
+    function setActiveInputSet(inputSet) {
+        $scope.activeInputSet = inputSet;
+    }
+
 
     $scope.existingInputToSidebar = function (id, list) {
         if ($scope.selectedCation === undefined
@@ -101,19 +152,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                         Number(document.getElementById("gammaCationValue").innerHTML)
                     ];
             $scope.inputs.push(input);
-            var html = '<div id="input-panel-'
-                    + id +
-                    '" class="input-panel">' +
-                    '<span id="input-panel-delete-'
-                    + id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
-                    '<a>' +
-                    '<div>' +
-                    '<div class="btn btn-primary btn-lg center-block">' +
-                    anion + ' - ' + cation + ' - ' + electrode
-                    + '</div>' +
-                    '</div>' +
-                    '</a>' +
-                    '</div>';
 
             var html2 = '<div id="printingInfo-'
                     + id +
@@ -150,12 +188,11 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                     '</div>' +
                     '</div>';
             $("#printingInfo").append(html2);
-            $("#input-panels").append(html);
             $("#input-panel-delete-" + id).click(function () {
                 // Remove from sidebar
                 $("#input-panel-" + id).remove();
                 // Remove from printview
-                $("#printingInfo-" + id).remove();               
+                $("#printingInfo-" + id).remove();
                 list.splice(id, 1);
                 console.log("Removing id " + id);
                 // Remove from inputs.
@@ -164,7 +201,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                         ($scope.inputs).splice(i, 1);
                     }
                 }
-                
+
                 // Remove from sidebar list
                 for (var i = id; i < list.length; i++) {
                     console.log("Reducing " + list[i] + " by 1");
@@ -177,7 +214,52 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         }
     }
 });
-calculateVoltageSteps = function (min, max, numSteps) {
+
+var inputSetIdCounter = 0;
+
+var InputSet = function (anion, cation, electrode) {
+    this.id = inputSetIdCounter++;
+    this.anion = anion;
+    this.cation = cation;
+    this.electrode = electrode;
+
+    return this;
+};
+
+function addNewInputSetHTML(inputSet) {
+    var anionName = inputSet.anion !== undefined ? inputSet.anion.label : " ";
+    var electrodeName = inputSet.electrode !== undefined ? inputSet.electrode.label : " ";
+    var cationName = inputSet.cation !== undefined ? inputSet.cation.label : " ";
+
+    var html = '<div id="input-panel-'
+            + inputSet.id +
+            '" class="input-panel">' +
+            '<span id="input-panel-delete-'
+            + inputSet.id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
+            '<div class="text-center">' +
+            '<h4 id="input-panel-text-' + inputSet.id + '">' +
+            formatInput(anionName, cationName, electrodeName) +
+            '</h4>' +
+            '</div>' +
+            '</div>';
+
+    $("#input-panels").append(html);
+};
+
+function updateInputSetHTML(inputSet) {
+    var anionName = inputSet.anion !== undefined ? inputSet.anion.label : " ";
+    var electrodeName = inputSet.electrode !== undefined ? inputSet.electrode.label : " ";
+    var cationName = inputSet.cation !== undefined ? inputSet.cation.label : " ";
+    
+    var inputPanelText = document.getElementById("input-panel-text-" + inputSet.id);
+    inputPanelText.innerHTML = formatInput(anionName, cationName, electrodeName);
+}
+
+function formatInput(anionName, cationName, electrodeName) {
+    return anionName + ' - ' + electrodeName + ' - ' + cationName;
+}
+
+function calculateVoltageSteps(min, max, numSteps) {
     var step = (max - min) / (numSteps - 1);
     var steps = [];
     for (var i = 0; i < numSteps; i++) {
@@ -185,28 +267,4 @@ calculateVoltageSteps = function (min, max, numSteps) {
     }
 
     return steps;
-}
-
-function load3Dmodel() {
-    var glmol = new GLmol('glmol', true);
-    glmol.defineRepresentation = function () {
-        var all = this.getAllAtoms();
-        var hetatm = this.removeSolvents(this.getHetatms(all));
-        this.colorByAtom(all, {});
-        this.colorByChain(all);
-        var asu = new THREE.Object3D();
-        this.drawBondsAsStick(asu, hetatm, this.cylinderRadius, this.cylinderRadius);
-        this.drawBondsAsStick(asu, this.getResiduesById(this.getSidechains(this.getChain(all, ['A'])), [58, 87]), this.cylinderRadius, this.cylinderRadius);
-        this.drawBondsAsStick(asu, this.getResiduesById(this.getSidechains(this.getChain(all, ['B'])), [63, 92]), this.cylinderRadius, this.cylinderRadius);
-        this.drawCartoon(asu, all, this.curveWidth, this.thickness);
-        this.drawSymmetryMates2(this.modelGroup, asu, this.protein.biomtMatrices);
-        this.modelGroup.add(asu);
-    };
-    $.get("molecule.xyz", function (ret) {
-        $("#glmol_src").val(ret);
-        glmol.loadMolecule();
-    });
-    window.addEventListener('resize', function () {
-        //console.log($("#inputContainer").height());
-    }, true);
-}
+};
