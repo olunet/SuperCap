@@ -260,6 +260,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             );
         }
     }
+    
 });
 
 var inputSetIdCounter = 0;

@@ -68,17 +68,29 @@
             </div>
 
             <!-- 3D MODEL -->
-            <div class="col-xs-12 col-md-6 hidden-print" id="glmolParent"> 
-                <div id="glmol">  
-                    <textarea id="glmol_src"></textarea>
+            <div class="col-xs-12 col-md-6 hidden-print" id="anionParent"> 
+                <div id="anionMol">  
+                    <textarea id="anionMol_src"></textarea>
                 </div>
             </div>
+            
+             
+            <div class="col-xs-12 col-md-6 hidden-print" id="cationParent"> 
+                <div id="cationMol">  
+                    <textarea id="cationMol_src"></textarea>
+                </div>
+            </div>
+            
+            <div class="clearfix"></div>
 
             <!-- GRAPH CANVAS --> 
-            <div id="chartContainer">
+            <div id="chartContainer" class="col-xs-12">
                 <linechart data="chartData" options="chartOptions"></linechart>
             </div>
-            <div class="row" id="slidersContainer">
+            
+            <div class="clearfix"></div>
+            
+            <div class="row col-xs-12" id="slidersContainer">
                 <div class="col-xs-1 hidden-print">
                     <p>E</p>
                     <p>a<sub>0,anion</sub></p>

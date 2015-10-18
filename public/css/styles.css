@@ -11,11 +11,6 @@
     background-color:#ffffff;
 }
 
-#chartContainer {
-    width: 700px;
-    height: 600px;
-}
-
 .input-container {
     min-height: 220px;
 }
@@ -44,23 +39,41 @@
     bottom:8px;
 }
 
-#glmolParent {
+#anionParent {
     width: 200px;
     height: 150px;
     background-color: #eeeeee;
 }
 
-#glmol {
+#cationParent {
+    width: 200px;
+    height: 150px;
+    background-color: #eeeeee;
+}
+
+#anionMol {
     width: 100%;
     height: 100%;
     background-color: #eeeeee;
 }
 
-#glmol_src {
+#cationMol {
+    width: 100%;
+    height: 100%;
+    background-color: #eeeeee;
+}
+
+#anionMol_src {
     display: none;
 }
 
+#cationMol_src {
+    display: none;
+}
 
+#chartContainer {
+    min-height: 200px;
+}
 
 hr {
     color: #888888;
@@ -96,7 +109,7 @@ hr {
     width: 0;
     height: 100%;
     margin-left: -250px;
-    padding: 8px;
+    padding: 0px;
     overflow-y: auto;
     background: #444;
     -webkit-transition: all 0.5s ease;
@@ -164,7 +177,15 @@ hr {
         padding-left: 0;
     }
     
+    #sidebar-wrapper {
+        padding: 8px;
+    }
+    
     #canvasParent {
+        width: calc(100% - 250px);
+    }
+    
+    #chartContainer {
         width: calc(100% - 250px);
     }
     
@@ -287,9 +308,8 @@ input[type=range].slider:focus::-ms-fill-upper {
 }
 
 #slidersContainer {
-    min-height: 220px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     padding-left: 10px;
     background-color: #eeeeee;
 }
