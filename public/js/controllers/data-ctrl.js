@@ -43,6 +43,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             document.getElementById("a0AnionValue").innerHTML = $scope.selectedAnion.a0;
             $("#gammaAnionSlider").value = $scope.selectedAnion.gamma;
             document.getElementById("gammaAnionValue").innerHTML = $scope.selectedAnion.gamma;
+            loadAnion($scope.selectedAnion.xyz);
         }
         $scope.activeInputSet.anion = $scope.selectedAnion;
         updateInputSetHTML($scope.activeInputSet);
@@ -54,6 +55,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             document.getElementById("a0CationValue").innerHTML = $scope.selectedCation.a0;
             $("#gammaCationSlider").value = $scope.selectedCation.gamma;
             document.getElementById("gammaCationValue").innerHTML = $scope.selectedCation.gamma;
+            loadCation($scope.selectedCation.xyz);
         }
         $scope.activeInputSet.cation = $scope.selectedCation;
         updateInputSetHTML($scope.activeInputSet);    
@@ -65,7 +67,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.updateGraph();
     };
 
-    load3Dmodel();
+    load3Dmodels();
 
     //Slider handling
     $("#epsilonSlider").on("input", function () {
@@ -125,12 +127,14 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             document.getElementById("a0AnionValue").innerHTML = inputSet.anion.a0;
             $("#gammaAnionSlider").value = inputSet.anion.gamma;
             document.getElementById("gammaAnionValue").innerHTML = inputSet.anion.gamma;
+            loadAnion($scope.selectedAnion.xyz);
         }
         if (inputSet.cation) {
             $("#a0CationSlider").value = inputSet.cation.a0;
             document.getElementById("a0CationValue").innerHTML = inputSet.cation.a0;
             $("#gammaCationSlider").value = inputSet.cation.gamma;
             document.getElementById("gammaCationValue").innerHTML = inputSet.cation.gamma;
+            loadCation($scope.selectedCation.xyz);
         }
 
         //Force update on the fields
