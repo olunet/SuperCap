@@ -11,6 +11,11 @@
     background-color:#ffffff;
 }
 
+#chartContainer {
+    width: 700px;
+    height: 600px;
+}
+
 .input-container {
     min-height: 220px;
 }

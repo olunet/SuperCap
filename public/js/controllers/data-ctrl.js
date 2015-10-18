@@ -4,6 +4,40 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Currently active input set
     $scope.activeInputSet; 
 
+    $scope.chartData = [
+        {
+            x: 0,
+            y1: 0
+        },
+        {
+            x: 1,
+            y1: 2
+        },
+        {
+            x: 2,
+            y1: 4
+        },
+        {
+            x: 3,
+            y1: 1
+        },
+        {
+            x: 4,
+            y1: -2
+        }
+    ];
+    
+    $scope.chartOptions = {
+        lineMode: "bundle",
+        series: [
+            {
+                y: "y1",
+                label: "Test",
+                color: "#ff0000"
+            }
+        ]
+    }
+
     //Number of subdivisions on the X axis
     var numSteps = 21;
     //Minimum voltage on the X axis
@@ -13,7 +47,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Calculate the size of 1 step on the X axis, equal to u1s
     var voltages = calculateVoltageSteps(min, max, numSteps);
     
-    createChartCanvas(voltages);
+    //createChartCanvas(voltages);
     
     //Add a new empty input set as the currently active input set.
     addNewInputSet();
@@ -105,7 +139,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
         setActiveInputSet(inputSet);
         
-        createNewChart(inputSet);
+        //createNewChart(inputSet);
 
         return inputSet;
     }
