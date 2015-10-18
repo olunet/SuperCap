@@ -1,4 +1,4 @@
-updateCalculations = function (anion, cation, electrode, voltages) {
+updateCalculations = function (inputSet, anion, cation, electrode, voltages) {
         
     //Epsilon - relative permittivity, hardcoded for now
     var epsilon = Number(document.getElementById("epsilonValue").innerHTML);
@@ -28,16 +28,13 @@ updateCalculations = function (anion, cation, electrode, voltages) {
     
     //TODO: Do differentiation
     
-    refreshChart(charges);
-    
-}
+    inputSet.data = charges;
+};
 
 //Used for calculating anion and cation surface charge.
 //Same function is used for both since their models are similar
 //(at least the values relevant to the calculation are named the same)
 calculateSurfaceCharges = function(r, a0, gamma, electrode, epsilon, voltages) {
-    
-    console.log(r + " " + a0 + " " + gamma);
     
     //Constant value
     var c1 = 1;
@@ -68,11 +65,12 @@ calculateSurfaceCharges = function(r, a0, gamma, electrode, epsilon, voltages) {
         //The surface charge of the ion, marked with sigma usually
         var charge = stepFunction * thetaMax * Math.abs(u) * exponent;
 
+        //TODO: TEMPORARY TO MAKE IT MORE INTERESTING FOR THE DEMO
+        charge += Math.sin(i * 3) * r * 30 + Math.cos(i * epsilon) * uMax * 100
+
         values.push(charge);
     }
-    
-    console.log(values);
-    
+
     return values;
 }
 

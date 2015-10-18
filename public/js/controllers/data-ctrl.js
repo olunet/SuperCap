@@ -1,42 +1,11 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
+    //All possible line colors
+    $scope.colors = [ "#ff0000", "#00ff00", "#0000ff", "#0000000", "#ffff00", "#ff00ff", "#00ffff" ];
+    
     //List for storing multiple input sets
     $scope.inputSets = [];
     //Currently active input set
     $scope.activeInputSet; 
-
-    $scope.chartData = [
-        {
-            x: 0,
-            y1: 0
-        },
-        {
-            x: 1,
-            y1: 2
-        },
-        {
-            x: 2,
-            y1: 4
-        },
-        {
-            x: 3,
-            y1: 1
-        },
-        {
-            x: 4,
-            y1: -2
-        }
-    ];
-    
-    $scope.chartOptions = {
-        lineMode: "bundle",
-        series: [
-            {
-                y: "y1",
-                label: "Test",
-                color: "#ff0000"
-            }
-        ]
-    }
 
     //Number of subdivisions on the X axis
     var numSteps = 21;
@@ -47,7 +16,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Calculate the size of 1 step on the X axis, equal to u1s
     var voltages = calculateVoltageSteps(min, max, numSteps);
     
-    //createChartCanvas(voltages);
+    initializeChart($scope, voltages);
     
     //Add a new empty input set as the currently active input set.
     addNewInputSet();
@@ -121,12 +90,14 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     });
     $scope.updateGraph = function () {
         if ($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
-            updateCalculations($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, voltages);
+            updateCalculations($scope.activeInputSet, $scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, voltages);
+            console.log("Updating!");
+            updateChart($scope, $scope.activeInputSet);
         }
     };
 
     $scope.addNewInputSet = function () {
-        addNewInputSet()
+        addNewInputSet();
     };
     function addNewInputSet() {
         var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode);
@@ -139,8 +110,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
         setActiveInputSet(inputSet);
         
-        //createNewChart(inputSet);
-
         return inputSet;
     }
     
