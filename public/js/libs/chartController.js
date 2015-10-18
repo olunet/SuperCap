@@ -1,27 +1,16 @@
-
-
-createChart = function (voltages) {
+createChartCanvas = function (voltages) {
+    var dataset = [];
     var labels = [];
-    var data = []
 
     for (var i = 0; i < voltages.length; i++) {
         labels.push(voltages[i]);
-        data.push(0);
+        dataset.push(0);
     }
 
     var data = {
         labels: labels,
-        datasets: [
-            {
-                fillColor: "rgba(0, 0, 0,0)",
-                strokeColor: "#ff0000",
-                pointColor: "#fff",
-                pointStrokeColor: "#444444",
-                data: data
-            }
-        ]
+        datasets: [ { data: dataset } ]
     }
-
 
     var canvas = document.getElementById('chart');
     canvas.width = $("#canvasParent").width();
@@ -29,18 +18,34 @@ createChart = function (voltages) {
     var context = canvas.getContext('2d');
     var chart = new Chart(context).Line(data);
     this.chart = chart;
+    
+    console.log(chart);
+}
+
+createNewChart = function (inputSet) {
+    var dataset = [];
+
+    console.log(chart);
+
+    for (var i = 0; i < chart.scale.xLabels.length; i++) {
+        dataset.push(1);
+    }
+
+    chart.datasets.push({data: dataset});
+    chart.update();
 }
 
 
 refreshChart = function (values) {
 
-    for (var i = 0; i < chart.datasets[0].points.length; i++) {
-
-        chart.datasets[0].points[i].value = values[i];
+    for (var set = 0; set < chart.datasets.length; set++) {
+        console.log(chart.datasets[set]);
+        for (var i = 0; i < chart.datasets[0].points.length; i++) {
+            chart.datasets[set].points[i].value = values[i];
+        }
     }
 
     chart.update();
-
 }
 
 

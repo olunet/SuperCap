@@ -3,8 +3,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     $scope.inputSets = [];
     //Currently active input set
     $scope.activeInputSet; 
-    //Add a new empty input set as the currently active input set.
-    addNewInputSet();
 
     //Number of subdivisions on the X axis
     var numSteps = 21;
@@ -14,19 +12,28 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     var max = 2;
     //Calculate the size of 1 step on the X axis, equal to u1s
     var voltages = calculateVoltageSteps(min, max, numSteps);
-    createChart(voltages);
+    
+    createChartCanvas(voltages);
+    
+    //Add a new empty input set as the currently active input set.
+    addNewInputSet();
+    
     DataService.getAnions().then(function (response) {
         $scope.anions = response.data;
     });
+    
     DataService.getCations().then(function (response) {
         $scope.cations = response.data;
     });
+    
     DataService.getElectrodes().then(function (response) {
         $scope.electrodes = response.data;
     });
+    
     $scope.inputChanged = function () {
         $scope.updateGraph();
     };
+    
     $scope.anionChanged = function () {
         if ($scope.selectedAnion) {
             $("#a0CationSlider").value = $scope.selectedAnion.a0;
@@ -97,6 +104,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         });
 
         setActiveInputSet(inputSet);
+        
+        createNewChart(inputSet);
 
         return inputSet;
     }
@@ -126,7 +135,11 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     }
 
     function setActiveInputSet(inputSet) {
+        if($scope.activeInputSet) {
+            $("#input-panel-" + $scope.activeInputSet.id).toggleClass("input-panel-active");
+        }
         $scope.activeInputSet = inputSet;
+        $("#input-panel-" + inputSet.id).toggleClass("input-panel-active");
     }
 
 
@@ -222,7 +235,7 @@ var InputSet = function (anion, cation, electrode) {
     this.anion = anion;
     this.cation = cation;
     this.electrode = electrode;
-
+    this.dataset = undefined;
     return this;
 };
 
@@ -254,6 +267,12 @@ function updateInputSetHTML(inputSet) {
     var inputPanelText = document.getElementById("input-panel-text-" + inputSet.id);
     inputPanelText.innerHTML = formatInput(anionName, cationName, electrodeName);
 }
+
+function toggleHighlightOnInputSet(inputSet) {
+    var panel = document.getElementById("input-panel" + inputSet.id);
+    $("#input-panel-" + inputSet.id).toggleClass("input-panel-active");
+}
+
 
 function formatInput(anionName, cationName, electrodeName) {
     return anionName + ' - ' + electrodeName + ' - ' + cationName;
