@@ -10,11 +10,11 @@
                     class="btn btn-lg btn-info center-block">
                     How to use this app
                 </a>
-                <a href="javascript:if(window.print)window.print()">
-                    <div>
-                        <div class="btn btn-info btn-lg center-block"> Print</div>
-                    </div>
-                </a>
+                <!--<a ng-click="printTest()">-->
+                <div>
+                    <div class="btn btn-info btn-lg center-block" ng-click="printInputSets()"> Print</div>
+                </div>
+                <!--</a>-->
                 <a href="">
                     <div>
                         <div class="btn btn-info btn-lg center-block"> Export</div>
@@ -29,7 +29,8 @@
         </div>
         <div id="input-panels"></div>
         <div>
-            <button type="button" class="btn pull-right" ng-click="addNewInputSet()">Add another</button>
+            <button type="button" class="btn pull-right" ng-click="addNewInputSet();
+                        printTest()">Add another</button>
         </div>
     </div>
 
@@ -73,23 +74,23 @@
                     <textarea id="anionMol_src"></textarea>
                 </div>
             </div>
-            
-             
+
+
             <div class="col-xs-12 col-md-6 hidden-print" id="cationParent"> 
                 <div id="cationMol">  
                     <textarea id="cationMol_src"></textarea>
                 </div>
             </div>
-            
+
             <div class="clearfix"></div>
 
             <!-- GRAPH CANVAS --> 
             <div id="chartContainer" class="col-xs-12">
                 <linechart data="chartData" options="chartOptions"></linechart>
             </div>
-            
+
             <div class="clearfix"></div>
-            
+
             <div class="row col-xs-12" id="slidersContainer">
                 <div class="col-xs-1 hidden-print">
                     <p>E</p>
