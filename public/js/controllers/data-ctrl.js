@@ -121,7 +121,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         }
 
 //Force update on the fields
-        $scope.$apply()
+        $scope.$apply();
     }
 
     function setActiveInputSet(inputSet) {
@@ -138,9 +138,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     $scope.wow = function () {
         console.log("wow");
     };
+    
     $scope.printInputSets = function () {
-        var element = document.getElementById("printingInfo");
-        element.innerHTML = "<h5>HELLO></h5>";
+        var html = '<div class="container">';
         for (var i = 0; i < $scope.inputSets.length; i++) {
             var inputSet = $scope.inputSets[i];
             console.log(inputSet);
@@ -150,85 +150,34 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             var a0Anion = inputSet.anion.a0;
             var a0Cation = inputSet.cation.a0;
             var gammaAnion = inputSet.anion.gamma;
-            var gammaCation = inputSet.cation.gamma
+            var gammaCation = inputSet.cation.gamma;
             var epsilon = inputSet.e;
-            var html = '<div id="printingInfo-'
+            var htmlInputSet = '<div class="col-xs-12">' +
+                '<div id="printingInfo-'
                 + i +
                 '" class="printingInfo">' +
-                '<div>' +
+                '<div>' + 
                 '<div class = "panel panel-default col-xs-2 col-md-2">' +
                 '<table class = "table" style="font-size:70%">' +
                 '<tr>' +
                 '<td>Anion: ' + anion + '</td>' +
-                '</tr>' +
-                '<tr>' +
                 '<td>Cation: ' + cation + '</td>' +
-                '</tr>' +
-                '<tr>' +
                 '<td>Electorde: ' + electrode + '</td>' +
-                '</tr>' +
-                '<tr>' +
                 '<td>E: ' + epsilon + '</td>' +
-                '</tr>' +
-                '<tr>' +
                 '<td>a0 anion: ' + a0Anion + '</td>' +
-                '</tr>' +
-                '<tr>' +
                 '<td>a0 cation: ' + a0Cation + '</td>' +
-                '</tr>' +
-                '<tr>' +
                 '<td>y0 anion: ' + gammaAnion + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>y0 cation: ' + gammaCation + '</td>' +
+                '<td>y0 cation: ' + gammaCation + '</td>' +       
                 '</tr>' +
                 '</table>' +
                 '</div>' +
                 '</div>' +
-                '</div>';
+                '</div>' +
+                '</div>' +
+                '<div class="clear-fix"></div>';
+            html += htmlInputSet;
         }
-        /*<!-- -->
-         <!-- [14:41:19] Andreas Sepp: for(var i = 0; i < $scope.inputSets.length; i++) { var inputSet = $scope.inputSets[i];
-         [14:41:30] Andreas Sepp: ja siis kasuta inputSet'i omadusi, et lisada htmli
-         [14:41:37] Andreas Sepp: inputSet.anion.label - anioni nimi nt
-         [14:41:55] Andreas Sepp: inputSet.anion.gamma, inputSet.cation.a0
-         [14:42:10] Andreas Sepp: seda E ehk epsiloni inputSet küljes vist ei ole(unustasin ära)
-         [14:42:13] Andreas Sepp: võid lihtsalt kutsuda inputSet.e -->*/
-
-        /*var html2 = '<div id="printingInfo-'
-                + id +
-                '" class="printingInfo">' +
-                '<div>' +
-                '<div class = "panel panel-default col-xs-2 col-md-2">' +
-                '<table class = "table" style="font-size:70%">' +
-                '<tr>' +
-                '<td>Anion: ' + anion + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Cation: ' + cation + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Electorde: ' + electrode + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>E: ' + input[4] + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>a0 anion: ' + input[5] + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>a0 cation: ' + input[6] + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>y0 anion: ' + input[7] + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>y0 cation: ' + input[8] + '</td>' +
-                '</tr>' +
-                '</table>' +
-                '</div>' +
-                '</div>' +
-                '</div>';*/
+        html += '</div>';
         $("#printingInfo").append(html);
         window.print();
     };
