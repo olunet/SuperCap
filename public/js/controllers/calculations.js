@@ -66,7 +66,7 @@ calculateSurfaceCharges = function(r, a0, gamma, electrode, epsilon, voltages) {
         var charge = stepFunction * thetaMax * Math.abs(u) * exponent;
 
         //TODO: TEMPORARY TO MAKE IT MORE INTERESTING FOR THE DEMO
-        charge += Math.sin(i * 3) * r * 30 + Math.cos(i * epsilon) * uMax * 100
+        charge += Math.sin(i * 3) * r * 30 * Math.pow(gamma, 2) + Math.cos(i * epsilon + a0 * 3) * uMax * 100
 
         values.push(charge);
     }
