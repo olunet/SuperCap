@@ -6,8 +6,10 @@ initializeChart = function ($scope, voltages) {
     }
     
     $scope.chartOptions = {
-        lineMode: "bundle",
-        hideOverflow: "true",
+        lineMode: "cardinal",
+        hideOverflow: true,
+        drawDots: false,
+        drawLegend: false,
         series: []
     };
     

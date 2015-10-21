@@ -441,8 +441,8 @@ GLmol.prototype.isConnected = function(atom1, atom2) {
    if (distSquared < 0.5) return 0; // maybe duplicate position.
 
    if (distSquared > 1.3 && (atom1.elem == 'H' || atom2.elem == 'H' || atom1.elem == 'D' || atom2.elem == 'D')) return 0;
-   if (distSquared < 3.42 && (atom1.elem == 'S' || atom2.elem == 'S')) return 1;
-   if (distSquared > 2.78) return 0;
+   if (distSquared < 3.72 && (atom1.elem == 'S' || atom2.elem == 'S')) return 1;
+   if (distSquared > 4.38) return 0;
    return 1;
 };
 
