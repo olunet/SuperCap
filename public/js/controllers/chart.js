@@ -34,6 +34,7 @@ updateChart = function ($scope, inputSet) {
                 {
                     y: "line" + inputSet.id,
                     label: "Line" + inputSet.id,
+                    thickness: '3px',
                     color: $scope.colors[inputSet.id % $scope.colors.length]
                 });
     
