@@ -2,9 +2,28 @@ language: node_js
 
 node_js:
   - 0.10.33
+
+install:
+  - npm install -g karma karma-cli bower gulp
+  - npm install
+  - bower install
+
+script:  
+  - npm test
+  - mv shippable/codecoverage/*/coverage.xml shippable/codecoverage
   
 services:
    - mongodb
 
 after_success:
+    - echo $DEPLOY_SERVER
     - git push git@heroku.com:peaceful-scrubland-7377.git master
+    - echo $BRANCH
+    - echo $BRANCH
+    - echo $BUILD_NUMBER
+    - echo $BUILD_URL 
+    - echo $COMMIT 
+    - echo $DEBIAN_FRONTEND 
+    - echo $JOB_ID 
+    - echo $PULL_REQUEST 
+    - gulp

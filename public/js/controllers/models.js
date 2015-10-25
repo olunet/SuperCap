@@ -1,5 +1,7 @@
 
 
+/* global THREE */
+
 var anion;
 var cation;
 
