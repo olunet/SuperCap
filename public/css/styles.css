@@ -39,6 +39,8 @@
     bottom:8px;
 }
 
+
+
 #anionParent {
     width: 200px;
     height: 150px;
@@ -72,7 +74,7 @@
 }
 
 #chartContainer {
-    min-height: 200px;
+    min-height: 280px;
 }
 
 hr {
