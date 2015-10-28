@@ -34,8 +34,13 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             document.getElementById("a0AnionValue").innerHTML = $scope.selectedAnion.a0;
             $("#gammaAnionSlider").value = $scope.selectedAnion.gamma;
             document.getElementById("gammaAnionValue").innerHTML = $scope.selectedAnion.gamma;
-            //loadAnion($scope.selectedAnion.xyz);
+            try {
+                loadAnion($scope.selectedAnion.xyz);
+            } catch (err) {
+
+            }
         }
+        ;
         $scope.activeInputSet.anion = $scope.selectedAnion;
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
@@ -46,7 +51,12 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             document.getElementById("a0CationValue").innerHTML = $scope.selectedCation.a0;
             $("#gammaCationSlider").value = $scope.selectedCation.gamma;
             document.getElementById("gammaCationValue").innerHTML = $scope.selectedCation.gamma;
-            //loadCation($scope.selectedCation.xyz);
+            try {
+                loadCation($scope.selectedCation.xyz);
+            } catch (err) {
+
+            }
+            ;
         }
         $scope.activeInputSet.cation = $scope.selectedCation;
         updateInputSetHTML($scope.activeInputSet);
@@ -57,7 +67,12 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
     };
-    //load3Dmodels();
+    try {
+        load3Dmodels();
+    } catch (err) {
+
+    }
+    ;
     //Slider handling
     $("#epsilonSlider").on("input", function () {
         document.getElementById("epsilonValue").innerHTML = this.value;
@@ -110,14 +125,24 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             document.getElementById("a0AnionValue").innerHTML = inputSet.anion.a0;
             $("#gammaAnionSlider").value = inputSet.anion.gamma;
             document.getElementById("gammaAnionValue").innerHTML = inputSet.anion.gamma;
-            //loadAnion($scope.selectedAnion.xyz);
+            try {
+                loadAnion($scope.selectedAnion.xyz);
+            } catch (err) {
+
+            }
+            ;
         }
         if (inputSet.cation) {
             $("#a0CationSlider").value = inputSet.cation.a0;
             document.getElementById("a0CationValue").innerHTML = inputSet.cation.a0;
             $("#gammaCationSlider").value = inputSet.cation.gamma;
             document.getElementById("gammaCationValue").innerHTML = inputSet.cation.gamma;
-            //loadCation($scope.selectedCation.xyz);
+            try {
+                loadCation($scope.selectedCation.xyz);
+            } catch (err) {
+
+            }
+            ;
         }
 
 //Force update on the fields
@@ -138,7 +163,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     $scope.wow = function () {
         console.log("wow");
     };
-    
     $scope.printInputSets = function () {
         var html = '<div class="container">';
         for (var i = 0; i < $scope.inputSets.length; i++) {
@@ -153,28 +177,28 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             var gammaCation = inputSet.cation.gamma;
             var epsilon = inputSet.e;
             var htmlInputSet = '<div class="col-xs-12">' +
-                '<div id="printingInfo-'
-                + i +
-                '" class="printingInfo">' +
-                '<div>' + 
-                '<div class = "panel panel-default col-xs-2 col-md-2">' +
-                '<table class = "table" style="font-size:70%">' +
-                '<tr>' +
-                '<td>Anion: ' + anion + '</td>' +
-                '<td>Cation: ' + cation + '</td>' +
-                '<td>Electorde: ' + electrode + '</td>' +
-                '<td>E: ' + epsilon + '</td>' +
-                '<td>a0 anion: ' + a0Anion + '</td>' +
-                '<td>a0 cation: ' + a0Cation + '</td>' +
-                '<td>y0 anion: ' + gammaAnion + '</td>' +
-                '<td>y0 cation: ' + gammaCation + '</td>' +       
-                '</tr>' +
-                '</table>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="clear-fix"></div>';
+                    '<div id="printingInfo-'
+                    + i +
+                    '" class="printingInfo">' +
+                    '<div>' +
+                    '<div class = "panel panel-default col-xs-2 col-md-2">' +
+                    '<table class = "table" style="font-size:70%">' +
+                    '<tr>' +
+                    '<td>Anion: ' + anion + '</td>' +
+                    '<td>Cation: ' + cation + '</td>' +
+                    '<td>Electorde: ' + electrode + '</td>' +
+                    '<td>E: ' + epsilon + '</td>' +
+                    '<td>a0 anion: ' + a0Anion + '</td>' +
+                    '<td>a0 cation: ' + a0Cation + '</td>' +
+                    '<td>y0 anion: ' + gammaAnion + '</td>' +
+                    '<td>y0 cation: ' + gammaCation + '</td>' +
+                    '</tr>' +
+                    '</table>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="clear-fix"></div>';
             html += htmlInputSet;
         }
         html += '</div>';
