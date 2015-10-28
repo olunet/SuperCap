@@ -6,7 +6,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Currently active input set
     $scope.activeInputSet;
     //Number of subdivisions on the X axis
-    var numSteps = 21;
+    var numSteps = 100 + 1;
     //Minimum voltage on the X axis
     var min = -2;
     //Maximum voltage on the X axis
@@ -338,7 +338,7 @@ function calculateVoltageSteps(min, max, numSteps) {
     var step = (max - min) / (numSteps - 1);
     var steps = [];
     for (var i = 0; i < numSteps; i++) {
-        steps.push(Number(min + step * i).toFixed(1));
+        steps.push(Number(min + step * i));
     }
 
     return steps;

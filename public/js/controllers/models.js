@@ -41,7 +41,6 @@ function load3Dmodels() {
 }
 
 function loadAnion(xyz) {
-    console.log(xyz);
     $("#anionMol_src").val(xyz);
     anion.loadMolecule();    
 }

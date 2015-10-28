@@ -1,7 +1,7 @@
 initializeChart = function ($scope, voltages) {
     $scope.chartData = [];
 
-    for (var i = 0; i < voltages.length; i++) {
+    for (var i = 0; i < voltages.length - 1; i++) {
         $scope.chartData.push({x: voltages[i]});
     }
     
@@ -27,7 +27,7 @@ updateChart = function ($scope, inputSet) {
     
     if($scope.chartOptions.inputSets[inputSet.id]) {
        //There is already an entry for this input set, apply changes
-       $scope.$apply();
+       //$scope.$apply();
     } else {
         //Add new chartOptions entry
         $scope.chartOptions.series.push(

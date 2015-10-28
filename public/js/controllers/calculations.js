@@ -24,11 +24,10 @@ updateCalculations = function (inputSet, anion, cation, electrode, voltages) {
     //Equation 2 stuff
     var u2s = calculateU2s(charges, electrode, epsilon);
     
+    //Equation 3 stuff
     var cs = calculateCs(charges, voltages, u2s);
     
-    //TODO: Do differentiation
-    
-    inputSet.data = charges;
+    inputSet.data = cs;
 };
 
 //Used for calculating anion and cation surface charge.
@@ -64,9 +63,6 @@ calculateSurfaceCharges = function(r, a0, gamma, electrode, epsilon, voltages) {
         
         //The surface charge of the ion, marked with sigma usually
         var charge = stepFunction * thetaMax * Math.abs(u) * exponent;
-
-        //TODO: TEMPORARY TO MAKE IT MORE INTERESTING FOR THE DEMO
-        charge += Math.sin(i * 3) * r * 30 * Math.pow(gamma, 2) + Math.cos(i * epsilon + a0 * 3) * uMax * 100
 
         values.push(charge);
     }
@@ -109,10 +105,7 @@ calculateU2s = function(surfaceCharges, electrode, epsilon) {
 
         var g_sigma = electrode.g1 * Math.pow((sigma - electrode.g2), 2) + electrode.g3;
         
-        //Hardcoded for now
-        var s = 1;
-        
-        var u2 = -s / ( 1 /f_sigma + 1/g_sigma) * c2 / epsilon;
+        var u2 = -sigma / ( 1 /f_sigma + 1/g_sigma) * c2 / epsilon;
 
         values.push(u2);
     }
@@ -123,6 +116,25 @@ calculateU2s = function(surfaceCharges, electrode, epsilon) {
 //TODO: Find a better name for this
 calculateCs = function(sigmas, u1s, u2s) {
     
+    var values = [];
     
+    for(var i = 0; i < sigmas.length - 1; i++) {
+        
+        var uCurrent = Number(u1s[i]) + u2s[i];
+        
+        var uNext = Number(u1s[i + 1]) + u2s[i + 1];
+        
+        var uDelta = uCurrent - uNext;
+        
+        var sigmaCurrent = sigmas[i];
+        
+        var sigmaNext = sigmas[i + 1];
+        
+        var sigmaDelta = sigmaCurrent - sigmaNext;
+        
+        values.push(sigmaDelta / uDelta);
+        
+    }
     
+    return values;
 }
