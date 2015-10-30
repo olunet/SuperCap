@@ -164,7 +164,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         console.log("wow");
     };
     $scope.printInputSets = function () {
-        if (typeof inputSet !== undefined) {
+        try {
             var html = '<div class="container">';
             for (var i = 0; i < $scope.inputSets.length; i++) {
                 var inputSet = $scope.inputSets[i];
@@ -205,91 +205,10 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             html += '</div>';
             $("#printingInfo").append(html);
             window.print();
+        } catch (err) {
+            alert("Please select anion, cation and electrode or insert CAS-number.");
         }
     };
-    $scope.existingInputToSidebar = function (id, list) {
-        if ($scope.selectedCation === undefined
-                || $scope.selectedAnion === undefined
-                || $scope.selectedElectrode === undefined) {
-            alert("Please select anion, cation and electode.");
-        } else {
-            var anion = $scope.selectedAnion.label;
-            var cation = $scope.selectedCation.label;
-            var electrode = $scope.selectedElectrode.label;
-            var input =
-                    [
-                        id,
-                        $scope.selectedAnion,
-                        $scope.selectedCation,
-                        $scope.selectedElectrode,
-                        Number(document.getElementById("epsilonValue").innerHTML),
-                        Number(document.getElementById("a0AnionValue").innerHTML),
-                        Number(document.getElementById("a0CationValue").innerHTML),
-                        Number(document.getElementById("gammaAnionValue").innerHTML),
-                        Number(document.getElementById("gammaCationValue").innerHTML)
-                    ];
-            $scope.inputs.push(input);
-            var html2 = '<div id="printingInfo-'
-                    + id +
-                    '" class="printingInfo">' +
-                    '<div>' +
-                    '<div class = "panel panel-default col-xs-2 col-md-2">' +
-                    '<table class = "table" style="font-size:70%">' +
-                    '<tr>' +
-                    '<td>Anion: ' + anion + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Cation: ' + cation + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Electorde: ' + electrode + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>E: ' + input[4] + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>a0 anion: ' + input[5] + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>a0 cation: ' + input[6] + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>y0 anion: ' + input[7] + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>y0 cation: ' + input[8] + '</td>' +
-                    '</tr>' +
-                    '</table>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
-            $("#printingInfo").append(html2);
-            $("#input-panel-delete-" + id).click(function () {
-                // Remove from sidebar
-                $("#input-panel-" + id).remove();
-                // Remove from printview
-                $("#printingInfo-" + id).remove();
-                list.splice(id, 1);
-                console.log("Removing id " + id);
-                // Remove from inputs.
-                for (var i = id; i < $scope.inputs.length; i++) {
-                    if ((($scope.inputs[i])[0]) === id) {
-                        ($scope.inputs).splice(i, 1);
-                    }
-                }
-
-                // Remove from sidebar list
-                for (var i = id; i < list.length; i++) {
-                    console.log("Reducing " + list[i] + " by 1");
-                    $("#input-panel-" + id).attr('id', "input-panel-" + (i - 1));
-                    list[i] = list[i] - 1;
-                }
-            }
-
-            );
-        }
-    }
-
 });
 var inputSetIdCounter = 0;
 var InputSet = function (anion, cation, electrode) {
