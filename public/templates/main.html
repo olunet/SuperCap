@@ -17,7 +17,7 @@
                 <!--</a>-->
                 <a href="">
                     <div>
-                        <div class="btn btn-info btn-lg center-block"> Export</div>
+                        <div class="btn btn-info btn-lg center-block"  ng-click="exportPDF()"> Export</div>
                     </div>
                 </a>
             </div>
@@ -36,9 +36,14 @@
 
     <!-- MAIN PAGE -->
     <div id="page-content-wrapper" class="lighter-grey-background">
-        <div class="panel-default visible-print-block ">
+        <div class="panel-default visible-print-block">
             <div id ="printingInfo"></div>
         </div>
+        
+        <div class="panel-default hidden" id="exportParent">
+            <div id ="exportInfo"></div>
+        </div>
+        
         <div class="container1">
 
             <!-- INPUT PARAMETERS -->

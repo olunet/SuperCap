@@ -168,7 +168,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             var html = '<div class="container">';
             for (var i = 0; i < $scope.inputSets.length; i++) {
                 var inputSet = $scope.inputSets[i];
-                console.log(inputSet);
+               // console.log(inputSet);
                 var anion = inputSet.anion.label;
                 var cation = inputSet.cation.label;
                 var electrode = inputSet.electrode.label;
@@ -203,13 +203,85 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 html += htmlInputSet;
             }
             html += '</div>';
+            $("#printingInfo").empty();
             $("#printingInfo").append(html);
             window.print();
         } catch (err) {
             alert("Please select anion, cation and electrode or insert CAS-number.");
         }
     };
+    
+    $scope.exportPDF = function () {
+        var html = '<div class="container">';
+            for (var i = 0; i < $scope.inputSets.length; i++) {
+                var inputSet = $scope.inputSets[i];
+                var anion = inputSet.anion.label;
+                var cation = inputSet.cation.label;
+                var electrode = inputSet.electrode.label;
+                var a0Anion = inputSet.anion.a0;
+                var a0Cation = inputSet.cation.a0;
+                var gammaAnion = inputSet.anion.gamma;
+                var gammaCation = inputSet.cation.gamma;
+                var epsilon = inputSet.e;
+                var htmlInputSet = '<div class="col-xs-12">' +
+                        '<div id="printingInfo-'
+                        + i +
+                        '" class="printingInfo">' +
+                        '<div>' +
+                        '<div class = "panel panel-default col-xs-2 col-md-2">' +
+                        '<table class = "table" style="font-size:70%">' +
+                        '<tr>' +
+                        '<td>Anion: ' + anion + '</td>' +
+                        '<td>Cation: ' + cation + '</td>' +
+                        '<td>Electorde: ' + electrode + '</td>' +
+                        '<td>E: ' + epsilon + '</td>' +
+                        '<td>a0 anion: ' + a0Anion + '</td>' +
+                        '<td>a0 cation: ' + a0Cation + '</td>' +
+                        '<td>y0 anion: ' + gammaAnion + '</td>' +
+                        '<td>y0 cation: ' + gammaCation + '</td>' +
+                        '</tr>' +
+                        '</table>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="clear-fix"></div>';
+                html += htmlInputSet;
+            }
+            html += '</div>';
+         
+         $("#exportInfo").append(html);
+         $("#exportParent").removeClass("hidden");
+         $("#sidebar-wrapper").addClass("hidden");
+         $("#inputContainer").addClass("hidden");
+         $("#slidersContainer").addClass("hidden");
+         //$("#anionParent").addClass("hidden");  
+         //$("#cationParent").addClass("hidden");
+         
+        html2canvas(document.body, {
+        onrendered: function(canvas) {
+            var dataURL = canvas.toDataURL();
+            var link = document.createElement('a');
+            link.download = "SuperCap";
+            link.href = dataURL;
+            link.click();
+        },      
+        });
+        
+        $("#exportInfo").empty();
+        $("#sidebar-wrapper").removeClass("hidden");
+        $("#inputContainer").removeClass("hidden");
+        //$("#anionMol_src").addClass("hidden");
+        //$("#cationMol_src").addClass("hidden");
+       // $("#cationParent").removeClass("hidden");
+        //$("#anionParent").removeClass("hidden");
+        $("#slidersContainer").removeClass("hidden");
+        $("#exportParent").addClass("hidden");    
+              
+    };
 });
+
+
 var inputSetIdCounter = 0;
 var InputSet = function (anion, cation, electrode) {
     this.id = inputSetIdCounter++;

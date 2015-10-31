@@ -59,7 +59,7 @@ GLmol.prototype.create = function(id, suppressAutoload, force2d) {
    this.WIDTH = this.container.width() * this.aaScale, this.HEIGHT = this.container.height() * this.aaScale;
    this.ASPECT = this.WIDTH / this.HEIGHT;
    this.NEAR = 1, FAR = 800;
-   this.CAMERA_Z = -150;
+   this.CAMERA_Z = -125;
    this.webglFailed = true;
    try {
       if (force2d) throw "WebGL disabled";
