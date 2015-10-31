@@ -22,6 +22,7 @@ module.exports = function (config) {
 //                        './public/js/libs/**/*materialize.min.js',
 			'./public/js/**/app.js',
                         './public/js/controllers/**/*.js',
+                        './public/js/services/**/*.js',
 			'./public/tests/**/*test.js'
 		],
 
@@ -33,8 +34,11 @@ module.exports = function (config) {
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'./public/js/**/*.js': ['coverage'],
-                        './public/js/services/**/*.js': ['coverage']
+			'./public/js/app.js': ['coverage'],
+                        './public/js/services/**/*.js': ['coverage'],
+                        './public/js/controllers/calculations.js': ['coverage'],
+                        './public/js/controllers/chart.js': ['coverage'],
+                        './public/js/controllers/data-ctrl.js': ['coverage']
 		},
 
 		// test results reporter to use
