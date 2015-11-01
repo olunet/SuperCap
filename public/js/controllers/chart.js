@@ -18,7 +18,7 @@ initializeChart = function ($scope, voltages) {
 
 };
 
-updateChart = function ($scope, inputSet) {
+updateChartInputSet = function ($scope, inputSet) {
     //Update data values
     console.log($scope);
     for (var i = 0; i < $scope.chartData.length; i++) {
@@ -39,6 +39,28 @@ updateChart = function ($scope, inputSet) {
                 });
     
         $scope.chartOptions.inputSets[inputSet.id] = inputSet;
+    }
+};
+
+removeInputSetFromChart = function($scope, inputSet) {
+    //Find the chartoptions series element
+    for(var i = 0; i < $scope.chartOptions.series.length; i++) {
+        var series = $scope.chartOptions.series[i];
+        
+        if(series.y === "line" + inputSet.id) {
+            //Remove the element
+            var index = $scope.chartOptions.series.indexOf(series);
+            if (index > -1) {
+                $scope.chartOptions.series.splice(index, 1);
+            }
+            return;
+        }   
+    }
+    
+    //Also remove the chartoptions.inputsets element
+    var index = $scope.chartOptions.inputSets.indexOf(inputSet);
+    if(index > -1) {
+        $scope.chartOptions.inputSets.splice(index, 1);
     }
     
 };

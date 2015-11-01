@@ -1,6 +1,6 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
 //All possible line colors
-    $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#0000000", "#ffff00", "#ff00ff", "#00ffff"];
+    $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"];
     //List for storing multiple input sets
     $scope.inputSets = [];
     //Currently active input set
@@ -97,8 +97,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     $scope.updateGraph = function () {
         if ($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
             updateCalculations($scope.activeInputSet, $scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, voltages);
-            console.log("Updating!");
-            updateChart($scope, $scope.activeInputSet);
+            updateChartInputSet($scope, $scope.activeInputSet);
         }
     };
     $scope.addNewInputSet = function () {
@@ -111,6 +110,10 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $("#input-panel-" + inputSet.id).click(function () {
             switchToInputSet(inputSet);
         });
+        $("#input-panel-remove-" + inputSet.id).click(function ( event ) {
+            event.stopPropagation();
+            removeInputSet(inputSet);
+        });
         setActiveInputSet(inputSet);
         return inputSet;
     }
@@ -120,6 +123,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.selectedAnion = inputSet.anion;
         $scope.selectedCation = inputSet.cation;
         $scope.selectedElectrode = inputSet.electrode;
+        console.log("We have done it!");
+        console.log(inputSet.anion);
         if (inputSet.anion) {
             $("#a0CationSlider").value = inputSet.anion.a0;
             document.getElementById("a0AnionValue").innerHTML = inputSet.anion.a0;
@@ -144,9 +149,30 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             }
             ;
         }
-
-//Force update on the fields
+        //Force update on the fields
         $scope.$apply();
+    }
+
+    function removeInputSet(inputSet) {
+        if($scope.inputSets.length <= 1) {
+            //Don't allow removal if it's the last input set left.
+            return;
+        }
+        //Remove the HTML element
+        removeInputSetHTML(inputSet);
+
+        //Remove it from input sets array
+        var index = $scope.inputSets.indexOf(inputSet);
+        if (index > -1) {
+            $scope.inputSets.splice(index, 1);
+        }
+
+        //Remove it from the chart
+        removeInputSetFromChart($scope, inputSet)
+
+        //Switch active inputset to the first inputset
+        console.log($scope.inputSets[0]);
+        switchToInputSet($scope.inputSets[0]);
     }
 
     function setActiveInputSet(inputSet) {
@@ -205,88 +231,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $("#printingInfo").append(html);
         window.print();
     };
-    $scope.existingInputToSidebar = function (id, list) {
-        if ($scope.selectedCation === undefined
-                || $scope.selectedAnion === undefined
-                || $scope.selectedElectrode === undefined) {
-            alert("Please select anion, cation and electode.");
-        } else {
-            var anion = $scope.selectedAnion.label;
-            var cation = $scope.selectedCation.label;
-            var electrode = $scope.selectedElectrode.label;
-            var input =
-                    [
-                        id,
-                        $scope.selectedAnion,
-                        $scope.selectedCation,
-                        $scope.selectedElectrode,
-                        Number(document.getElementById("epsilonValue").innerHTML),
-                        Number(document.getElementById("a0AnionValue").innerHTML),
-                        Number(document.getElementById("a0CationValue").innerHTML),
-                        Number(document.getElementById("gammaAnionValue").innerHTML),
-                        Number(document.getElementById("gammaCationValue").innerHTML)
-                    ];
-            $scope.inputs.push(input);
-            var html2 = '<div id="printingInfo-'
-                    + id +
-                    '" class="printingInfo">' +
-                    '<div>' +
-                    '<div class = "panel panel-default col-xs-2 col-md-2">' +
-                    '<table class = "table" style="font-size:70%">' +
-                    '<tr>' +
-                    '<td>Anion: ' + anion + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Cation: ' + cation + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>Electorde: ' + electrode + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>E: ' + input[4] + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>a0 anion: ' + input[5] + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>a0 cation: ' + input[6] + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>y0 anion: ' + input[7] + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                    '<td>y0 cation: ' + input[8] + '</td>' +
-                    '</tr>' +
-                    '</table>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
-            $("#printingInfo").append(html2);
-            $("#input-panel-delete-" + id).click(function () {
-                // Remove from sidebar
-                $("#input-panel-" + id).remove();
-                // Remove from printview
-                $("#printingInfo-" + id).remove();
-                list.splice(id, 1);
-                console.log("Removing id " + id);
-                // Remove from inputs.
-                for (var i = id; i < $scope.inputs.length; i++) {
-                    if ((($scope.inputs[i])[0]) === id) {
-                        ($scope.inputs).splice(i, 1);
-                    }
-                }
-
-                // Remove from sidebar list
-                for (var i = id; i < list.length; i++) {
-                    console.log("Reducing " + list[i] + " by 1");
-                    $("#input-panel-" + id).attr('id', "input-panel-" + (i - 1));
-                    list[i] = list[i] - 1;
-                }
-            }
-
-            );
-        }
-    }
 
 });
 var inputSetIdCounter = 0;
@@ -305,7 +249,7 @@ function addNewInputSetHTML(inputSet) {
     var html = '<div id="input-panel-'
             + inputSet.id +
             '" class="input-panel">' +
-            '<span id="input-panel-delete-'
+            '<span id="input-panel-remove-'
             + inputSet.id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
             '<div class="text-center">' +
             '<h4 id="input-panel-text-' + inputSet.id + '">' +
@@ -322,6 +266,11 @@ function updateInputSetHTML(inputSet) {
     var cationName = inputSet.cation !== undefined ? inputSet.cation.label : " ";
     var inputPanelText = document.getElementById("input-panel-text-" + inputSet.id);
     inputPanelText.innerHTML = formatInput(anionName, cationName, electrodeName);
+}
+
+function removeInputSetHTML(inputSet) {
+    var element = document.getElementById('input-panel-' + inputSet.id);
+    element.parentElement.removeChild(element);
 }
 
 function toggleHighlightOnInputSet(inputSet) {
