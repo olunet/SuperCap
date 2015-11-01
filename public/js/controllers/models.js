@@ -5,10 +5,13 @@
 var anion;
 var cation;
 
+
 function load3Dmodels() {
+
     
+
     anion = new GLmol('anionMol', true);
-    
+
     anion.defineRepresentation = function () {
         var all = this.getAllAtoms();
         var hetatm = this.removeSolvents(this.getHetatms(all));
@@ -22,9 +25,9 @@ function load3Dmodels() {
         this.drawSymmetryMates2(this.modelGroup, asu, this.protein.biomtMatrices);
         this.modelGroup.add(asu);
     };
-    
+
     cation = new GLmol('cationMol', true);
-    
+
     cation.defineRepresentation = function () {
         var all = this.getAllAtoms();
         var hetatm = this.removeSolvents(this.getHetatms(all));
@@ -42,7 +45,7 @@ function load3Dmodels() {
 
 function loadAnion(xyz) {
     $("#anionMol_src").val(xyz);
-    anion.loadMolecule();    
+    anion.loadMolecule();
 }
 
 function loadCation(xyz) {
