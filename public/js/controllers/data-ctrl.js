@@ -156,13 +156,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.activeInputSet = inputSet;
         $("#input-panel-" + inputSet.id).toggleClass("input-panel-active");
     }
-
-    $scope.dTest = function () {
-        console.log("hurrdurr");
-    };
-    $scope.wow = function () {
-        console.log("wow");
-    };
+    
     $scope.printInputSets = function () {
         try {
             var html = '<div class="container">';
