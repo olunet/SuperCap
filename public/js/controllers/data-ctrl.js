@@ -182,56 +182,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.activeInputSet = inputSet;
         $("#input-panel-" + inputSet.id).toggleClass("input-panel-active");
     }
-
-    $scope.dTest = function () {
-        console.log("hurrdurr");
-    };
-    $scope.wow = function () {
-        console.log("wow");
-    };
+    
     $scope.printInputSets = function () {
-        var html = '<div class="container">';
-        for (var i = 0; i < $scope.inputSets.length; i++) {
-            var inputSet = $scope.inputSets[i];
-            console.log(inputSet);
-            var anion = inputSet.anion.label;
-            var cation = inputSet.cation.label;
-            var electrode = inputSet.electrode.label;
-            var a0Anion = inputSet.anion.a0;
-            var a0Cation = inputSet.cation.a0;
-            var gammaAnion = inputSet.anion.gamma;
-            var gammaCation = inputSet.cation.gamma;
-            var epsilon = inputSet.e;
-            var htmlInputSet = '<div class="col-xs-12">' +
-                    '<div id="printingInfo-'
-                    + i +
-                    '" class="printingInfo">' +
-                    '<div>' +
-                    '<div class = "panel panel-default col-xs-2 col-md-2">' +
-                    '<table class = "table" style="font-size:70%">' +
-                    '<tr>' +
-                    '<td>Anion: ' + anion + '</td>' +
-                    '<td>Cation: ' + cation + '</td>' +
-                    '<td>Electorde: ' + electrode + '</td>' +
-                    '<td>E: ' + epsilon + '</td>' +
-                    '<td>a0 anion: ' + a0Anion + '</td>' +
-                    '<td>a0 cation: ' + a0Cation + '</td>' +
-                    '<td>y0 anion: ' + gammaAnion + '</td>' +
-                    '<td>y0 cation: ' + gammaCation + '</td>' +
-                    '</tr>' +
-                    '</table>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="clear-fix"></div>';
-            html += htmlInputSet;
-        }
-        html += '</div>';
-        $("#printingInfo").append(html);
-        window.print();
-    };
-
         try {
             var html = '<div class="container">';
             for (var i = 0; i < $scope.inputSets.length; i++) {
