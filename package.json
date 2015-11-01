@@ -1,35 +1,35 @@
 {
-    "name": "SuperCap",
-    "version": "0.0.0",
-    "engines": {
-        "npm": "3.3.9"
-    },
-    "description": "A toy-model of a SuperCapacitor",
-    "main": "server.js",
-    "scripts": {
-        "start": "node server.js",
-        "postinstall": "npm install bower -g && bower install",
-        "test": "karma start"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/vladislavivanistsev/supercap"
-    },
-    "author": "",
-    "license": "MIT",
-    "devDependencies": {
-        "gulp": "^3.8.2",
-        "gulp-karma": "0.0.4",
-        "karma": "^0.12.16",
-        "karma-coverage": "^0.5.1",
-        "karma-htmlfile-reporter": "^0.2.2",
-        "karma-jasmine": "^0.1.5",
-        "karma-junit-reporter": "^0.2.2",
-        "karma-phantomjs-launcher": "^0.1.4"
-    },
-    "dependencies": {
-        "express": "~4.10.0",
-        "mongoose": "4.1.7",
-        "body-parser": "~1.13.3"
-    }
+  "name": "SuperCap",
+  "version": "0.0.0",
+  "engines": {
+    "npm": "3.3.9"
+  },
+  "description": "A toy-model of a SuperCapacitor",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "npm install bower -g && bower install",
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vladislavivanistsev/supercap"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.2",
+    "gulp-karma": "0.0.4",
+    "karma": "^0.13.14",
+    "karma-coverage": "^0.5.1",
+    "karma-htmlfile-reporter": "^0.2.2",
+    "karma-jasmine": "^0.1.5",
+    "karma-junit-reporter": "^0.2.2",
+    "karma-phantomjs-launcher": "^0.1.4"
+  },
+  "dependencies": {
+    "express": "~4.10.0",
+    "mongoose": "4.1.7",
+    "body-parser": "~1.13.3"
+  }
 }
