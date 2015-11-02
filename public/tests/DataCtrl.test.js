@@ -63,7 +63,11 @@ describe('DataCtrl tests', function () {
     it('Expect $scope to have list of colors and an initial inputsets list.', function () {
         expect(this.scope.colors).toBeDefined();
         expect(this.scope.inputSets).toBeDefined();
-        expect(this.scope.colors).toEqual(["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"]);
+        expect(this.scope.colors).toEqual(jasmine.any(Array));
+        expect("#000fff").toMatch(/#[0-9a-fA-F]{6}/);
+        for (var i = 0; i < this.scope.colors.length; i++) {
+            expect(this.scope.colors[i]).toMatch(/#[0-9a-fA-F]{6}/);
+        }
         expect(this.scope.inputSets).toEqual([{id: 0, anion: undefined, cation: undefined, electrode: undefined, dataset: undefined}]);
 
     });
