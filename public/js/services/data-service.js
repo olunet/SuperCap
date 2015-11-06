@@ -11,4 +11,8 @@ angular.module('SuperCap').service('DataService', function ($http) {
     this.getElectrodes = function () {
         return $http({method: 'GET', url: '/api/electrodes'});
     };
+
+    this.getCas = function () {
+        return $http({method: 'GET', url: '/api/cas'});
+    };
 });

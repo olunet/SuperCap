@@ -1,5 +1,8 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
 //All possible line colors
+
+    $scope.selectedCas = undefined;
+    
     $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"];
     //List for storing multiple input sets
     $scope.inputSets = [];
@@ -16,6 +19,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     initializeChart($scope, voltages);
     //Add a new empty input set as the currently active input set.
     addNewInputSet();
+    DataService.getCas().then(function (response) {
+        $scope.cas = response.data;
+    });
     DataService.getAnions().then(function (response) {
         $scope.anions = response.data;
     });
@@ -110,7 +116,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $("#input-panel-" + inputSet.id).click(function () {
             switchToInputSet(inputSet);
         });
-        $("#input-panel-remove-" + inputSet.id).click(function ( event ) {
+        $("#input-panel-remove-" + inputSet.id).click(function (event) {
             event.stopPropagation();
             removeInputSet(inputSet);
         });
@@ -154,7 +160,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     }
 
     function removeInputSet(inputSet) {
-        if($scope.inputSets.length <= 1) {
+        if ($scope.inputSets.length <= 1) {
             //Don't allow removal if it's the last input set left.
             return;
         }
@@ -182,13 +188,13 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.activeInputSet = inputSet;
         $("#input-panel-" + inputSet.id).toggleClass("input-panel-active");
     }
-    
+
     $scope.printInputSets = function () {
         try {
             var html = '<div class="container">';
             for (var i = 0; i < $scope.inputSets.length; i++) {
                 var inputSet = $scope.inputSets[i];
-               // console.log(inputSet);
+                // console.log(inputSet);
                 var anion = inputSet.anion.label;
                 var cation = inputSet.cation.label;
                 var electrode = inputSet.electrode.label;
@@ -230,74 +236,74 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             alert("Please select anion, cation and electrode or insert CAS-number.");
         }
     };
-    
+
     $scope.exportPDF = function () {
         var html = '<div class="container">';
-            for (var i = 0; i < $scope.inputSets.length; i++) {
-                var inputSet = $scope.inputSets[i];
-                var anion = inputSet.anion.label;
-                var cation = inputSet.cation.label;
-                var electrode = inputSet.electrode.label;
-                var a0Anion = inputSet.anion.a0;
-                var a0Cation = inputSet.cation.a0;
-                var gammaAnion = inputSet.anion.gamma;
-                var gammaCation = inputSet.cation.gamma;
-                var epsilon = inputSet.e;
-                var htmlInputSet = '<div class="col-xs-12">' +
-                        '<div id="printingInfo-'
-                        + i +
-                        '" class="printingInfo">' +
-                        '<div>' +
-                        '<div class = "panel panel-default col-xs-2 col-md-2">' +
-                        '<table class = "table" style="font-size:70%">' +
-                        '<tr>' +
-                        '<td>Anion: ' + anion + '</td>' +
-                        '<td>Cation: ' + cation + '</td>' +
-                        '<td>Electorde: ' + electrode + '</td>' +
-                        '<td>E: ' + epsilon + '</td>' +
-                        '<td>a0 anion: ' + a0Anion + '</td>' +
-                        '<td>a0 cation: ' + a0Cation + '</td>' +
-                        '<td>y0 anion: ' + gammaAnion + '</td>' +
-                        '<td>y0 cation: ' + gammaCation + '</td>' +
-                        '</tr>' +
-                        '</table>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="clear-fix"></div>';
-                html += htmlInputSet;
-            }
-            html += '</div>';
-         
-         $("#exportInfo").append(html);
-         $("#exportParent").removeClass("hidden");
-         $("#sidebar-wrapper").addClass("hidden");
-         $("#inputContainer").addClass("hidden");
-         $("#slidersContainer").addClass("hidden");
-         //$("#anionParent").addClass("hidden");  
-         //$("#cationParent").addClass("hidden");
-         
+        for (var i = 0; i < $scope.inputSets.length; i++) {
+            var inputSet = $scope.inputSets[i];
+            var anion = inputSet.anion.label;
+            var cation = inputSet.cation.label;
+            var electrode = inputSet.electrode.label;
+            var a0Anion = inputSet.anion.a0;
+            var a0Cation = inputSet.cation.a0;
+            var gammaAnion = inputSet.anion.gamma;
+            var gammaCation = inputSet.cation.gamma;
+            var epsilon = inputSet.e;
+            var htmlInputSet = '<div class="col-xs-12">' +
+                    '<div id="printingInfo-'
+                    + i +
+                    '" class="printingInfo">' +
+                    '<div>' +
+                    '<div class = "panel panel-default col-xs-2 col-md-2">' +
+                    '<table class = "table" style="font-size:70%">' +
+                    '<tr>' +
+                    '<td>Anion: ' + anion + '</td>' +
+                    '<td>Cation: ' + cation + '</td>' +
+                    '<td>Electorde: ' + electrode + '</td>' +
+                    '<td>E: ' + epsilon + '</td>' +
+                    '<td>a0 anion: ' + a0Anion + '</td>' +
+                    '<td>a0 cation: ' + a0Cation + '</td>' +
+                    '<td>y0 anion: ' + gammaAnion + '</td>' +
+                    '<td>y0 cation: ' + gammaCation + '</td>' +
+                    '</tr>' +
+                    '</table>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="clear-fix"></div>';
+            html += htmlInputSet;
+        }
+        html += '</div>';
+
+        $("#exportInfo").append(html);
+        $("#exportParent").removeClass("hidden");
+        $("#sidebar-wrapper").addClass("hidden");
+        $("#inputContainer").addClass("hidden");
+        $("#slidersContainer").addClass("hidden");
+        //$("#anionParent").addClass("hidden");  
+        //$("#cationParent").addClass("hidden");
+
         html2canvas(document.body, {
-        onrendered: function(canvas) {
-            var dataURL = canvas.toDataURL();
-            var link = document.createElement('a');
-            link.download = "SuperCap";
-            link.href = dataURL;
-            link.click();
-        },      
+            onrendered: function (canvas) {
+                var dataURL = canvas.toDataURL();
+                var link = document.createElement('a');
+                link.download = "SuperCap";
+                link.href = dataURL;
+                link.click();
+            },
         });
-        
+
         $("#exportInfo").empty();
         $("#sidebar-wrapper").removeClass("hidden");
         $("#inputContainer").removeClass("hidden");
         //$("#anionMol_src").addClass("hidden");
         //$("#cationMol_src").addClass("hidden");
-       // $("#cationParent").removeClass("hidden");
+        // $("#cationParent").removeClass("hidden");
         //$("#anionParent").removeClass("hidden");
         $("#slidersContainer").removeClass("hidden");
-        $("#exportParent").addClass("hidden");    
-              
+        $("#exportParent").addClass("hidden");
+
     };
 });
 
