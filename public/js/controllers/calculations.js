@@ -19,7 +19,7 @@ updateCalculations = function (inputSet, anion, cation, electrode, voltages) {
     
     var charges = mergeSurfaceCharges(anionCharges, cationCharges, anion, cation, voltages);
     
-            
+    
     //TODO: Find better names for these
     //Equation 2 stuff
     var u2s = calculateU2s(charges, electrode, epsilon);
