@@ -19,7 +19,7 @@ updateCalculations = function (inputSet, anion, cation, electrode, voltages) {
     
     var charges = mergeSurfaceCharges(anionCharges, cationCharges, anion, cation, voltages);
     
-            
+    
     //TODO: Find better names for these
     //Equation 2 stuff
     var u2s = calculateU2s(charges, electrode, epsilon);
@@ -36,17 +36,17 @@ updateCalculations = function (inputSet, anion, cation, electrode, voltages) {
 calculateSurfaceCharges = function(r, a0, gamma, electrode, epsilon, voltages) {
     
     //Constant value
-    var c1 = 1;
+    var c1 = 1.602177;
     //Constant value
-    var c2 = 0.8854;
+    var c2 = 8.854188;//[F/nm]
     //constant value
     var e = 2.71828;
     
     //theta max is equal to c1 / r^2
-    var thetaMax = c1 / Math.pow(r, 2);
+    var thetaMax = c1 / Math.pow(r, 2); //[1e/nm2]
     
     //u max is equal to theta max * (d + r) * c2 / epsilon
-    var uMax = thetaMax * (electrode.d + r) * c2 / epsilon;
+    var uMax = thetaMax * (electrode.d + r) * c2 / epsilon; //[1e/nm*]
     
     var values = [];
     
