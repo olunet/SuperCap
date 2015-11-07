@@ -12,7 +12,7 @@ angular.module('SuperCap').service('DataService', function ($http) {
         return $http({method: 'GET', url: '/api/electrodes'});
     };
 
-    this.getCas = function () {
-        return $http({method: 'GET', url: '/api/cas'});
+    this.getLiquids = function () {
+        return $http({method: 'GET', url: '/api/liquids'});
     };
 });

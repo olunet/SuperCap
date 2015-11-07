@@ -18,8 +18,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     initializeChart($scope, voltages);
     //Add a new empty input set as the currently active input set.
     addNewInputSet();
-    DataService.getCas().then(function (response) {
-        $scope.cas = response.data;
+    DataService.getLiquids().then(function (response) {
+        $scope.liquids = response.data;
     });
     DataService.getAnions().then(function (response) {
         $scope.anions = response.data;
@@ -72,28 +72,28 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     };
     $scope.$watch('myCas', function (val, old) {
         if (angular.isObject(val)) {
-            $scope.selectedCas = val;
+            $scope.selectedLiquid = val;
             $scope.casChanged();
         } else {
-            $scope.selectedCas = val;
+            $scope.selectedLiquid = val;
         }
     }
     );
     $scope.casChanged = function () {
-        if ($scope.selectedCas) {
+        if ($scope.selectedLiquid) {
             var foundAnion = false;
             var foundCation = false;
             var casanion = '';
             var cascation = '';
             for (var i = 0; i < $scope.anions.length; i++) {
-                if ($scope.anions[i].label === $scope.selectedCas.anionlabel) {
+                if ($scope.anions[i].label === $scope.selectedLiquid.anionlabel) {
                     foundAnion = true;
                     casanion = $scope.anions[i];
                     break;
                 }
             }
             for (var i = 0; i < $scope.cations.length; i++) {
-                if ($scope.cations[i].label === $scope.selectedCas.cationlabel) {
+                if ($scope.cations[i].label === $scope.selectedLiquid.cationlabel) {
                     foundCation = true;
                     cascation = $scope.cations[i];
                     break;
