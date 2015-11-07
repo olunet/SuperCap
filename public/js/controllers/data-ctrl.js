@@ -106,6 +106,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 $scope.selectedCation = cascation;
                 $scope.anionChanged();
                 $scope.cationChanged();
+                $scope.needToGenerateData();
             }
         }
     };
@@ -119,7 +120,32 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     } catch (err) {
 
     }
-    ;
+
+    $scope.needToGenerateData = function () {
+        if ($scope.selectedAnion && $scope.selectedCation
+                && $scope.selectedElectrode) {
+            var need = true;
+            for (var i = 0; i < $scope.liquids.length; i++) {
+                if ($scope.selectedCation.label === $scope.liquids[i].cationlabel
+                        && $scope.selectedAnion.label === $scope.liquids[i].anionlabel
+                        && $scope.liquids[i].e !== undefined) {
+
+                    try {
+                        $scope.liquids[i].e === 5;
+                    } catch (err) {
+
+                    }
+                    need = false;
+                    break;
+                }
+            }
+            if (need === true) {
+                alert("Uh Oh!");
+            }
+        }
+    };
+
+
     //Slider handling
     $("#epsilonSlider").on("input", function () {
         document.getElementById("epsilonValue").innerHTML = this.value;
