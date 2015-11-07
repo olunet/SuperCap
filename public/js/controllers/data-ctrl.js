@@ -1,6 +1,5 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
 //All possible line colors
-
     $scope.myCas = '';
     $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"];
     //List for storing multiple input sets
@@ -140,7 +139,29 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 }
             }
             if (need === true) {
-                alert("Uh Oh!");
+                BootstrapDialog.show({
+                    message: 'There is no data for the given cation/anion pair in the database.',
+                    buttons: [{
+                            icon: 'glyphicon glyphicon-send',
+                            label: 'Simulate fake calculating process.',
+                            cssClass: 'btn-primary',
+                            autospin: true,
+                            action: function (dialogRef) {
+                                var $button = this;
+                                $button.disable();
+                                dialogRef.setClosable(true);
+                                dialogRef.getModalBody().html('Data will be calculated in 5 minutes.');
+                                setTimeout(function () {
+                                    dialogRef.close();
+                                }, 5000 * 12 * 5);
+                            }
+                        }, {
+                            label: 'Abort calculations',
+                            action: function (dialogRef) {
+                                dialogRef.close();
+                            }
+                        }]
+                });
             }
         }
     };
