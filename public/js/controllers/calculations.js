@@ -38,7 +38,7 @@ calculateSurfaceCharges = function(r, a0, gamma, electrode, epsilon, voltages) {
     //Constant value
     var c1 = 1.602177;
     //Constant value
-    var c2 = 8.854188;[F/nm]
+    var c2 = 8.854188;//[F/nm]
     //constant value
     var e = 2.71828;
     
