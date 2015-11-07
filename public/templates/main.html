@@ -52,14 +52,14 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <select id ="selectAnion" class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged();
-                                        anionChanged()">
+                                        anionChanged(); emptifyCas()">
                             <option value="" disabled>Select anion</option>
                         </select>
                     </div>
 
                     <div class="col-xs-6">
                         <select id ="selectCation"  class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged();
-                                        cationChanged()">
+                                        cationChanged(); emptifyCas()">
                             <option value="" disabled>Select cation</option>
                         </select>
                     </div>

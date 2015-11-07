@@ -67,7 +67,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
     };
-
+    $scope.emptifyCas = function () {
+        $scope.myCas = '';
+    };
     $scope.$watch('myCas', function (val, old) {
         if (angular.isObject(val)) {
             $scope.selectedCas = val;
@@ -169,8 +171,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.selectedAnion = inputSet.anion;
         $scope.selectedCation = inputSet.cation;
         $scope.selectedElectrode = inputSet.electrode;
-        console.log("We have done it!");
-        console.log(inputSet.anion);
         if (inputSet.anion) {
             $("#a0CationSlider").value = inputSet.anion.a0;
             document.getElementById("a0AnionValue").innerHTML = inputSet.anion.a0;
