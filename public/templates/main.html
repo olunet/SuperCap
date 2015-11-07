@@ -66,13 +66,15 @@
                 </div>
 
                 <h4>or</h4>
-                <input 
-                    id="selectedCas" type="text" type="text" 
-                    autocomplete="off" data-typeahead-editable="false" 
-                    data-ng-model="selectedCas" 
-                    data-typeahead="cas.number for cas in cas | filter:$viewValue | limitTo:8" 
-                    class="form-control"  placeholder="Enter a CAS number">
-
+                <div>
+                    <cas-input id="selectedCas" 
+                              value="myCas" 
+                              value-expr="cas as cas.number for cas in collection" 
+                              collection="cas"
+                        placeholder="Enter a CAS number">
+                                  
+                    </cas-input>
+                </div>
                 <hr>
                 <select id ="selectCation" class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged();
                                 electrodeChanged()">

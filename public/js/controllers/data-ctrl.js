@@ -1,8 +1,7 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
 //All possible line colors
 
-    $scope.selectedCas = undefined;
-    
+    $scope.myCas = '';
     $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"];
     //List for storing multiple input sets
     $scope.inputSets = [];
@@ -68,6 +67,46 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
     };
+
+    $scope.$watch('myCas', function (val, old) {
+        if (angular.isObject(val)) {
+            $scope.selectedCas = val;
+            $scope.casChanged();
+        } else {
+            $scope.selectedCas = val;
+        }
+    }
+    );
+    $scope.casChanged = function () {
+        if ($scope.selectedCas) {
+            var foundAnion = false;
+            var foundCation = false;
+            var casanion = '';
+            var cascation = '';
+            for (var i = 0; i < $scope.anions.length; i++) {
+                if ($scope.anions[i].label === $scope.selectedCas.anionlabel) {
+                    foundAnion = true;
+                    casanion = $scope.anions[i];
+                    break;
+                }
+            }
+            for (var i = 0; i < $scope.cations.length; i++) {
+                if ($scope.cations[i].label === $scope.selectedCas.cationlabel) {
+                    foundCation = true;
+                    cascation = $scope.cations[i];
+                    break;
+                }
+            }
+            if ((foundCation === false) || (foundAnion === false)) {
+                console.log("Selected CAS-number does not match with anion/cation dataset");
+            } else {
+                $scope.selectedAnion = casanion;
+                $scope.selectedCation = cascation;
+                $scope.anionChanged();
+                $scope.cationChanged();
+            }
+        }
+    };
     $scope.electrodeChanged = function () {
         $scope.activeInputSet.electrode = $scope.selectedElectrode;
         updateInputSetHTML($scope.activeInputSet);
@@ -110,6 +149,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         addNewInputSet();
     };
     function addNewInputSet() {
+        $scope.myCas = '';
         var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode);
         $scope.inputSets.push(inputSet);
         addNewInputSetHTML(inputSet);
