@@ -114,7 +114,7 @@ describe('DataCtrl tests', function () {
         expect(this.scope.inputSets[0].electrode.label).toEqual("gold");
     });
 
-    it('Can add multiple inputsets with their own parameters.', function () {
+    it('Can add multiple inputsets with their own parameters and switch between them.', function () {
         // Add inputset nr. 1
         this.scope.inputSets[0].anion = this.scope.anions[0];
         this.scope.inputSets[0].cation = this.scope.cations[0];
@@ -147,7 +147,7 @@ describe('DataCtrl tests', function () {
         
         
         //Expect the inputset's nr. 1 a0Cation value to stay the same
-        this.scope.activeInputSet=this.scope.inputSets[0];
+        this.scope.switchToInputSet(this.scope.inputSets[0]);
         expect(this.scope.activeInputSet.a0Cation).toEqual(parseFloat(0.667+0.3));
     });
 });

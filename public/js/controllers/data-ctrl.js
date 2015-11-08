@@ -41,14 +41,14 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             } catch (err) {
 
             }
-        };
+        }
         $scope.activeInputSet.anion = $scope.selectedAnion;
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
     };
     $scope.cationChanged = function () {
         if ($scope.selectedCation) {
-            if($scope.activeInputSet.cation === undefined) {
+            if ($scope.activeInputSet.cation === undefined) {
                 $scope.activeInputSet.a0Cation = $scope.selectedCation.a0;
                 $scope.activeInputSet.gammaCation = $scope.selectedCation.gamma;
                 $scope.updateCationSliders($scope.activeInputSet);
@@ -173,47 +173,47 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     });
     $("#a0AnionSlider").on("input", function () {
         document.getElementById("a0AnionValue").innerHTML = this.value;
-        if($scope.activeInputSet) {
+        if ($scope.activeInputSet) {
             $scope.activeInputSet.a0Anion = this.value;
         }
         $scope.updateGraph();
     });
     $("#a0CationSlider").on("input", function () {
         document.getElementById("a0CationValue").innerHTML = this.value;
-        if($scope.activeInputSet) {
+        if ($scope.activeInputSet) {
             $scope.activeInputSet.a0Cation = this.value;
         }
         $scope.updateGraph();
     });
     $("#gammaAnionSlider").on("input", function () {
         document.getElementById("gammaAnionValue").innerHTML = this.value;
-        if($scope.activeInputSet) {
+        if ($scope.activeInputSet) {
             $scope.activeInputSet.gammaAnion = this.value;
         }
         $scope.updateGraph();
     });
     $("#gammaCationSlider").on("input", function () {
         document.getElementById("gammaCationValue").innerHTML = this.value;
-        if($scope.activeInputSet) {
+        if ($scope.activeInputSet) {
             $scope.activeInputSet.gammaCation = this.value;
         }
         $scope.updateGraph();
     });
-    
-    $scope.updateAnionSliders = function(inputSet) {
+
+    $scope.updateAnionSliders = function (inputSet) {
         document.getElementById("a0AnionSlider").value = inputSet.a0Anion;
         document.getElementById("a0AnionValue").innerHTML = inputSet.a0Anion;
         document.getElementById("gammaAnionSlider").value = inputSet.gammaAnion;
-        document.getElementById("gammaAnionValue").innerHTML = inputSet.gammaAnion; 
+        document.getElementById("gammaAnionValue").innerHTML = inputSet.gammaAnion;
     }
-    
-    $scope.updateCationSliders = function(inputSet) {
+
+    $scope.updateCationSliders = function (inputSet) {
         document.getElementById("a0CationSlider").value = inputSet.a0Cation;
         document.getElementById("a0CationValue").innerHTML = inputSet.a0Cation;
         document.getElementById("gammaCationSlider").value = inputSet.gammaCation;
-        document.getElementById("gammaCationValue").innerHTML = inputSet.gammaCation; 
+        document.getElementById("gammaCationValue").innerHTML = inputSet.gammaCation;
     }
-    
+
     $scope.updateGraph = function () {
         if ($scope.activeInputSet && $scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
             updateCalculations($scope.activeInputSet, voltages);
@@ -226,7 +226,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     function addNewInputSet() {
         $scope.myCas = '';
         var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, 1.6);
-        if($scope.activeInputSet) {
+        if ($scope.activeInputSet) {
             inputSet.a0Anion = $scope.activeInputSet.a0Anion;
             inputSet.a0Cation = $scope.activeInputSet.a0Cation;
             inputSet.gammaAnion = $scope.activeInputSet.gammaAnion;
@@ -236,16 +236,19 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.inputSets.push(inputSet);
         addNewInputSetHTML(inputSet);
         $("#input-panel-" + inputSet.id).click(function () {
-            switchToInputSet(inputSet);
+            $scope.switchToInputSet(inputSet);
         });
         $("#input-panel-remove-" + inputSet.id).click(function (event) {
             event.stopPropagation();
-            removeInputSet(inputSet);
+            $scope.removeInputSet(inputSet);
         });
         setActiveInputSet(inputSet);
         return inputSet;
     }
 
+    $scope.switchToInputSet = function (inputSet) {
+        switchToInputSet(inputSet);
+    };
     function switchToInputSet(inputSet) {
         setActiveInputSet(inputSet);
         $scope.selectedAnion = inputSet.anion;
@@ -270,10 +273,13 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             ;
         }
         document.getElementById("epsilonSlider").value = inputSet.e;
-        document.getElementById("epsilonValue").innerHTML = inputSet.e; 
-        
+        document.getElementById("epsilonValue").innerHTML = inputSet.e;
+
     }
 
+    $scope.removeInputSet = function (inputSet) {
+        removeInputSet(inputSet);
+    };
     function removeInputSet(inputSet) {
         if ($scope.inputSets.length <= 1) {
             //Don't allow removal if it's the last input set left.
@@ -293,7 +299,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
         //Switch active inputset to the first inputset
         console.log($scope.inputSets[0]);
-        switchToInputSet($scope.inputSets[0]);
+        $scope.switchToInputSet($scope.inputSets[0]);
     }
 
     function setActiveInputSet(inputSet) {
@@ -446,7 +452,7 @@ function addNewInputSetHTML(inputSet) {
             '<span id="input-panel-remove-'
             + inputSet.id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
             '<div class="text-center">' +
-            '<div class="legend-color-indicator" style="background-color:' + inputSet.color + ';"></div>' + 
+            '<div class="legend-color-indicator" style="background-color:' + inputSet.color + ';"></div>' +
             '<h5 id="input-panel-text-' + inputSet.id + '">' +
             formatInput(anionName, cationName, electrodeName) +
             '</h5>' +
