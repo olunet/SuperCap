@@ -15,6 +15,7 @@ module.exports = function (config) {
             './public/js/libs/ui-bootstrap-tpls-0.11.0.js',
             './public/js/libs/**/*jquery-1.11.2.min.js',
             './public/js/libs/**/*line-chart.min.js',
+            './public/js/libs/**/*Math.js',
 //                        './public/js/libs/**/*GLmol.js',
 //                        './public/js/libs/**/*Three49custom.js',
 //                        './public/js/libs/**/*d3.min.js',
