@@ -31,7 +31,10 @@ updateChartInputSet = function ($scope, inputSet) {
     
     if($scope.chartOptions.inputSets[inputSet.id]) {
        //There is already an entry for this input set, apply changes
-       $scope.$apply();
+       var phase = $scope.$root.$$phase;
+       if(phase !== '$apply' && phase !== '$digest') {
+            $scope.$apply();
+       }
     } else {
         //Add new chartOptions entry
         $scope.chartOptions.series.push(
