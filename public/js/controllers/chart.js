@@ -22,12 +22,17 @@ updateChartInputSet = function ($scope, inputSet) {
     //Update data values
     console.log($scope);
     for (var i = 0; i < $scope.chartData.length; i++) {
-        $scope.chartData[i]["line" + inputSet.id] = inputSet.data[i];
+        if(!isNaN(inputSet.data[i])) {
+            $scope.chartData[i]["line" + inputSet.id] = inputSet.data[i];
+        } else {
+            $scope.chartData[i]["line" + inputSet.id] = 0;
+            console.log("Something has gone wrong in calculations.");
+        }
     }
     
     if($scope.chartOptions.inputSets[inputSet.id]) {
        //There is already an entry for this input set, apply changes
-       //$scope.$apply();
+       $scope.$apply();
     } else {
         //Add new chartOptions entry
         $scope.chartOptions.series.push(

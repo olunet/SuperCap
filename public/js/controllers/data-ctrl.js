@@ -1,8 +1,6 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
-//All possible line colors
-
     $scope.selectedCas = undefined;
-    
+    //All possible line colors
     $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"];
     //List for storing multiple input sets
     $scope.inputSets = [];
@@ -11,12 +9,15 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Number of subdivisions on the X axis
     var numSteps = 100 + 1;
     //Minimum voltage on the X axis
-    var min = -2;
+    var min = -20;
     //Maximum voltage on the X axis
-    var max = 2;
+    var max = 20;
     //Calculate the size of 1 step on the X axis, equal to u1s
     var voltages = calculateVoltageSteps(min, max, numSteps);
+    console.log(voltages);
     initializeChart($scope, voltages);
+    
+    
     //Add a new empty input set as the currently active input set.
     addNewInputSet();
     DataService.getCas().then(function (response) {
@@ -32,31 +33,31 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.electrodes = response.data;
     });
     $scope.inputChanged = function () {
-        $scope.updateGraph();
     };
     $scope.anionChanged = function () {
         if ($scope.selectedAnion) {
-            $("#a0CationSlider").value = $scope.selectedAnion.a0;
-            document.getElementById("a0AnionValue").innerHTML = $scope.selectedAnion.a0;
-            $("#gammaAnionSlider").value = $scope.selectedAnion.gamma;
-            document.getElementById("gammaAnionValue").innerHTML = $scope.selectedAnion.gamma;
+            if($scope.activeInputSet.anion === undefined) {
+                $scope.activeInputSet.a0Anion = $scope.selectedAnion.a0;
+                $scope.activeInputSet.gammaAnion = $scope.selectedAnion.gamma;
+                $scope.updateAnionSliders($scope.activeInputSet);
+            }
             try {
                 loadAnion($scope.selectedAnion.xyz);
             } catch (err) {
 
             }
-        }
-        ;
+        };
         $scope.activeInputSet.anion = $scope.selectedAnion;
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
     };
     $scope.cationChanged = function () {
         if ($scope.selectedCation) {
-            $("#a0CationSlider").value = $scope.selectedCation.a0;
-            document.getElementById("a0CationValue").innerHTML = $scope.selectedCation.a0;
-            $("#gammaCationSlider").value = $scope.selectedCation.gamma;
-            document.getElementById("gammaCationValue").innerHTML = $scope.selectedCation.gamma;
+            if($scope.activeInputSet.cation === undefined) {
+                $scope.activeInputSet.a0Cation = $scope.selectedCation.a0;
+                $scope.activeInputSet.gammaCation = $scope.selectedCation.gamma;
+                $scope.updateCationSliders($scope.activeInputSet);
+            }
             try {
                 loadCation($scope.selectedCation.xyz);
             } catch (err) {
@@ -69,6 +70,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.updateGraph();
     };
     $scope.electrodeChanged = function () {
+        console.log("Selected " + $scope.selectedElectrode);
         $scope.activeInputSet.electrode = $scope.selectedElectrode;
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
@@ -82,27 +84,55 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Slider handling
     $("#epsilonSlider").on("input", function () {
         document.getElementById("epsilonValue").innerHTML = this.value;
+        $scope.activeInputSet.e = this.value;
         $scope.updateGraph();
     });
     $("#a0AnionSlider").on("input", function () {
         document.getElementById("a0AnionValue").innerHTML = this.value;
+        if($scope.activeInputSet) {
+            $scope.activeInputSet.a0Anion = this.value;
+        }
         $scope.updateGraph();
     });
     $("#a0CationSlider").on("input", function () {
         document.getElementById("a0CationValue").innerHTML = this.value;
+        if($scope.activeInputSet) {
+            $scope.activeInputSet.a0Cation = this.value;
+        }
         $scope.updateGraph();
     });
     $("#gammaAnionSlider").on("input", function () {
         document.getElementById("gammaAnionValue").innerHTML = this.value;
+        if($scope.activeInputSet) {
+            $scope.activeInputSet.gammaAnion = this.value;
+        }
         $scope.updateGraph();
     });
     $("#gammaCationSlider").on("input", function () {
         document.getElementById("gammaCationValue").innerHTML = this.value;
+        if($scope.activeInputSet) {
+            $scope.activeInputSet.gammaCation = this.value;
+        }
         $scope.updateGraph();
     });
+    
+    $scope.updateAnionSliders = function(inputSet) {
+        document.getElementById("a0AnionSlider").value = inputSet.a0Anion;
+        document.getElementById("a0AnionValue").innerHTML = inputSet.a0Anion;
+        document.getElementById("gammaAnionSlider").value = inputSet.gammaAnion;
+        document.getElementById("gammaAnionValue").innerHTML = inputSet.gammaAnion; 
+    }
+    
+    $scope.updateCationSliders = function(inputSet) {
+        document.getElementById("a0CationSlider").value = inputSet.a0Cation;
+        document.getElementById("a0CationValue").innerHTML = inputSet.a0Cation;
+        document.getElementById("gammaCationSlider").value = inputSet.gammaCation;
+        document.getElementById("gammaCationValue").innerHTML = inputSet.gammaCation; 
+    }
+    
     $scope.updateGraph = function () {
-        if ($scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
-            updateCalculations($scope.activeInputSet, $scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, voltages);
+        if ($scope.activeInputSet && $scope.selectedAnion && $scope.selectedCation && $scope.selectedElectrode) {
+            updateCalculations($scope.activeInputSet, voltages);
             updateChartInputSet($scope, $scope.activeInputSet);
         }
     };
@@ -110,7 +140,13 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         addNewInputSet();
     };
     function addNewInputSet() {
-        var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode);
+        var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, 1.6);
+        if($scope.activeInputSet) {
+            inputSet.a0Anion = $scope.activeInputSet.a0Anion;
+            inputSet.a0Cation = $scope.activeInputSet.a0Cation;
+            inputSet.gammaAnion = $scope.activeInputSet.gammaAnion;
+            inputSet.gammaCation = $scope.activeInputSet.gammaCation;
+        }
         $scope.inputSets.push(inputSet);
         addNewInputSetHTML(inputSet);
         $("#input-panel-" + inputSet.id).click(function () {
@@ -125,17 +161,15 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     }
 
     function switchToInputSet(inputSet) {
+        console.log("Switched to");
+        console.log(inputSet);
         setActiveInputSet(inputSet);
         $scope.selectedAnion = inputSet.anion;
         $scope.selectedCation = inputSet.cation;
         $scope.selectedElectrode = inputSet.electrode;
-        console.log("We have done it!");
-        console.log(inputSet.anion);
+        $scope.updateAnionSliders(inputSet);
+        $scope.updateCationSliders(inputSet);
         if (inputSet.anion) {
-            $("#a0CationSlider").value = inputSet.anion.a0;
-            document.getElementById("a0AnionValue").innerHTML = inputSet.anion.a0;
-            $("#gammaAnionSlider").value = inputSet.anion.gamma;
-            document.getElementById("gammaAnionValue").innerHTML = inputSet.anion.gamma;
             try {
                 loadAnion($scope.selectedAnion.xyz);
             } catch (err) {
@@ -144,10 +178,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             ;
         }
         if (inputSet.cation) {
-            $("#a0CationSlider").value = inputSet.cation.a0;
-            document.getElementById("a0CationValue").innerHTML = inputSet.cation.a0;
-            $("#gammaCationSlider").value = inputSet.cation.gamma;
-            document.getElementById("gammaCationValue").innerHTML = inputSet.cation.gamma;
             try {
                 loadCation($scope.selectedCation.xyz);
             } catch (err) {
@@ -155,6 +185,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             }
             ;
         }
+        document.getElementById("epsilonSlider").value = inputSet.e;
+        document.getElementById("epsilonValue").innerHTML = inputSet.e; 
+        
         //Force update on the fields
         $scope.$apply();
     }
@@ -198,10 +231,10 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 var anion = inputSet.anion.label;
                 var cation = inputSet.cation.label;
                 var electrode = inputSet.electrode.label;
-                var a0Anion = inputSet.anion.a0;
-                var a0Cation = inputSet.cation.a0;
-                var gammaAnion = inputSet.anion.gamma;
-                var gammaCation = inputSet.cation.gamma;
+                var a0Anion = inputSet.a0Anion;
+                var a0Cation = inputSet.a0Cation;
+                var gammaAnion = inputSet.gammaAnion;
+                var gammaCation = inputSet.gammaCation;
                 var epsilon = inputSet.e;
                 var htmlInputSet = '<div class="col-xs-12">' +
                         '<div id="printingInfo-'
@@ -244,10 +277,10 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             var anion = inputSet.anion.label;
             var cation = inputSet.cation.label;
             var electrode = inputSet.electrode.label;
-            var a0Anion = inputSet.anion.a0;
-            var a0Cation = inputSet.cation.a0;
-            var gammaAnion = inputSet.anion.gamma;
-            var gammaCation = inputSet.cation.gamma;
+            var a0Anion = inputSet.a0Anion;
+            var a0Cation = inputSet.a0Cation;
+            var gammaAnion = inputSet.gammaAnion;
+            var gammaCation = inputSet.gammaCation;
             var epsilon = inputSet.e;
             var htmlInputSet = '<div class="col-xs-12">' +
                     '<div id="printingInfo-'
@@ -309,12 +342,16 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
 
 var inputSetIdCounter = 0;
-var InputSet = function (anion, cation, electrode) {
+var InputSet = function (anion, cation, electrode, e) {
     this.id = inputSetIdCounter++;
     this.anion = anion;
     this.cation = cation;
     this.electrode = electrode;
-    this.dataset = undefined;
+    this.a0Anion;
+    this.gammaAnion;
+    this.a0Cation;
+    this.gammaCation;
+    this.e = e;
     return this;
 };
 function addNewInputSetHTML(inputSet) {

@@ -1,28 +1,28 @@
-updateCalculations = function (inputSet, anion, cation, electrode, voltages) {
+updateCalculations = function (inputSet, voltages) {
         
     //Epsilon - relative permittivity, hardcoded for now
-    var epsilon = Number(document.getElementById("epsilonValue").innerHTML);
+    var epsilon = inputSet.e;
     
-    var a0_anion = Number(document.getElementById("a0AnionValue").innerHTML);
+    var a0_anion = inputSet.a0Anion;
     
-    var a0_cation = Number(document.getElementById("a0CationValue").innerHTML);
+    var a0_cation = inputSet.a0Cation;
     
-    var gamma_anion = Number(document.getElementById("gammaAnionValue").innerHTML);
+    var gamma_anion = inputSet.gammaAnion;
     
-    var gamma_cation = Number(document.getElementById("gammaCationValue").innerHTML);
+    var gamma_cation = inputSet.gammaCation;
     
     //Also known as sigma anion
-    var anionCharges = calculateSurfaceCharges(anion.r, a0_anion, gamma_anion, electrode, epsilon, voltages);
+    var anionCharges = calculateSurfaceCharges(inputSet.anion.r, a0_anion, gamma_anion, inputSet.electrode, epsilon, voltages);
     
     //Also known as sigma cation
-    var cationCharges = calculateSurfaceCharges(cation.r, a0_cation, gamma_cation, electrode, epsilon, voltages);
+    var cationCharges = calculateSurfaceCharges(inputSet.cation.r, a0_cation, gamma_cation, inputSet.electrode, epsilon, voltages);
     
-    var charges = mergeSurfaceCharges(anionCharges, cationCharges, anion, cation, voltages);
+    var charges = mergeSurfaceCharges(anionCharges, cationCharges, inputSet.anion, inputSet.cation, voltages);
     
     
     //TODO: Find better names for these
     //Equation 2 stuff
-    var u2s = calculateU2s(charges, electrode, epsilon);
+    var u2s = calculateU2s(charges, inputSet.electrode, epsilon);
     
     //Equation 3 stuff
     var cs = calculateCs(charges, voltages, u2s);
