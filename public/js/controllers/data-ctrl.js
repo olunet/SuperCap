@@ -7,7 +7,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Currently active input set
     $scope.activeInputSet;
     //Number of subdivisions on the X axis
-    var numSteps = 100 + 1;
+    var numSteps = 300 + 1;
     //Minimum voltage on the X axis
     var min = -20;
     //Maximum voltage on the X axis
@@ -33,11 +33,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     };
     $scope.anionChanged = function () {
         if ($scope.selectedAnion) {
-            if($scope.activeInputSet.anion === undefined) {
-                $scope.activeInputSet.a0Anion = $scope.selectedAnion.a0;
-                $scope.activeInputSet.gammaAnion = $scope.selectedAnion.gamma;
-                $scope.updateAnionSliders($scope.activeInputSet);
-            }
+            $scope.activeInputSet.a0Anion = $scope.selectedAnion.a0;
+            $scope.activeInputSet.gammaAnion = $scope.selectedAnion.gamma;
+            $scope.updateAnionSliders($scope.activeInputSet);
             try {
                 loadAnion($scope.selectedAnion.xyz);
             } catch (err) {
