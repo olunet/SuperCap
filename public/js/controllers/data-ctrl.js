@@ -320,14 +320,14 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 var htmlInputSet = '<div class="col-xs-12">' +
                         '<div id="printingInfo-'
                         + i +
-                        '" class="printingInfo">' +
+                        '" class="printingInfo col-xs-12">' +
                         '<div>' +
-                        '<div class = "panel panel-default col-xs-2 col-md-2">' +
+                        '<div class = "panel panel-default col-xs-8 col-md-8">' +
                         '<table class = "table" style="font-size:70%">' +
                         '<tr>' +
                         '<td>Anion: ' + anion + '</td>' +
                         '<td>Cation: ' + cation + '</td>' +
-                        '<td>Electorde: ' + electrode + '</td>' +
+                        '<td>Electrode: ' + electrode + '</td>' +
                         '<td>E: ' + epsilon + '</td>' +
                         '<td>a0 anion: ' + a0Anion + '</td>' +
                         '<td>a0 cation: ' + a0Cation + '</td>' +
@@ -368,12 +368,12 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                     + i +
                     '" class="printingInfo">' +
                     '<div>' +
-                    '<div class = "panel panel-default col-xs-2 col-md-2">' +
+                    '<div class = "panel panel-default col-xs-12 col-md-6">' +
                     '<table class = "table" style="font-size:70%">' +
                     '<tr>' +
                     '<td>Anion: ' + anion + '</td>' +
                     '<td>Cation: ' + cation + '</td>' +
-                    '<td>Electorde: ' + electrode + '</td>' +
+                    '<td>Electrode: ' + electrode + '</td>' +
                     '<td>E: ' + epsilon + '</td>' +
                     '<td>a0 anion: ' + a0Anion + '</td>' +
                     '<td>a0 cation: ' + a0Cation + '</td>' +
