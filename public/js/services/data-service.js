@@ -1,11 +1,11 @@
 angular.module('SuperCap').service('DataService', function ($http) {
 
     this.getAnions = function () {
-        return $http({method: 'GET', url: '/api/anions'});
+        return $http({method: 'GET', url: '/api/anions', cache: true});
     };
 
     this.getCations = function () {
-        return $http({method: 'GET', url: '/api/cations'});
+        return $http({method: 'GET', url: '/api/cations', cache: true});
     };
 
     this.getElectrodes = function () {
