@@ -6,21 +6,56 @@ describe('Calculations tests', function () {
         expect(calculateSurfaceCharges(0.3, 0.6, 1.000,
                 {"d": 0.1}, 0.2, [-2, -1])).toEqual([-3.0700028470366574,
             -1.5350199583370898]);
+        expect(calculateSurfaceCharges(0.3, 0.6, 1.000,
+                {"d": 0.1}, 0.2, [2, 1])).toEqual([3.0700028470366574,
+            1.5350199583370898]);
+        expect(calculateSurfaceCharges(-0.3, -0.6, -1.000,
+                {"d": -0.1}, -0.2, [2, 1])).toEqual([3.070249995610353,
+            1.535050851069435]);
+        expect(calculateSurfaceCharges(-0.3, -0.6, -1.000,
+                {"d": -0.1}, -0.2, [-2, -1])).toEqual([-3.070249995610353,
+            -1.535050851069435]);
+
     });
 
     it('calculateU2s must return correct value.', function () {
         expect(calculateU2s([1, 2], {"f1": 1, "f2": 2, "f3": 2, "g1": 0.0,
             "g2": 0.0, "g3": 1000000}, 2)).toEqual([-0.7663545781054755,
             -1.6652899597541926]);
+        expect(calculateU2s([-1, -2], {"f1": -1, "f2": -2, "f3": -2, "g1": -0.0,
+            "g2": -0.0, "g3": -1000000}, -2)).toEqual([0.7663545781054755,
+            1.6652899597541926]);
+        expect(calculateU2s([1, 2], {"f1": 1, "f2": 2, "f3": 2, "g1": 2.0,
+            "g2": 3.0, "g3": 10}, 2)).toEqual([-0.6991214500636465,
+            -1.4396519875378324]);
+        expect(calculateU2s([999, 999], {"f1": 999, "f2": 999, "f3": 999, "g1": 999.0,
+            "g2": 999.0, "g3": 999999}, 2)).toEqual([-441383.4813705682,
+            -441383.4813705682]);
+        expect(calculateU2s([-999, -999], {"f1": -999, "f2": -999, "f3": -999, "g1": -999.0,
+            "g2": -999.0, "g3": -999999}, 2)).toEqual([-441383.4813705682,
+            -441383.4813705682]);
     });
 
     it('calculateCs must return correct value.', function () {
         expect(calculateCs([1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5])).toEqual([0.5, 0.5, 0.5, 0.5]);
+        expect(calculateCs([-1, -2, -3, -4, -5], [-1, -2, -3, -4, -5], [-1, -2, -3, -4, -5])).toEqual([0.5, 0.5, 0.5, 0.5]);
+        expect(calculateCs([0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0])).toMatch([NaN, NaN, NaN, NaN]);
+        expect(calculateCs([99, 99, 3, 4, 5], [1, 2, 3, 99, 99], [1, 2, 999, 4, 5])).toEqual([0, -0.09619238476953908,
+            -0.0011123470522803114, 1]);
     });
 
     it('mergeSurfaceCharges must return correct value.', function () {
         expect(mergeSurfaceCharges([1, 2], [1, 2], {"gamma": 1},
         {"gamma": 1}, [1, 2])).toEqual([1, 2]);
+        expect(mergeSurfaceCharges([-1, -2], [-1, -2], {"gamma": -1},
+        {"gamma": -1}, [-1, -2])).toEqual([-1, -2]);
+        expect(mergeSurfaceCharges([-1, -2], [1, 2], {"gamma": -1},
+        {"gamma": 1}, [1, -2])).toMatch([NaN, NaN]);
+        expect(mergeSurfaceCharges([1, -2], [-1, 2], {"gamma": 1},
+        {"gamma": 1}, [1, 2])).toEqual([0.7615941559557649,
+            -1.9280551601516338]);
+        expect(mergeSurfaceCharges([999, 999], [1, 5], {"gamma": 999},
+        {"gamma": 1}, [1, 2])).toEqual([999, 999]);
     });
 
     it('updateCalculations must give correct value.', function () {
@@ -39,5 +74,13 @@ describe('Calculations tests', function () {
             }, e: 1.6, color: '#ff0000', "a0Anion": 1, "a0Cation": 1, "gammaAnion": 1, "gammaCation": 1};
         updateCalculations(inputSet, [1, 2]);
         expect(inputSet.data).toEqual([-1.134144660236044]);
+        updateCalculations(inputSet, [-1, 2]);
+        expect(inputSet.data).toEqual([-1.3303051352943522]);
+        updateCalculations(inputSet, [0, -2]);
+        expect(inputSet.data).toEqual([-2.0147121472660396]);
+        updateCalculations(inputSet, [-1, -2]);
+        expect(inputSet.data).toEqual([-2.0148465618110887]);
+        updateCalculations(inputSet, [9, 9]);
+        expect(inputSet.data).toMatch([NaN]);
     });
 });
