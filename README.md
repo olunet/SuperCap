@@ -1,6 +1,5 @@
 # SuperCap - development repo
 
-
 Test server: https://peaceful-scrubland-7377.herokuapp.com/#/
 
 Live server: https://supercap.herokuapp.com/#/
