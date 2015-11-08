@@ -43,4 +43,16 @@ describe("DataService tests", function () {
         httpBackend.flush();
         expect(responseData.status).toEqual(200);
     });
+    
+    it("getLiquids() should make GET-request", function () {
+        httpBackend.whenGET("/api/liquids").respond({mockLiquid: "mockResponce"});
+        var responseData;
+        DataService.getLiquids()
+                .then(function (data) {
+                    responseData = data;
+                });
+
+        httpBackend.flush();
+        expect(responseData.status).toEqual(200);
+    });
 });
