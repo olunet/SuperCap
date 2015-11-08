@@ -114,23 +114,40 @@ describe('DataCtrl tests', function () {
         expect(this.scope.inputSets[0].electrode.label).toEqual("gold");
     });
 
-    it('Can add multiple inputsets.', function () {
+    it('Can add multiple inputsets with their own parameters.', function () {
         // Add inputset nr. 1
         this.scope.inputSets[0].anion = this.scope.anions[0];
         this.scope.inputSets[0].cation = this.scope.cations[0];
         this.scope.inputSets[0].electrode = this.scope.electrodes[1];
-        expect(this.scope.inputSets[0].anion.label).toEqual("FEP");
-        expect(this.scope.inputSets[0].cation.label).toEqual("BPy");
-        expect(this.scope.inputSets[0].electrode.label).toEqual("gold");
+        this.scope.inputSets[0].a0Anion = parseFloat(this.scope.anions[0].a0);
+        this.scope.inputSets[0].a0Cation = parseFloat(this.scope.cations[0].a0);
+        this.scope.inputSets[0].gammaAnion = parseFloat(this.scope.anions[0].gamma);
+        this.scope.inputSets[0].gammaCation = parseFloat(this.scope.cations[0].gamma);
+
+        expect(this.scope.activeInputSet.anion.label).toEqual("FEP");
+        expect(this.scope.activeInputSet.cation.label).toEqual("BPy");
+        expect(this.scope.activeInputSet.electrode.label).toEqual("gold");
+
+        //Change a0Cation value
+        this.scope.activeInputSet.a0Cation = this.scope.inputSets[0].a0Cation +0.3;
+        expect(this.scope.inputSets[0].a0Cation).toEqual(parseFloat(0.667+0.3));
         
         // Add inputset nr. 2
         this.scope.addNewInputSet();
-        this.scope.inputSets[1].anion = this.scope.anions[1];
-        this.scope.inputSets[1].cation = this.scope.cations[1];
-        this.scope.inputSets[1].electrode = this.scope.electrodes[0];
-        expect(this.scope.inputSets[1].anion.label).toEqual("FSI");
-        expect(this.scope.inputSets[1].cation.label).toEqual("TEPA");
-        expect(this.scope.inputSets[1].electrode.label).toEqual("bismuth");
-        expect(this.scope.inputSets.length).toEqual(2);    
+        this.scope.activeInputSet.anion = this.scope.anions[1];
+        this.scope.activeInputSet.cation = this.scope.cations[1];
+        this.scope.activeInputSet.electrode = this.scope.electrodes[0];
+        expect(this.scope.activeInputSet.anion.label).toEqual("FSI");
+        expect(this.scope.activeInputSet.cation.label).toEqual("TEPA");
+        expect(this.scope.activeInputSet.electrode.label).toEqual("bismuth");
+        expect(this.scope.inputSets.length).toEqual(2);
+        
+        //Change a0Cation value on inputset nr. 2
+        this.scope.activeInputSet.a0Cation = this.scope.activeInputSet.a0Cation - 0.1;
+        
+        
+        //Expect the inputset's nr. 1 a0Cation value to stay the same
+        this.scope.activeInputSet=this.scope.inputSets[0];
+        expect(this.scope.activeInputSet.a0Cation).toEqual(parseFloat(0.667+0.3));
     });
 });
