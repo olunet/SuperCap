@@ -1,5 +1,5 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
-    $scope.selectedCas = undefined;
+    $scope.myCas = '';
     //All possible line colors
     $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"];
     //List for storing multiple input sets
@@ -14,14 +14,11 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     var max = 20;
     //Calculate the size of 1 step on the X axis, equal to u1s
     var voltages = calculateVoltageSteps(min, max, numSteps);
-    console.log(voltages);
     initializeChart($scope, voltages);
-    
-    
     //Add a new empty input set as the currently active input set.
     addNewInputSet();
-    DataService.getCas().then(function (response) {
-        $scope.cas = response.data;
+    DataService.getLiquids().then(function (response) {
+        $scope.liquids = response.data;
     });
     DataService.getAnions().then(function (response) {
         $scope.anions = response.data;
@@ -69,8 +66,50 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
     };
+    $scope.emptifyCas = function () {
+        $scope.myCas = '';
+    };
+    $scope.$watch('myCas', function (val, old) {
+        if (angular.isObject(val)) {
+            $scope.selectedLiquid = val;
+            $scope.casChanged();
+        } else {
+            $scope.selectedLiquid = val;
+        }
+    }
+    );
+    $scope.casChanged = function () {
+        if ($scope.selectedLiquid) {
+            var foundAnion = false;
+            var foundCation = false;
+            var casanion = '';
+            var cascation = '';
+            for (var i = 0; i < $scope.anions.length; i++) {
+                if ($scope.anions[i].label === $scope.selectedLiquid.anionlabel) {
+                    foundAnion = true;
+                    casanion = $scope.anions[i];
+                    break;
+                }
+            }
+            for (var i = 0; i < $scope.cations.length; i++) {
+                if ($scope.cations[i].label === $scope.selectedLiquid.cationlabel) {
+                    foundCation = true;
+                    cascation = $scope.cations[i];
+                    break;
+                }
+            }
+            if ((foundCation === false) || (foundAnion === false)) {
+                console.log("Selected CAS-number does not match with anion/cation dataset");
+            } else {
+                $scope.selectedAnion = casanion;
+                $scope.selectedCation = cascation;
+                $scope.anionChanged();
+                $scope.cationChanged();
+                $scope.needToGenerateData();
+            }
+        }
+    };
     $scope.electrodeChanged = function () {
-        console.log("Selected " + $scope.selectedElectrode);
         $scope.activeInputSet.electrode = $scope.selectedElectrode;
         updateInputSetHTML($scope.activeInputSet);
         $scope.updateGraph();
@@ -80,7 +119,54 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     } catch (err) {
 
     }
-    ;
+
+    $scope.needToGenerateData = function () {
+        if ($scope.selectedAnion && $scope.selectedCation
+                && $scope.selectedElectrode) {
+            var need = true;
+            for (var i = 0; i < $scope.liquids.length; i++) {
+                if ($scope.selectedCation.label === $scope.liquids[i].cationlabel
+                        && $scope.selectedAnion.label === $scope.liquids[i].anionlabel
+                        && $scope.liquids[i].e !== undefined) {
+
+                    try {
+                        $scope.liquids[i].e === 5;
+                    } catch (err) {
+
+                    }
+                    need = false;
+                    break;
+                }
+            }
+            if (need === true) {
+                BootstrapDialog.show({
+                    message: 'There is no data for the given cation/anion pair in the database.',
+                    buttons: [{
+                            icon: 'glyphicon glyphicon-send',
+                            label: 'Simulate fake calculating process.',
+                            cssClass: 'btn-primary',
+                            autospin: true,
+                            action: function (dialogRef) {
+                                var $button = this;
+                                $button.disable();
+                                dialogRef.setClosable(true);
+                                dialogRef.getModalBody().html('Data will be calculated in 5 minutes.');
+                                setTimeout(function () {
+                                    dialogRef.close();
+                                }, 5000 * 12 * 5);
+                            }
+                        }, {
+                            label: 'Abort calculations',
+                            action: function (dialogRef) {
+                                dialogRef.close();
+                            }
+                        }]
+                });
+            }
+        }
+    };
+
+
     //Slider handling
     $("#epsilonSlider").on("input", function () {
         document.getElementById("epsilonValue").innerHTML = this.value;
@@ -140,6 +226,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         addNewInputSet();
     };
     function addNewInputSet() {
+        $scope.myCas = '';
         var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, 1.6);
         if($scope.activeInputSet) {
             inputSet.a0Anion = $scope.activeInputSet.a0Anion;
@@ -161,8 +248,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     }
 
     function switchToInputSet(inputSet) {
-        console.log("Switched to");
-        console.log(inputSet);
         setActiveInputSet(inputSet);
         $scope.selectedAnion = inputSet.anion;
         $scope.selectedCation = inputSet.cation;
