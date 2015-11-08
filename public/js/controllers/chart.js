@@ -60,14 +60,17 @@ removeInputSetFromChart = function($scope, inputSet) {
             if (index > -1) {
                 $scope.chartOptions.series.splice(index, 1);
             }
-            return;
+            break;
         }   
     }
-    
     //Also remove the chartoptions.inputsets element
     var index = $scope.chartOptions.inputSets.indexOf(inputSet);
     if(index > -1) {
         $scope.chartOptions.inputSets.splice(index, 1);
     }
-    
+ 
+    var phase = $scope.$root.$$phase;
+    if(phase !== '$apply' && phase !== '$digest') {
+            $scope.$apply();
+    }
 };
