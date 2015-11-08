@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var Anion = require('./models/anion');
 var Cation = require('./models/cation');
 var Electrode = require('./models/electrode');
+var Liquid = require('./models/liquid');
 
 var config = require('./config.js');
 mongoose.connect(config.db);
@@ -71,6 +72,12 @@ app.get('/api/electrodes', function(req, res) {
     });
 });
 
+//Fetches all the available casnumbers
+app.get('/api/liquids', function(req, res) {
+    Liquid.find({}, function(err, liquids) {
+        return res.json(liquids);
+    });
+});
 
 app.listen(process.env.PORT || 3000, function(){
     if(process.env.PORT) {

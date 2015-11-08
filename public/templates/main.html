@@ -1,77 +1,118 @@
 <div id="wrapper">
     <!-- SIDEBAR -->
-    <div id="sidebar-wrapper">
-        <br>
+    <div id="sidebar-wrapper" class="hidden-print">
+        <!-- BUTTONS -->
         <div>
-            <button  
-                data-toggle="modal" 
-                data-target="#basicModal" 
-                type="button" 
-                class="btn btn-lg btn-info center-block">
-                How to use this app
-            </button>
+            <div class="row">
+                <a 
+                    data-toggle="modal" 
+                    data-target="#basicModal" 
+                    class="btn btn-lg btn-info center-block">
+                    How to use this app
+                </a>
+                <!--<a ng-click="printTest()">-->
+                <div>
+                    <div class="btn btn-info btn-lg center-block" ng-click="printInputSets()"> Print</div>
+                </div>
+                <!--</a>-->
+                <a href="">
+                    <div>
+                        <div class="btn btn-info btn-lg center-block"  ng-click="exportPDF()"> Export</div>
+                    </div>
+                </a>
+            </div>
+
         </div>
+        <!-- INPUT SETS -->
         <div class="sidebar-title text-center ">
-            <h3>Inputs</h3>
+            Inputs
         </div>
         <div id="input-panels"></div>
         <div>
-            <button id="add-input-set" type="button" class="btn pull-right">Add another</button>
-        </div>
-        <div class="bottom">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <button type="button" class="btn btn-info btn-lg">Print</button>
-                </div>
-                <div class="col-xs-12 col-sm-6">
-                    <button type="button" class="btn btn-info btn-lg">Export</button>
-                </div>
-            </div>
+            <button type="button" class="btn pull-right" ng-click="addNewInputSet();
+                        printTest()">Add another</button>
         </div>
     </div>
 
     <!-- MAIN PAGE -->
     <div id="page-content-wrapper" class="lighter-grey-background">
+        <div class="panel-default visible-print-block">
+            <div id ="printingInfo"></div>
+        </div>
+
+        <div class="panel-default hidden" id="exportParent">
+            <div id ="exportInfo"></div>
+        </div>
+
         <div class="container1">
 
             <!-- INPUT PARAMETERS -->
-            <div class="col-xs-12 col-md-6 light-grey-background input-container" id="inputContainer">
+            <div class="col-xs-12 col-md-6 light-grey-background input-container hidden-print" id="inputContainer">
                 <br>
                 <div class="row">
                     <div class="col-xs-6">
-                        <select class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged();anionChanged()">
+                        <select id ="selectAnion" class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged();
+                                        anionChanged(); emptifyCas(); needToGenerateData()">
                             <option value="" disabled>Select anion</option>
                         </select>
                     </div>
 
                     <div class="col-xs-6">
-                        <select class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged();cationChanged()">
+                        <select id ="selectCation"  class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged();
+                                        cationChanged(); emptifyCas(); needToGenerateData()">
                             <option value="" disabled>Select cation</option>
                         </select>
                     </div>
                 </div>
+
                 <h4>or</h4>
-                <input id="cas" type="text" class="form-control" placeholder="Enter a CAS number">
+                <div>
+                    <cas-input id="selectedLiquid" 
+                              value="myCas" 
+                              value-expr="liquid as liquid.number for liquid in collection" 
+                              collection="liquids"
+                        placeholder="Enter a CAS number">
+                                  
+                    </cas-input>
+                </div>
                 <hr>
-                <select class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged();electrodeChanged()">
+                <select id ="selectElectrode" class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged();
+                                electrodeChanged(); needToGenerateData()">
                     <option value="" disabled>Select electrode</option>
                 </select>
             </div>
 
             <!-- 3D MODEL -->
-            <div class="col-xs-12 col-md-6" id="glmolParent"> 
-                <div id="glmol">  
-                    <textarea id="glmol_src"></textarea>
+            <div class="col-xs-12 col-md-6 hidden-print" id="anionParent"> 
+                <div>
+                    <h4>Anion</h4>
+                </div>
+                <div id="anionMol">  
+                    <textarea id="anionMol_src"></textarea>
                 </div>
             </div>
 
-            <!-- GRAPH CANVAS --> 
-            <div id="canvasParent">
-                <canvas id="chart" class="white-background"></canvas>
+
+            <div class="col-xs-12 col-md-6 hidden-print" id="cationParent">
+                <div>
+                    <h4>Cation</h4>
+                </div>
+                <div id="cationMol">  
+                    <textarea id="cationMol_src"></textarea>
+                </div>
             </div>
 
-            <div class="row" id="slidersContainer">
-                <div class="col-xs-1">
+            <div class="clearfix"></div>
+
+            <!-- GRAPH CANVAS --> 
+            <div id="chartContainer" class="col-xs-12">
+                <linechart data="chartData" options="chartOptions"></linechart>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row col-xs-12" id="slidersContainer">
+                <div class="col-xs-1 hidden-print">
                     <p>E</p>
                     <p>a<sub>0,anion</sub></p>
                     <p>a<sub>0,cation</sub></p>
@@ -79,15 +120,15 @@
                     <p>&gamma;<sub>cation</sub></p>
                 </div>
 
-                <div class="col-xs-9">
-                    <input type="range" class="slider" id="epsilonSlider" min="0" max="4" step="0.25">
+                <div class="col-xs-9 hidden-print">
+                    <input type="range" class="slider" id="epsilonSlider" min="1" max="4" step="0.25">
                     <input type="range" class="slider" id="a0AnionSlider" min="0.5" max="1" step="0.05">
                     <input type="range" class="slider" id="a0CationSlider" min="0.5" max="1" step="0.05">
-                    <input type="range" class="slider" id="gammaAnionSlider" min="0" max="10" step="1">
-                    <input type="range" class="slider" id="gammaCationSlider" min="0" max="10" step="1">
+                    <input type="range" class="slider" id="gammaAnionSlider" min="0" max="20" step="1">
+                    <input type="range" class="slider" id="gammaCationSlider" min="0" max="20" step="1">
                 </div>
 
-                <div class="col-xs-2"> 
+                <div class="col-xs-2 hidden-print"> 
                     <p id="epsilonValue">2</p>
                     <p id="a0AnionValue">0.75</p>
                     <p id="a0CationValue">0.75</p>
@@ -95,7 +136,6 @@
                     <p id="gammaCationValue">5</p>
                 </div>
             </div>
-
         </div>
     </div>
     <!-- HOWTOUSETHISAPP MODAL PAGE -->

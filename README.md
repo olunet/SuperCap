@@ -1,7 +1,4 @@
-# SuperCap
-
-
-Our development repository is located at: https://github.com/SuperCap/SuperCap
+# SuperCap - development repo
 
 Test server: https://peaceful-scrubland-7377.herokuapp.com/#/
 

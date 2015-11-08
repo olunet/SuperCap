@@ -15,6 +15,8 @@
          Copyright (c) 2011 John Resig
  */
 
+/* global THREE */
+
 // Workaround for Intel GMA series (gl_FrontFacing causes compilation error)
 THREE.ShaderLib.lambert.fragmentShader = THREE.ShaderLib.lambert.fragmentShader.replace("gl_FrontFacing", "true");
 THREE.ShaderLib.lambert.vertexShader = THREE.ShaderLib.lambert.vertexShader.replace(/\}$/, "#ifdef DOUBLE_SIDED\n if (transformedNormal.z < 0.0) vLightFront = vLightBack;\n #endif\n }");
@@ -57,7 +59,7 @@ GLmol.prototype.create = function(id, suppressAutoload, force2d) {
    this.WIDTH = this.container.width() * this.aaScale, this.HEIGHT = this.container.height() * this.aaScale;
    this.ASPECT = this.WIDTH / this.HEIGHT;
    this.NEAR = 1, FAR = 800;
-   this.CAMERA_Z = -150;
+   this.CAMERA_Z = -125;
    this.webglFailed = true;
    try {
       if (force2d) throw "WebGL disabled";
@@ -441,8 +443,8 @@ GLmol.prototype.isConnected = function(atom1, atom2) {
    if (distSquared < 0.5) return 0; // maybe duplicate position.
 
    if (distSquared > 1.3 && (atom1.elem == 'H' || atom2.elem == 'H' || atom1.elem == 'D' || atom2.elem == 'D')) return 0;
-   if (distSquared < 3.42 && (atom1.elem == 'S' || atom2.elem == 'S')) return 1;
-   if (distSquared > 2.78) return 0;
+   if (distSquared < 3.72 && (atom1.elem == 'S' || atom2.elem == 'S')) return 1;
+   if (distSquared > 4.38) return 0;
    return 1;
 };
 

@@ -1,22 +1,18 @@
-angular.module('SuperCap').service('DataService', function($http) {
-    
-    this.getAnions = function() {
-        return $http({method:'GET', url:'/api/anions'});
+angular.module('SuperCap').service('DataService', function ($http) {
+
+    this.getAnions = function () {
+        return $http({method: 'GET', url: '/api/anions', cache: true});
     };
-    
-    this.getCations = function() {
-        return $http({method:'GET', url:'/api/cations'});
+
+    this.getCations = function () {
+        return $http({method: 'GET', url: '/api/cations', cache: true});
     };
-    
-    this.getElectrodes = function() {
-        return $http({method:'GET', url:'/api/electrodes'});
+
+    this.getElectrodes = function () {
+        return $http({method: 'GET', url: '/api/electrodes'});
     };
-    
-//        this.editBook = function(book) {
-//        return $http({method:'PUT', url:'/api/books/'+book._id, data:book});
-//    }
-//    this.addBook = function(book) {
-//        return $http({method:'POST', url:'/api/books/', data:book});
-//    }
-    
+
+    this.getLiquids = function () {
+        return $http({method: 'GET', url: '/api/liquids'});
+    };
 });

@@ -4,3 +4,8 @@
 Develop.njsproj
 Develop.sln
 /nbproject/private/
+bower_components
+node_modules
+shippable
+npm-debug.log
+/coverage

@@ -6,6 +6,15 @@
     background-color:#fcfcfc;
 }
 
+.legend-color-indicator {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0,0,0,.2);
+}
 
 .white-background {
     background-color:#ffffff;
@@ -39,23 +48,43 @@
     bottom:8px;
 }
 
-#glmolParent {
+
+
+#anionParent {
     width: 200px;
     height: 150px;
     background-color: #eeeeee;
 }
 
-#glmol {
-    width: 100%;
-    height: 100%;
+#cationParent {
+    width: 200px;
+    height: 150px;
     background-color: #eeeeee;
 }
 
-#glmol_src {
+#anionMol {
+    width: 100%;
+    height: 70%;
+    background-color: #eeeeee;
+}
+
+#cationMol {
+    width: 100%;
+    height: 70%;
+    background-color: #eeeeee;
+}
+
+#anionMol_src {
     display: none;
 }
 
+#cationMol_src {
+    display: none;
+}
 
+#chartContainer {
+    min-height: 280px;
+}
 
 hr {
     color: #888888;
@@ -91,7 +120,7 @@ hr {
     width: 0;
     height: 100%;
     margin-left: -250px;
-    padding: 8px;
+    padding: 0px;
     overflow-y: auto;
     background: #444;
     -webkit-transition: all 0.5s ease;
@@ -159,7 +188,15 @@ hr {
         padding-left: 0;
     }
     
+    #sidebar-wrapper {
+        padding: 8px;
+    }
+    
     #canvasParent {
+        width: calc(100% - 250px);
+    }
+    
+    #chartContainer {
         width: calc(100% - 250px);
     }
     
@@ -282,9 +319,8 @@ input[type=range].slider:focus::-ms-fill-upper {
 }
 
 #slidersContainer {
-    min-height: 220px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     padding-left: 10px;
     background-color: #eeeeee;
 }
