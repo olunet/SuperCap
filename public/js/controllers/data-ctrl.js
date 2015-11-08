@@ -232,6 +232,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             inputSet.gammaAnion = $scope.activeInputSet.gammaAnion;
             inputSet.gammaCation = $scope.activeInputSet.gammaCation;
         }
+        inputSet.color = $scope.colors[inputSet.id % $scope.colors.length];
         $scope.inputSets.push(inputSet);
         addNewInputSetHTML(inputSet);
         $("#input-panel-" + inputSet.id).click(function () {
@@ -445,9 +446,10 @@ function addNewInputSetHTML(inputSet) {
             '<span id="input-panel-remove-'
             + inputSet.id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
             '<div class="text-center">' +
-            '<h4 id="input-panel-text-' + inputSet.id + '">' +
+            '<div class="legend-color-indicator" style="background-color:' + inputSet.color + ';"></div>' + 
+            '<h5 id="input-panel-text-' + inputSet.id + '">' +
             formatInput(anionName, cationName, electrodeName) +
-            '</h4>' +
+            '</h5>' +
             '</div>' +
             '</div>';
     $("#input-panels").append(html);
