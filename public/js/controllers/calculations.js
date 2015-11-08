@@ -3,17 +3,17 @@ updateCalculations = function (inputSet, voltages) {
     //Epsilon - relative permittivity, hardcoded for now
     var epsilon = inputSet.e;
     
-    var a0_anion = inputSet.a0Anion;
+    var a0_anion = Number(inputSet.a0Anion);
     
-    var a0_cation = inputSet.a0Cation;
+    var a0_cation = Number(inputSet.a0Cation);
     
-    var gamma_anion = inputSet.gammaAnion;
+    var gamma_anion = Number(inputSet.gammaAnion);
     
-    var gamma_cation = inputSet.gammaCation;
+    var gamma_cation = Number(inputSet.gammaCation);
     
     //Also known as sigma anion
     var anionCharges = calculateSurfaceCharges(inputSet.anion.r, a0_anion, gamma_anion, inputSet.electrode, epsilon, voltages);
-    
+
     //Also known as sigma cation
     var cationCharges = calculateSurfaceCharges(inputSet.cation.r, a0_cation, gamma_cation, inputSet.electrode, epsilon, voltages);
     
@@ -26,7 +26,7 @@ updateCalculations = function (inputSet, voltages) {
     
     //Equation 3 stuff
     var cs = calculateCs(charges, voltages, u2s);
-    
+
     inputSet.data = cs;
 };
 

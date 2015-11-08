@@ -130,7 +130,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                         && $scope.liquids[i].e !== undefined) {
 
                     try {
-                        $scope.liquids[i].e === 5;
+                        $scope.liquids[i].e === 1.6;
                     } catch (err) {
 
                     }
@@ -273,8 +273,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         document.getElementById("epsilonSlider").value = inputSet.e;
         document.getElementById("epsilonValue").innerHTML = inputSet.e; 
         
-        //Force update on the fields
-        $scope.$apply();
     }
 
     function removeInputSet(inputSet) {

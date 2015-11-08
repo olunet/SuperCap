@@ -20,7 +20,6 @@ initializeChart = function ($scope, voltages) {
 
 updateChartInputSet = function ($scope, inputSet) {
     //Update data values
-    console.log($scope);
     for (var i = 0; i < $scope.chartData.length; i++) {
         if(!isNaN(inputSet.data[i])) {
             $scope.chartData[i]["line" + inputSet.id] = inputSet.data[i];
