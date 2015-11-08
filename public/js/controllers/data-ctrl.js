@@ -273,8 +273,12 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             ;
         }
         document.getElementById("epsilonSlider").value = inputSet.e;
-        document.getElementById("epsilonValue").innerHTML = inputSet.e;
-
+        document.getElementById("epsilonValue").innerHTML = inputSet.e; 
+        
+        var phase = $scope.$root.$$phase;
+        if(phase !== '$apply' && phase !== '$digest') {
+            $scope.$apply();
+        }
     }
 
     $scope.removeInputSet = function (inputSet) {
