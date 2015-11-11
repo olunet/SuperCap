@@ -91,6 +91,7 @@ mergeSurfaceCharges = function (anionCharges, cationCharges, anion, cation, volt
 
 calculateU2s = function (surfaceCharges, electrode, epsilon) {
     //Constant value
+    var c1 = 16.02177;
     var c2 = 0.8854188;
 
     var values = [];
@@ -99,9 +100,9 @@ calculateU2s = function (surfaceCharges, electrode, epsilon) {
 
         var sigma = surfaceCharges[i];
 
-        var f_sigma = electrode.f1 + (electrode.f2 - electrode.f1) * (tanh(sigma / electrode.f3) + 1) / 2;
+        var f_sigma = electrode.f1 + (electrode.f2 - electrode.f1) * (tanh(sigma / c1 / electrode.f3) + 1) / 2;
 
-        var g_sigma = electrode.g1 * Math.pow((sigma - electrode.g2), 2) + electrode.g3;
+        var g_sigma = electrode.g1 * Math.pow((sigma / c1 - electrode.g2), 2) + electrode.g3;
 
         var u2 = -sigma / (1 / f_sigma + 1 / g_sigma) * c2 / epsilon;
 
