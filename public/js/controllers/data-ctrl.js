@@ -273,10 +273,10 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             ;
         }
         document.getElementById("epsilonSlider").value = inputSet.e;
-        document.getElementById("epsilonValue").innerHTML = inputSet.e; 
-        
+        document.getElementById("epsilonValue").innerHTML = inputSet.e;
+
         var phase = $scope.$root.$$phase;
-        if(phase !== '$apply' && phase !== '$digest') {
+        if (phase !== '$apply' && phase !== '$digest') {
             $scope.$apply();
         }
     }
@@ -361,75 +361,40 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             alert("Please select anion, cation and electrode or insert CAS-number.");
         }
     };
-
-    $scope.exportPDF = function () {
-        var html = '<div class="container">';
+    
+    $scope.export = function () {
+        
+        var name = "";
+        var data = "";
         for (var i = 0; i < $scope.inputSets.length; i++) {
-            var inputSet = $scope.inputSets[i];
-            var anion = inputSet.anion.label;
-            var cation = inputSet.cation.label;
-            var electrode = inputSet.electrode.label;
-            var a0Anion = inputSet.a0Anion;
-            var a0Cation = inputSet.a0Cation;
-            var gammaAnion = inputSet.gammaAnion;
-            var gammaCation = inputSet.gammaCation;
-            var epsilon = inputSet.e;
-            var htmlInputSet = '<div class="col-xs-12">' +
-                    '<div id="printingInfo-'
-                    + i +
-                    '" class="printingInfo">' +
-                    '<div>' +
-                    '<div class = "panel panel-default col-xs-12 col-md-6">' +
-                    '<table class = "table" style="font-size:70%">' +
-                    '<tr>' +
-                    '<td>Anion: ' + anion + '</td>' +
-                    '<td>Cation: ' + cation + '</td>' +
-                    '<td>Electrode: ' + electrode + '</td>' +
-                    '<td>E: ' + epsilon + '</td>' +
-                    '<td>a0 anion: ' + a0Anion + '</td>' +
-                    '<td>a0 cation: ' + a0Cation + '</td>' +
-                    '<td>y0 anion: ' + gammaAnion + '</td>' +
-                    '<td>y0 cation: ' + gammaCation + '</td>' +
-                    '</tr>' +
-                    '</table>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="clear-fix"></div>';
-            html += htmlInputSet;
+                if(i != 0) {
+                    name += "_|_";
+                    data += "\n";
+                }
+                var inputSet = $scope.inputSets[i];
+                name += inputSet.anion.label + "_";
+                name += inputSet.cation.label + "_";
+                name += inputSet.electrode.label;
+                data += "Anion: " + inputSet.anion.label + " ";
+                data += "Cation: " + inputSet.cation.label + " ";
+                data += "Electrode: " + inputSet.electrode.label + " ";
+                data += "; ";
         }
-        html += '</div>';
+        
+        $("svg").attr({version: '1.1', xmlns: "http://www.w3.org/2000/svg"});
+        //saveAs(new Blob([$("svg")[0].parentNode.innerHTML], {type:"image/svg+xml"}), name + ".svg");
+        
+        var zip = new JSZip();
+        zip.file(name + ".svg", [$("svg")[0].parentNode.innerHTML]);
+        
+        name += "_data";
+        //saveAs(new Blob([data], {type:"text/plain;charset=utf-8"}), name + ".txt")      
 
-        $("#exportInfo").append(html);
-        $("#exportParent").removeClass("hidden");
-        $("#sidebar-wrapper").addClass("hidden");
-        $("#inputContainer").addClass("hidden");
-        $("#slidersContainer").addClass("hidden");
-        //$("#anionParent").addClass("hidden");  
-        //$("#cationParent").addClass("hidden");
-
-        html2canvas(document.body, {
-            onrendered: function (canvas) {
-                var dataURL = canvas.toDataURL();
-                var link = document.createElement('a');
-                link.download = "SuperCap";
-                link.href = dataURL;
-                link.click();
-            },
-        });
-
-        $("#exportInfo").empty();
-        $("#sidebar-wrapper").removeClass("hidden");
-        $("#inputContainer").removeClass("hidden");
-        //$("#anionMol_src").addClass("hidden");
-        //$("#cationMol_src").addClass("hidden");
-        // $("#cationParent").removeClass("hidden");
-        //$("#anionParent").removeClass("hidden");
-        $("#slidersContainer").removeClass("hidden");
-        $("#exportParent").addClass("hidden");
-
+        zip.file(name + ".txt", data);
+        var content = zip.generate({type:"blob"});
+        saveAs(content, name + ".zip");
     };
+    
 });
 
 
