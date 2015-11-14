@@ -51,16 +51,16 @@
                 <br>
                 <div class="row">
                     <div class="col-xs-6">
-                        <select id ="selectAnion" class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged();
-                                        anionChanged(); emptifyCas(); needToGenerateData()">
-                            <option value="" disabled>Select anion</option>
-                        </select>
-                    </div>
-
-                    <div class="col-xs-6">
                         <select id ="selectCation"  class="form-control" data-width="100%" ng-model="selectedCation" ng-options="cation.label for cation in cations" ng-change="inputChanged();
                                         cationChanged(); emptifyCas(); needToGenerateData()">
                             <option value="" disabled>Select cation</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-xs-6">
+                        <select id ="selectAnion" class="form-control" ng-model="selectedAnion" ng-options="anion.label for anion in anions" ng-change="inputChanged();
+                                        anionChanged(); emptifyCas(); needToGenerateData()">
+                            <option value="" disabled>Select anion</option>
                         </select>
                     </div>
                 </div>
@@ -83,22 +83,21 @@
             </div>
 
             <!-- 3D MODEL -->
-            <div class="col-xs-12 col-md-6 hidden-print" id="anionParent"> 
-                <div>
-                    <h4>Anion</h4>
-                </div>
-                <div id="anionMol">  
-                    <textarea id="anionMol_src"></textarea>
-                </div>
-            </div>
-
-
             <div class="col-xs-12 col-md-6 hidden-print" id="cationParent">
                 <div>
                     <h4>Cation</h4>
                 </div>
                 <div id="cationMol">  
                     <textarea id="cationMol_src"></textarea>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 col-md-6 hidden-print" id="anionParent"> 
+                <div>
+                    <h4>Anion</h4>
+                </div>
+                <div id="anionMol">  
+                    <textarea id="anionMol_src"></textarea>
                 </div>
             </div>
 
@@ -120,20 +119,20 @@
                     <p>&gamma;<sub>cation</sub></p>
                 </div>
 
-                <div class="col-xs-9 hidden-print">
-                    <input type="range" class="slider" id="epsilonSlider" min="1" max="4" step="0.25">
-                    <input type="range" class="slider" id="a0AnionSlider" min="0.5" max="1" step="0.05">
-                    <input type="range" class="slider" id="a0CationSlider" min="0.5" max="1" step="0.05">
-                    <input type="range" class="slider" id="gammaAnionSlider" min="0" max="20" step="1">
-                    <input type="range" class="slider" id="gammaCationSlider" min="0" max="20" step="1">
-                </div>
-
-                <div class="col-xs-2 hidden-print"> 
+                <div class="col-xs-1 text-right hidden-print"> 
                     <p id="epsilonValue">2</p>
                     <p id="a0AnionValue">0.75</p>
                     <p id="a0CationValue">0.75</p>
                     <p id="gammaAnionValue">5</p>
                     <p id="gammaCationValue">5</p>
+                </div>
+                
+                <div class="col-xs-10 hidden-print">
+                    <input type="range" class="slider" id="epsilonSlider" min="1" max="4" step="0.25">
+                    <input type="range" class="slider" id="a0AnionSlider" min="0.5" max="1" step="0.05">
+                    <input type="range" class="slider" id="a0CationSlider" min="0.5" max="1" step="0.05">
+                    <input type="range" class="slider" id="gammaAnionSlider" min="0" max="20" step="1">
+                    <input type="range" class="slider" id="gammaCationSlider" min="0" max="20" step="1">
                 </div>
             </div>
         </div>

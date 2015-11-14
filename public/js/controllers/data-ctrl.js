@@ -485,7 +485,7 @@ function toggleHighlightOnInputSet(inputSet) {
 
 
 function formatInput(anionName, cationName, electrodeName) {
-    return anionName + ' - ' + electrodeName + ' - ' + cationName;
+    return cationName + ' - ' + anionName + ' - ' + electrodeName;
 }
 
 function calculateVoltageSteps(min, max, numSteps) {
