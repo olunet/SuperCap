@@ -19,7 +19,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Add a new empty input set as the currently active input set.
     addNewInputSet();
     DataService.getLiquids().then(function (response) {
-        $scope.liquids = response.data;
+        console.log(response.data);
+        $scope.ionicliquids = response.data;
     });
     DataService.getAnions().then(function (response) {
         $scope.anions = response.data;
@@ -84,14 +85,14 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             var casanion = '';
             var cascation = '';
             for (var i = 0; i < $scope.anions.length; i++) {
-                if ($scope.anions[i].label === $scope.selectedLiquid.anionlabel) {
+                if ($scope.anions[i].label === $scope.selectedLiquid.anionname) {
                     foundAnion = true;
                     casanion = $scope.anions[i];
                     break;
                 }
             }
             for (var i = 0; i < $scope.cations.length; i++) {
-                if ($scope.cations[i].label === $scope.selectedLiquid.cationlabel) {
+                if ($scope.cations[i].label === $scope.selectedLiquid.cationname) {
                     foundCation = true;
                     cascation = $scope.cations[i];
                     break;
@@ -123,13 +124,13 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         if ($scope.selectedAnion && $scope.selectedCation
                 && $scope.selectedElectrode) {
             var need = true;
-            for (var i = 0; i < $scope.liquids.length; i++) {
-                if ($scope.selectedCation.label === $scope.liquids[i].cationlabel
-                        && $scope.selectedAnion.label === $scope.liquids[i].anionlabel
-                        && $scope.liquids[i].e !== undefined) {
+            for (var i = 0; i < $scope.ionicliquids.length; i++) {
+                if ($scope.selectedCation.label === $scope.ionicliquids[i].cationlabel
+                        && $scope.selectedAnion.label === $scope.ionicliquids[i].anionlabel
+                        && $scope.ionicliquids[i].e !== undefined) {
 
                     try {
-                        $scope.liquids[i].e === 1.6;
+                        $scope.ionicliquids[i].e === 1.6;
                     } catch (err) {
 
                     }
