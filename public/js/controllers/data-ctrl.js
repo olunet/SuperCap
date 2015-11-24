@@ -406,6 +406,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         var name = "";
         var data = "";
         var printSeparator = false;
+        
         for (var i = 0; i < $scope.inputSets.length; i++) {
                 var inputSet = $scope.inputSets[i];
                 if(inputSet.hidden) {
@@ -418,27 +419,25 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 }
                 printSeparator = true;
                 
-                name += inputSet.anion.label + "_";
                 name += inputSet.cation.label + "_";
+                name += inputSet.anion.label + "_";
                 name += inputSet.electrode.label;
                 data += "Color: " + $scope.colorNames[i % $scope.colorNames.length] + "\r\n";
-                data += "Anion: " + inputSet.anion.label + "\r\n";
-                data += "Cation: " + inputSet.cation.label + "\r\n";
+                data += "Cation: " + inputSet.cation.label + "\r\n";   
+                data += "Anion: " + inputSet.anion.label + "\r\n";                   
                 data += "Electrode: " + inputSet.electrode.label + "\r\n";
+                data += "a0Cation: " + inputSet.a0Cation + "\r\n";
+                data += "a0Anion: " + inputSet.a0Anion + "\r\n";         
+                data += "gammaCation: " + inputSet.gammaCation + "\r\n";
+                data += "gammaAnion: " + inputSet.gammaAnion + "\r\n";
+                data += "e: " + inputSet.e + "\r\n";
         }
         
         $("svg").attr({version: '1.1', xmlns: "http://www.w3.org/2000/svg"});
-        //saveAs(new Blob([$("svg")[0].parentNode.innerHTML], {type:"image/svg+xml"}), name + ".svg");
-        
-        var zip = new JSZip();
-        zip.file(name + ".svg", [$("svg")[0].parentNode.innerHTML]);
+        saveAs(new Blob([$("svg")[0].parentNode.innerHTML], {type:"image/svg+xml"}), name + ".svg");
         
         name += "_data";
-        //saveAs(new Blob([data], {type:"text/plain;charset=utf-8"}), name + ".txt")      
-
-        zip.file(name + ".txt", data);
-        var content = zip.generate({type:"blob"});
-        saveAs(content, name + ".zip");
+        saveAs(new Blob([data], {type:"text/plain;charset=utf-8"}), name + ".txt")      
     };
     
 });
