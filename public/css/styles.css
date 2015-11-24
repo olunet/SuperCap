@@ -43,6 +43,10 @@
     
 }
 
+.glyphicon {
+    margin: 2px;
+}
+
 .bottom {
     position:absolute;
     bottom:8px;

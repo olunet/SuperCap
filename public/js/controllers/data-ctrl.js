@@ -243,6 +243,10 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             event.stopPropagation();
             $scope.removeInputSet(inputSet);
         });
+        $("#input-panel-toggle-" + inputSet.id).click(function (event) {
+            event.stopPropagation();
+            $scope.toggleInputSet(inputSet);
+        });
         setActiveInputSet(inputSet);
         return inputSet;
     }
@@ -282,6 +286,37 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         }
     }
 
+    $scope.toggleInputSet = function(inputSet) {
+        toggleInputSet(inputSet);
+    };
+    
+    function toggleInputSet(inputSet) {
+        var glyphiconElement = $("#input-panel-toggle-" + inputSet.id);
+        
+        if(glyphiconElement.hasClass("glyphicon-eye-open")) {
+            //Hiding the input set
+            hideInputSet(inputSet);
+        } else {
+            //Unhiding the input set
+            unhideInputSet(inputSet);
+        }
+        
+        glyphiconElement.toggleClass("glyphicon-eye-open");
+        glyphiconElement.toggleClass("glyphicon-eye-close");
+        
+    }
+
+    function hideInputSet(inputSet) {
+        inputSet.hidden = true;
+        removeInputSetFromChart($scope, inputSet);
+    }
+    
+    function unhideInputSet(inputSet) {
+        inputSet.hidden = false;
+        updateChartInputSet($scope, inputSet);
+    }
+
+
     $scope.removeInputSet = function (inputSet) {
         removeInputSet(inputSet);
     };
@@ -300,7 +335,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         }
 
         //Remove it from the chart
-        removeInputSetFromChart($scope, inputSet)
+        removeInputSetFromChart($scope, inputSet);
 
         //Switch active inputset to the first inputset
         console.log($scope.inputSets[0]);
@@ -320,6 +355,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             var html = '<div class="container">';
             for (var i = 0; i < $scope.inputSets.length; i++) {
                 var inputSet = $scope.inputSets[i];
+                if(inputSet.hidden) {
+                    continue;
+                }
                 // console.log(inputSet);
                 var anion = inputSet.anion.label;
                 var cation = inputSet.cation.label;
@@ -367,12 +405,19 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         
         var name = "";
         var data = "";
+        var printSeparator = false;
         for (var i = 0; i < $scope.inputSets.length; i++) {
-                if(i != 0) {
+                var inputSet = $scope.inputSets[i];
+                if(inputSet.hidden) {
+                    continue;
+                }
+                
+                if(printSeparator) {
                     name += "_|_";
                     data += "\r\n";
                 }
-                var inputSet = $scope.inputSets[i];
+                printSeparator = true;
+                
                 name += inputSet.anion.label + "_";
                 name += inputSet.cation.label + "_";
                 name += inputSet.electrode.label;
@@ -421,6 +466,7 @@ function addNewInputSetHTML(inputSet) {
             '" class="input-panel">' +
             '<span id="input-panel-remove-'
             + inputSet.id + '" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>' +
+            '<span id="input-panel-toggle-' + inputSet.id + '" class="glyphicon glyphicon-eye-open pull-right" aria-hidden="true"></span>' +
             '<div class="text-center">' +
             '<div class="legend-color-indicator" style="background-color:' + inputSet.color + ';"></div>' +
             '<h5 id="input-panel-text-' + inputSet.id + '">' +
