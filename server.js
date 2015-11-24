@@ -73,7 +73,7 @@ app.get('/api/electrodes', function(req, res) {
 });
 
 //Fetches all the available casnumbers
-app.get('/api/liquids', function(req, res) {
+app.get('/api/ioniq_liquids', function(req, res) {
     Liquid.find({}, function(err, liquids) {
         return res.json(liquids);
     });

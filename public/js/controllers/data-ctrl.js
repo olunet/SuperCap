@@ -2,6 +2,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     $scope.myCas = '';
     //All possible line colors
     $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"];
+    $scope.colorNames = ["Red", "Green", "Blue", "Black", "Orange", "Purple", "Cyan"];
     //List for storing multiple input sets
     $scope.inputSets = [];
     //Currently active input set
@@ -369,16 +370,16 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         for (var i = 0; i < $scope.inputSets.length; i++) {
                 if(i != 0) {
                     name += "_|_";
-                    data += "\n";
+                    data += "\r\n";
                 }
                 var inputSet = $scope.inputSets[i];
                 name += inputSet.anion.label + "_";
                 name += inputSet.cation.label + "_";
                 name += inputSet.electrode.label;
-                data += "Anion: " + inputSet.anion.label + " ";
-                data += "Cation: " + inputSet.cation.label + " ";
-                data += "Electrode: " + inputSet.electrode.label + " ";
-                data += "; ";
+                data += "Color: " + $scope.colorNames[i % $scope.colorNames.length] + "\r\n";
+                data += "Anion: " + inputSet.anion.label + "\r\n";
+                data += "Cation: " + inputSet.cation.label + "\r\n";
+                data += "Electrode: " + inputSet.electrode.label + "\r\n";
         }
         
         $("svg").attr({version: '1.1', xmlns: "http://www.w3.org/2000/svg"});

@@ -228,94 +228,100 @@ hr {
        
 }
 
-
-input[type=range].slider {
-  -webkit-appearance: none;
-  width: 80%;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  display: inline-block;
-  margin-left: 50px;
+.slider {
+    padding-bottom: 20px;
 }
-input[type=range].slider:focus {
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 10px;
+  width: 100%;
+  background-color: #eeeeee;
+}
+input[type=range]:focus {
   outline: none;
 }
-input[type=range].slider::-webkit-slider-runnable-track {
-  width: 80%;
-  height: 10px;
-  cursor: pointer;
+input[type=range]::-webkit-slider-runnable-track {
+  margin-top: -4px;
+  width: 100%;
+  height: 5.4px;
+  cursor: pointer;  
+  animate: 0.2s;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #444444;
-  border-radius: 0px;
-  border: 0px solid #010101;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.1px solid #010101;
+  
 }
-input[type=range].slider::-webkit-slider-thumb {
-  box-shadow: 0px 0px 1px #670000, 0px 0px 0px #810000;
-  border: 0px solid #ff1e00;
-  height: 12px;
-  width: 18px;
-  border-radius: 0px;
-  background: rgba(255, 67, 95, 0.93);
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 8px;
+  border-radius: 5px;
+  background: #ffffff;
   cursor: pointer;
   -webkit-appearance: none;
-  margin-top: -1px;
+  margin-top: -8px;
 }
-input[type=range].slider:focus::-webkit-slider-runnable-track {
-  background: #515151;
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
 }
-input[type=range].slider::-moz-range-track {
-  width: 80%;
-  height: 10px;
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5.4px;
   cursor: pointer;
+  animate: 0.2s;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #444444;
-  border-radius: 0px;
-  border: 0px solid #010101;
+  background: #3071a9;
+  border-radius: 1.0px;
+  border: 0.0px solid #010101;
 }
-input[type=range].slider::-moz-range-thumb {
-  box-shadow: 0px 0px 1px #670000, 0px 0px 0px #810000;
-  border: 0px solid #ff1e00;
-  height: 12px;
-  width: 18px;
-  border-radius: 0px;
-  background: rgba(255, 67, 95, 0.93);
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 8px;
+  border-radius: 2px;
+  background: #ffffff;
   cursor: pointer;
 }
-input[type=range].slider::-ms-track {
-  width: 80%;
-  height: 10px;
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 5.4px;
   cursor: pointer;
+  animate: 0.2s;
   background: transparent;
   border-color: transparent;
+  border-width: 16px 0;
   color: transparent;
 }
-input[type=range].slider::-ms-fill-lower {
-  background: #373737;
-  border: 0px solid #010101;
-  border-radius: 0px;
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
-input[type=range].slider::-ms-fill-upper {
-  background: #444444;
-  border: 0px solid #010101;
-  border-radius: 0px;
+input[type=range]::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
-input[type=range].slider::-ms-thumb {
-  box-shadow: 0px 0px 1px #670000, 0px 0px 0px #810000;
-  border: 0px solid #ff1e00;
-  height: 12px;
-  width: 18px;
-  border-radius: 0px;
-  background: rgba(255, 67, 95, 0.93);
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 10px;
+  border-radius: 3px;
+  background: #ffffff;
   cursor: pointer;
-  height: 10px;
 }
-input[type=range].slider:focus::-ms-fill-lower {
-  background: #444444;
+input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
 }
-input[type=range].slider:focus::-ms-fill-upper {
-  background: #515151;
+input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd;
 }
 
 #slidersContainer {
