@@ -36,16 +36,23 @@ updateChartInputSet = function ($scope, inputSet) {
             $scope.$apply();
        }
     } else {
-        //Add new chartOptions entry
-        $scope.chartOptions.series.push(
-                {
-                    y: "line" + inputSet.id,
-                    label: "Line" + inputSet.id,
-                    thickness: '3px',
-                    color: $scope.colors[inputSet.id % $scope.colors.length]
-                });
-    
-        $scope.chartOptions.inputSets[inputSet.id] = inputSet;
+        if(!inputSet.hidden) {
+            //Add new chartOptions entry
+            $scope.chartOptions.series.push(
+                    {
+                        y: "line" + inputSet.id,
+                        label: "Line" + inputSet.id,
+                        thickness: '3px',
+                        color: $scope.colors[inputSet.id % $scope.colors.length]
+                    });
+
+            $scope.chartOptions.inputSets[inputSet.id] = inputSet;
+
+            var phase = $scope.$root.$$phase;
+            if(phase !== '$apply' && phase !== '$digest') {
+                $scope.$apply();
+            }
+        }
     }
 };
 
@@ -60,7 +67,7 @@ removeInputSetFromChart = function($scope, inputSet) {
             if (index > -1) {
                 $scope.chartOptions.series.splice(index, 1);
             }
-            return;
+            break;
         }   
     }
     
@@ -68,6 +75,11 @@ removeInputSetFromChart = function($scope, inputSet) {
     var index = $scope.chartOptions.inputSets.indexOf(inputSet);
     if(index > -1) {
         $scope.chartOptions.inputSets.splice(index, 1);
+    }
+
+    var phase = $scope.$root.$$phase;
+    if(phase !== '$apply' && phase !== '$digest') {
+         $scope.$apply();
     }
     
 };
