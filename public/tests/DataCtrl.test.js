@@ -90,7 +90,7 @@ describe('DataCtrl tests', function () {
             expect(this.scope.colors[i]).toMatch(/#[0-9a-fA-F]{6}/);
         }
 
-        expect(this.scope.inputSets).toEqual([{id: 0, anion: undefined, cation: undefined, electrode: undefined, e: 1.6, color: '#ff0000'}]);
+        expect(this.scope.inputSets).toEqual([{id: 0, anion: undefined, cation: undefined, electrode: undefined, e: 1.649, color: '#ff0000'}]);
 
     });
 
