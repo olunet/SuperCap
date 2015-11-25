@@ -167,8 +167,13 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
 
     //Slider handling
-    document.getElementById("epsilonValue").innerHTML = Number(Math.pow(Math.E, 0.5)).toFixed(3);
-
+    
+    try {
+        document.getElementById("epsilonValue").innerHTML = Number(Math.pow(Math.E, 0.5)).toFixed(3);
+    }
+    catch(err) {
+        console.log(err);
+    }
     $("#epsilonSlider").on("input", function () {
         document.getElementById("epsilonValue").innerHTML = Number(Math.pow(Math.E, this.value / 4)).toFixed(3);
         
