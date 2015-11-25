@@ -19,7 +19,6 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     //Add a new empty input set as the currently active input set.
     addNewInputSet();
     DataService.getLiquids().then(function (response) {
-        console.log(response.data);
         $scope.ionicliquids = response.data;
     });
     DataService.getAnions().then(function (response) {
@@ -168,9 +167,15 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
 
     //Slider handling
+    document.getElementById("epsilonSlider").value = 2;
+    document.getElementById("epsilonValue").innerHTML = Number(Math.pow(Math.E, 0.5)).toFixed(3);
+    $scope.activeInputSet.e = Number(Math.pow(Math.E, 0.5)).toFixed(3);
+    
+    
     $("#epsilonSlider").on("input", function () {
-        document.getElementById("epsilonValue").innerHTML = this.value;
-        $scope.activeInputSet.e = this.value;
+        document.getElementById("epsilonValue").innerHTML = Number(Math.pow(Math.E, this.value / 4)).toFixed(3);
+        
+        $scope.activeInputSet.e = Math.pow(Math.E, this.value / 4);
         $scope.updateGraph();
     });
     $("#a0AnionSlider").on("input", function () {
@@ -227,7 +232,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     };
     function addNewInputSet() {
         $scope.myCas = '';
-        var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, 1.6);
+        var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, 1.649);
         if ($scope.activeInputSet) {
             inputSet.a0Anion = $scope.activeInputSet.a0Anion;
             inputSet.a0Cation = $scope.activeInputSet.a0Cation;
@@ -279,7 +284,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             ;
         }
         document.getElementById("epsilonSlider").value = inputSet.e;
-        document.getElementById("epsilonValue").innerHTML = inputSet.e;
+        document.getElementById("epsilonValue").innerHTML = Number(inputSet.e).toFixed(3);
 
         var phase = $scope.$root.$$phase;
         if (phase !== '$apply' && phase !== '$digest') {
