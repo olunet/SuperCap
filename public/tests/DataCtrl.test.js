@@ -66,12 +66,12 @@ describe('DataCtrl tests', function () {
             {
                 "_id": {"$oid": "563d0e69e4b0ecb0579de309"},
                 "number": "1111-1111-11", "anionlabel": "FEP",
-                "cationlabel": "BPy", "e": 1.6
+                "cationlabel": "BPy", "e": 1.649
             },
             {
                 "_id": {"$oid": "563d1209e4b0ecb0579de345"},
                 "number": "2444-4444-44", "anionlabel": "FSI",
-                "cationlabel": "TEPA", "e": 1.6
+                "cationlabel": "TEPA", "e": 1.649
             }
         ];
         this.ctrl = $controller('DataCtrl', {
