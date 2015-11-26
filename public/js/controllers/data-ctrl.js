@@ -170,6 +170,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     
     try {
         document.getElementById("epsilonValue").innerHTML = Number(Math.pow(Math.E, 0.5)).toFixed(3);
+        document.getElementById("gammaAnionValue").innerHTML = Number(Math.pow(Math.E, 5.0)).toFixed(3);
+        document.getElementById("gammaCationValue").innerHTML = Number(Math.pow(Math.E, 5.0)).toFixed(3);
     }
     catch(err) {
         console.log(err);
@@ -195,16 +197,16 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.updateGraph();
     });
     $("#gammaAnionSlider").on("input", function () {
-        document.getElementById("gammaAnionValue").innerHTML = this.value;
+        document.getElementById("gammaAnionValue").innerHTML = Number(Math.pow(Math.E, this.value)).toFixed(3);
         if ($scope.activeInputSet) {
-            $scope.activeInputSet.gammaAnion = this.value;
+            $scope.activeInputSet.gammaAnion = Number(Math.pow(Math.E, this.value)).toFixed(3);
         }
         $scope.updateGraph();
     });
     $("#gammaCationSlider").on("input", function () {
-        document.getElementById("gammaCationValue").innerHTML = this.value;
+        document.getElementById("gammaCationValue").innerHTML = Number(Math.pow(Math.E, this.value)).toFixed(3);
         if ($scope.activeInputSet) {
-            $scope.activeInputSet.gammaCation = this.value;
+            $scope.activeInputSet.gammaCation = Number(Math.pow(Math.E, this.value)).toFixed(3);
         }
         $scope.updateGraph();
     });
@@ -212,14 +214,14 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     $scope.updateAnionSliders = function (inputSet) {
         document.getElementById("a0AnionSlider").value = inputSet.a0Anion;
         document.getElementById("a0AnionValue").innerHTML = inputSet.a0Anion;
-        document.getElementById("gammaAnionSlider").value = inputSet.gammaAnion;
+        document.getElementById("gammaAnionSlider").value = Math.log(inputSet.gammaAnion);
         document.getElementById("gammaAnionValue").innerHTML = inputSet.gammaAnion;
     }
 
     $scope.updateCationSliders = function (inputSet) {
         document.getElementById("a0CationSlider").value = inputSet.a0Cation;
         document.getElementById("a0CationValue").innerHTML = inputSet.a0Cation;
-        document.getElementById("gammaCationSlider").value = inputSet.gammaCation;
+        document.getElementById("gammaCationSlider").value = Math.log(inputSet.gammaCation);
         document.getElementById("gammaCationValue").innerHTML = inputSet.gammaCation;
     }
 

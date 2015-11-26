@@ -15,7 +15,35 @@ initializeChart = function ($scope, voltages) {
     
     //Used to check if there's already a line for some input set
     $scope.chartOptions.inputSets = [];
+    
+    loadAxisTitles($scope);
+    window.addEventListener('resize', function(event){
+        loadAxisTitles($scope);
+    });
+};
 
+loadAxisTitles = function ($scope) {
+    setTimeout(function(){
+      var axis = d3.select(".x.axis");
+      var width = axis.node().getBBox().width;
+      axis.append("text")
+        .text("U/V")
+        .attr("dy", 40)
+        .attr("dx", width /2 )
+        .attr("text-anchor","middle");
+
+      axis = d3.select(".y.axis");
+      var text = axis.append("text")
+        .text("C / µC cm⁻²");
+        
+      var tWidth = 150;
+      text.attr("dy", 15 )
+        .attr("dx", -tWidth )
+        .attr("text-anchor","start")
+        .attr("transform","rotate(-90)")
+        .text("C / µC cm⁻²");
+
+    }, 100);
 };
 
 updateChartInputSet = function ($scope, inputSet) {
@@ -29,6 +57,7 @@ updateChartInputSet = function ($scope, inputSet) {
         }
     }
     
+    loadAxisTitles($scope);
     if($scope.chartOptions.inputSets[inputSet.id]) {
        //There is already an entry for this input set, apply changes
        var phase = $scope.$root.$$phase;
