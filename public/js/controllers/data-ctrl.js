@@ -242,6 +242,10 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         addNewInputSet();
     };
     function addNewInputSet() {
+        if($scope.activeInputSet && (!$scope.selectedAnion || !$scope.selectedCation || !$scope.selectedElectrode)) {
+            //Don't allow adding new input sets if current one is partially undefined.
+            return;
+        }
         $scope.myCas = '';
         var inputSet = new InputSet($scope.selectedAnion, $scope.selectedCation, $scope.selectedElectrode, 1.649);
         if ($scope.activeInputSet) {
