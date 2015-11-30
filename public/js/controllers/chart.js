@@ -58,7 +58,7 @@ updateChartInputSet = function ($scope, inputSet) {
     }
     
     loadAxisTitles($scope);
-    if($scope.chartOptions.inputSets[inputSet.id]) {
+    if($scope.chartOptions.inputSets["inputSet" +  inputSet.id]) {
        //There is already an entry for this input set, apply changes
        var phase = $scope.$root.$$phase;
        if(phase !== '$apply' && phase !== '$digest') {
@@ -75,7 +75,7 @@ updateChartInputSet = function ($scope, inputSet) {
                         color: $scope.colors[inputSet.id % $scope.colors.length]
                     });
 
-            $scope.chartOptions.inputSets[inputSet.id] = inputSet;
+            $scope.chartOptions.inputSets["inputSet" +  inputSet.id] = inputSet;
 
             var phase = $scope.$root.$$phase;
             if(phase !== '$apply' && phase !== '$digest') {
@@ -101,11 +101,11 @@ removeInputSetFromChart = function($scope, inputSet) {
     }
     
     //Also remove the chartoptions.inputsets element
-    var index = $scope.chartOptions.inputSets.indexOf(inputSet);
-    if(index > -1) {
-        $scope.chartOptions.inputSets.splice(index, 1);
+    var value = $scope.chartOptions.inputSets["inputSet" + inputSet.id];
+    if(value !== undefined) {
+        delete $scope.chartOptions.inputSets["inputSet" + inputSet.id];
     }
-
+    
     var phase = $scope.$root.$$phase;
     if(phase !== '$apply' && phase !== '$digest') {
          $scope.$apply();

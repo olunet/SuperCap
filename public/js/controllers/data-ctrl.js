@@ -269,6 +269,11 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             $scope.toggleInputSet(inputSet);
         });
         setActiveInputSet(inputSet);
+        
+        if($scope.selectedAnion || $scope.selectedCation || $scope.selectedElectrode) {
+            updateCalculations(inputSet, voltages);
+        }
+        
         return inputSet;
     }
 
