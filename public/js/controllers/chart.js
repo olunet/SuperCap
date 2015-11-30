@@ -10,7 +10,10 @@ initializeChart = function ($scope, voltages) {
         hideOverflow: true,
         drawDots: false,
         drawLegend: false,
-        series: []
+        series: [],
+        tooltip: {
+                    mode: 'none'
+                 }
     };
     
     //Used to check if there's already a line for some input set
