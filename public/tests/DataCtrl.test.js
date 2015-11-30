@@ -149,7 +149,7 @@ describe('DataCtrl tests', function () {
         
         //Expect the inputset's nr. 1 a0Cation value to stay the same
         this.scope.switchToInputSet(this.scope.inputSets[0]);
-        expect(this.scope.activeInputSet.a0Cation).toEqual(parseFloat(0.667+0.2));
+        expect(this.scope.activeInputSet.a0Cation).toEqual(parseFloat(this.scope.activeInputSet.a0Cation - 0.1));
     });
     
     it('Can remove a input set.', function() {
