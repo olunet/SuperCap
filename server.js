@@ -14,6 +14,8 @@ var app = express();
 app.use(bodyParser.json());
 app.use(express.static(__dirname+'/public'));
 
+//Here is some sample code on how to add and edit data in the database if the need ever rises:
+
 ////add more books
 //app.post('/api/books', function(req, res) {
 //    var book = new Book({
@@ -50,6 +52,18 @@ app.use(express.static(__dirname+'/public'));
 //});
 
 /** OUR APPLICATION **/
+
+app.post('/api/generateData', function(req, res) {
+    var cation = req.body.cation;
+    var anion = req.body.anion;
+    
+    //HTTP 200 - OK
+    return res.status(200).end();
+    
+    //HTTP 400 - Bad Request (invalid data)
+    //return res.status(400).end();
+    
+});
 
 //Fetches all the available anions
 app.get('/api/anions', function(req, res) {

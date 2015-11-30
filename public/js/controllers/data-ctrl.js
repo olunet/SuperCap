@@ -149,10 +149,17 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                                 var $button = this;
                                 $button.disable();
                                 dialogRef.setClosable(true);
+                                //You can remove the timeout, it does nothing.
                                 dialogRef.getModalBody().html('Data will be calculated in 5 minutes.');
                                 setTimeout(function () {
                                     dialogRef.close();
                                 }, 5000 * 12 * 5);
+                                //Post a request to the server to do something with the anion and cation name
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/api/generateData",
+                                    data: { anion: $scope.selectedAnion.label, cation: $scope.selectedCation.label }
+                                });
                             }
                         }, {
                             label: 'Abort calculations',
