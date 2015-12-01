@@ -334,6 +334,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
     function hideInputSet(inputSet) {
         inputSet.hidden = true;
+        loadAxisTitles($scope);
         removeInputSetFromChart($scope, inputSet);
     }
     
@@ -344,6 +345,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
 
     $scope.removeInputSet = function (inputSet) {
+        loadAxisTitles($scope);
         removeInputSet(inputSet);
     };
     function removeInputSet(inputSet) {
