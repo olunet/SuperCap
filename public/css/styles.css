@@ -51,13 +51,13 @@
 
 
 #anionParent {
-    width: 200px;
+    width: 172px;
     height: 150px;
     background-color: #eeeeee;
 }
 
 #cationParent {
-    width: 200px;
+    width: 172px;
     height: 150px;
     background-color: #eeeeee;
 }
@@ -193,15 +193,15 @@ hr {
     }
     
     #canvasParent {
-        width: calc(100% - 250px);
+        width: calc(90%);
     }
     
     #chartContainer {
-        width: calc(100% - 250px);
+        width: calc(90%);
     }
     
     #slidersContainer {
-        width: calc(100% - 250px);      
+        width: calc(90%);      
     }
 
     #sidebar-wrapper {
