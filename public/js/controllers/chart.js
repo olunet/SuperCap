@@ -6,10 +6,16 @@ initializeChart = function ($scope, voltages) {
     }
     
     $scope.chartOptions = {
+        axes: {
+            y: {ticksFormat: '.1f'}
+        },
         lineMode: "cardinal",
         hideOverflow: true,
         drawDots: false,
         drawLegend: false,
+        margin: {
+        left: 100
+        },
         series: [],
         tooltip: {
                     mode: 'none'
