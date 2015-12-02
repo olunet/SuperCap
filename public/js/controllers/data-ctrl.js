@@ -468,6 +468,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         saveAs(new Blob([data], {type:"text/plain;charset=utf-8"}), name + ".txt")      
     };
     
+    //Load the modal for howtouse app
+    $("#tutorial").load("templates/tutorial.html");
+    
 });
 
 
@@ -535,5 +538,4 @@ function calculateVoltageSteps(min, max, numSteps) {
     }
 
     return steps;
-}
-;
+};
