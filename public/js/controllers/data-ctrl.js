@@ -34,6 +34,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     };
     $scope.anionChanged = function () {
         if ($scope.selectedAnion) {
+            delete $scope.activeInputSet.cas;
             $scope.activeInputSet.a0Anion = $scope.selectedAnion.a0;
             $scope.activeInputSet.gammaAnion = $scope.selectedAnion.gamma;
             $scope.updateAnionSliders($scope.activeInputSet);
@@ -48,8 +49,11 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.updateGraph();
     };
     $scope.cationChanged = function () {
+              
         if ($scope.selectedCation) {
+            delete $scope.activeInputSet.cas;
             if ($scope.activeInputSet.cation === undefined) {
+                
                 $scope.activeInputSet.a0Cation = $scope.selectedCation.a0;
                 $scope.activeInputSet.gammaCation = $scope.selectedCation.gamma;
                 $scope.updateCationSliders($scope.activeInputSet);
@@ -66,6 +70,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.updateGraph();
     };
     $scope.emptifyCas = function () {
+        
         $scope.myCas = '';
     };
     $scope.$watch('myCas', function (val, old) {
@@ -100,10 +105,12 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             if ((foundCation === false) || (foundAnion === false)) {
                 console.log("Selected CAS-number does not match with anion/cation dataset");
             } else {
+                
                 $scope.selectedAnion = casanion;
                 $scope.selectedCation = cascation;
                 $scope.anionChanged();
                 $scope.cationChanged();
+                $scope.activeInputSet.cas = $scope.selectedLiquid.number;
                 $scope.needToGenerateData();
             }
         }
@@ -459,6 +466,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 data += "gammaCation: " + inputSet.gammaCation + "\r\n";
                 data += "gammaAnion: " + inputSet.gammaAnion + "\r\n";
                 data += "e: " + inputSet.e + "\r\n";
+                if(inputSet.cas != null) {
+                  data += "CAS number: " + inputSet.cas + "\r\n";  
+                }
         }
         
         $("svg").attr({version: '1.1', xmlns: "http://www.w3.org/2000/svg"});
