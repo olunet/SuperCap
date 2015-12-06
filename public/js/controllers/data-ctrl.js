@@ -468,9 +468,16 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         saveAs(new Blob([data], {type:"text/plain;charset=utf-8"}), name + ".txt")      
     };
     
-    //Load the modal for howtouse app
-    $("#tutorial").load("templates/tutorial.html");
+    var howToLoadedYet = false;
     
+    $scope.howToModalClicked = function() {
+        if(howToLoadedYet === false) {
+            //Load the modal for howtouse app
+            $("#tutorial").load("templates/tutorial.html");
+            setTimeout(function(){ $("#howToButton").click(); }, 500);
+            howToLoadedYet = true;
+        }
+    }
 });
 
 
