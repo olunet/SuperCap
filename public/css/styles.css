@@ -193,15 +193,15 @@ hr {
     }
     
     #canvasParent {
-        width: calc(90%);
+        width: 90%;
     }
     
     #chartContainer {
-        width: calc(90%);
+        width: 90%;
     }
     
     #slidersContainer {
-        width: calc(90%);      
+        width: 90%;      
     }
 
     #sidebar-wrapper {
@@ -223,11 +223,6 @@ hr {
     }
 }
 
-//Sliders
-#slidersContainer { //This empty one fixes sliders style
-       
-}
-
 .slider {
     padding-bottom: 20px;
 }
@@ -246,7 +241,6 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 5.4px;
   cursor: pointer;  
-  animate: 0.2s;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   background: #3071a9;
   border-radius: 1.3px;
@@ -271,7 +265,6 @@ input[type=range]::-moz-range-track {
   width: 100%;
   height: 5.4px;
   cursor: pointer;
-  animate: 0.2s;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   background: #3071a9;
   border-radius: 1.0px;
@@ -290,7 +283,6 @@ input[type=range]::-ms-track {
   width: 100%;
   height: 5.4px;
   cursor: pointer;
-  animate: 0.2s;
   background: transparent;
   border-color: transparent;
   border-width: 16px 0;
