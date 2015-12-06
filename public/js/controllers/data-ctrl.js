@@ -1,5 +1,5 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
-    
+
     $("#caserrormessage").hide();
     $scope.myCas = '';
     //All possible line colors
@@ -51,11 +51,11 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.updateGraph();
     };
     $scope.cationChanged = function () {
-              
+
         if ($scope.selectedCation) {
             delete $scope.activeInputSet.cas;
             if ($scope.activeInputSet.cation === undefined) {
-                
+
                 $scope.activeInputSet.a0Cation = $scope.selectedCation.a0;
                 $scope.activeInputSet.gammaCation = $scope.selectedCation.gamma;
                 $scope.updateCationSliders($scope.activeInputSet);
@@ -72,25 +72,25 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         $scope.updateGraph();
     };
     $scope.emptifyCas = function () {
-        
+
         $scope.myCas = '';
     };
     $scope.$watch('myCas', function (val, old) {
         if (angular.isObject(val)) {
             $scope.selectedLiquid = val;
-            $scope.casChanged();          
+            $scope.casChanged();
         } else {
-            
+
             function filterByCAS(obj) {
-               if ('number' in obj && obj.number.indexOf($scope.myCas) > -1) {
-                return true;
-               } else {
-                return false;
-            }
+                if ('number' in obj && obj.number.indexOf($scope.myCas) > -1) {
+                    return true;
+                } else {
+                    return false;
                 }
-                
-            if($scope.ionicliquids != null) {
-                if($scope.ionicliquids.filter(filterByCAS).length === 0) {
+            }
+
+            if ($scope.ionicliquids != null) {
+                if ($scope.ionicliquids.filter(filterByCAS).length === 0) {
                     $("#caserrormessage").show();
                 } else {
                     $("#caserrormessage").hide();
@@ -98,8 +98,8 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             } else {
                 $("#caserrormessage").hide();
             }
-            
-            $scope.selectedLiquid = val;        
+
+            $scope.selectedLiquid = val;
         }
     }
     );
@@ -124,9 +124,9 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 }
             }
             if ((foundCation === false) || (foundAnion === false)) {
-                console.log("Selected CAS-number does not match with anion/cation dataset");              
+                console.log("Selected CAS-number does not match with anion/cation dataset");
             } else {
-                
+
                 $scope.selectedAnion = casanion;
                 $scope.selectedCation = cascation;
                 $scope.anionChanged();
@@ -146,6 +146,20 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     } catch (err) {
 
     }
+
+    $("#selectCation").bind("keydown change", function () {
+        var box = $(this);
+        setTimeout(function () {
+            display(box.val());
+        }, 0);
+    });
+    
+    $("#selectAnion").bind("keydown change", function () {
+        var box = $(this);
+        setTimeout(function () {
+            display(box.val());
+        }, 0);
+    });
 
     $scope.needToGenerateData = function () {
         if ($scope.selectedAnion && $scope.selectedCation
@@ -186,7 +200,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                                 $.ajax({
                                     type: "POST",
                                     url: "/api/generateData",
-                                    data: { anion: $scope.selectedAnion.label, cation: $scope.selectedCation.label }
+                                    data: {anion: $scope.selectedAnion.label, cation: $scope.selectedCation.label}
                                 });
                             }
                         }, {
@@ -202,18 +216,18 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
 
 
     //Slider handling
-    
+
     try {
         document.getElementById("epsilonValue").innerHTML = Number(Math.pow(Math.E, 0.5)).toFixed(3);
         document.getElementById("gammaAnionValue").innerHTML = Number(Math.pow(Math.E, 5.0)).toFixed(3);
         document.getElementById("gammaCationValue").innerHTML = Number(Math.pow(Math.E, 5.0)).toFixed(3);
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
     }
     $("#epsilonSlider").on("input", function () {
         document.getElementById("epsilonValue").innerHTML = Number(Math.pow(Math.E, this.value / 4)).toFixed(3);
-        
+
         $scope.activeInputSet.e = Math.pow(Math.E, this.value / 4);
         $scope.updateGraph();
     });
@@ -270,7 +284,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         addNewInputSet();
     };
     function addNewInputSet() {
-        if($scope.activeInputSet && (!$scope.selectedAnion || !$scope.selectedCation || !$scope.selectedElectrode)) {
+        if ($scope.activeInputSet && (!$scope.selectedAnion || !$scope.selectedCation || !$scope.selectedElectrode)) {
             //Don't allow adding new input sets if current one is partially undefined.
             return;
         }
@@ -297,11 +311,11 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             $scope.toggleInputSet(inputSet);
         });
         setActiveInputSet(inputSet);
-        
-        if($scope.selectedAnion || $scope.selectedCation || $scope.selectedElectrode) {
+
+        if ($scope.selectedAnion || $scope.selectedCation || $scope.selectedElectrode) {
             updateCalculations(inputSet, voltages);
         }
-        
+
         return inputSet;
     }
 
@@ -340,24 +354,24 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         }
     }
 
-    $scope.toggleInputSet = function(inputSet) {
+    $scope.toggleInputSet = function (inputSet) {
         toggleInputSet(inputSet);
     };
-    
+
     function toggleInputSet(inputSet) {
         var glyphiconElement = $("#input-panel-toggle-" + inputSet.id);
-        
-        if(glyphiconElement.hasClass("glyphicon-eye-open")) {
+
+        if (glyphiconElement.hasClass("glyphicon-eye-open")) {
             //Hiding the input set
             hideInputSet(inputSet);
         } else {
             //Unhiding the input set
             unhideInputSet(inputSet);
         }
-        
+
         glyphiconElement.toggleClass("glyphicon-eye-open");
         glyphiconElement.toggleClass("glyphicon-eye-close");
-        
+
     }
 
     function hideInputSet(inputSet) {
@@ -365,7 +379,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
         loadAxisTitles($scope);
         removeInputSetFromChart($scope, inputSet);
     }
-    
+
     function unhideInputSet(inputSet) {
         inputSet.hidden = false;
         updateChartInputSet($scope, inputSet);
@@ -411,7 +425,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             var html = '<div class="container">';
             for (var i = 0; i < $scope.inputSets.length; i++) {
                 var inputSet = $scope.inputSets[i];
-                if(inputSet.hidden) {
+                if (inputSet.hidden) {
                     continue;
                 }
                 // console.log(inputSet);
@@ -456,56 +470,58 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
             alert("Please select anion, cation and electrode or insert CAS-number.");
         }
     };
-    
+
     $scope.export = function () {
-        
+
         var name = "";
         var data = "";
         var printSeparator = false;
-        
+
         for (var i = 0; i < $scope.inputSets.length; i++) {
-                var inputSet = $scope.inputSets[i];
-                if(inputSet.hidden) {
-                    continue;
-                }
-                
-                if(printSeparator) {
-                    name += "_|_";
-                    data += "\r\n";
-                }
-                printSeparator = true;
-                
-                name += inputSet.cation.label + "_";
-                name += inputSet.anion.label + "_";
-                name += inputSet.electrode.label;
-                data += "Color: " + $scope.colorNames[i % $scope.colorNames.length] + "\r\n";
-                data += "Cation: " + inputSet.cation.label + "\r\n";   
-                data += "Anion: " + inputSet.anion.label + "\r\n";                   
-                data += "Electrode: " + inputSet.electrode.label + "\r\n";
-                data += "a0Cation: " + inputSet.a0Cation + "\r\n";
-                data += "a0Anion: " + inputSet.a0Anion + "\r\n";         
-                data += "gammaCation: " + inputSet.gammaCation + "\r\n";
-                data += "gammaAnion: " + inputSet.gammaAnion + "\r\n";
-                data += "e: " + inputSet.e + "\r\n";
-                if(inputSet.cas != null) {
-                  data += "CAS number: " + inputSet.cas + "\r\n";  
-                }
+            var inputSet = $scope.inputSets[i];
+            if (inputSet.hidden) {
+                continue;
+            }
+
+            if (printSeparator) {
+                name += "_|_";
+                data += "\r\n";
+            }
+            printSeparator = true;
+
+            name += inputSet.cation.label + "_";
+            name += inputSet.anion.label + "_";
+            name += inputSet.electrode.label;
+            data += "Color: " + $scope.colorNames[i % $scope.colorNames.length] + "\r\n";
+            data += "Cation: " + inputSet.cation.label + "\r\n";
+            data += "Anion: " + inputSet.anion.label + "\r\n";
+            data += "Electrode: " + inputSet.electrode.label + "\r\n";
+            data += "a0Cation: " + inputSet.a0Cation + "\r\n";
+            data += "a0Anion: " + inputSet.a0Anion + "\r\n";
+            data += "gammaCation: " + inputSet.gammaCation + "\r\n";
+            data += "gammaAnion: " + inputSet.gammaAnion + "\r\n";
+            data += "e: " + inputSet.e + "\r\n";
+            if (inputSet.cas != null) {
+                data += "CAS number: " + inputSet.cas + "\r\n";
+            }
         }
-        
+
         $("svg").attr({version: '1.1', xmlns: "http://www.w3.org/2000/svg"});
-        saveAs(new Blob([$("svg")[0].parentNode.innerHTML], {type:"image/svg+xml"}), name + ".svg");
-        
+        saveAs(new Blob([$("svg")[0].parentNode.innerHTML], {type: "image/svg+xml"}), name + ".svg");
+
         name += "_data";
-        saveAs(new Blob([data], {type:"text/plain;charset=utf-8"}), name + ".txt")      
+        saveAs(new Blob([data], {type: "text/plain;charset=utf-8"}), name + ".txt")
     };
-    
+
     var howToLoadedYet = false;
-    
-    $scope.howToModalClicked = function() {
-        if(howToLoadedYet === false) {
+
+    $scope.howToModalClicked = function () {
+        if (howToLoadedYet === false) {
             //Load the modal for howtouse app
             $("#tutorial").load("templates/tutorial.html");
-            setTimeout(function(){ $("#howToButton").click(); }, 500);
+            setTimeout(function () {
+                $("#howToButton").click();
+            }, 500);
             howToLoadedYet = true;
         }
     }
@@ -576,4 +592,6 @@ function calculateVoltageSteps(min, max, numSteps) {
     }
 
     return steps;
-};
+}
+;
+
