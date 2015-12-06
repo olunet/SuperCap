@@ -23,8 +23,12 @@ updateCalculations = function (inputSet, voltages) {
     //Equation 2 stuff
     var u2s = calculateU2s(charges, inputSet.electrode, epsilon);
 
+    console.log(u2s);
+
     //Equation 3 stuff
     var cs = calculateCs(charges, voltages, u2s);
+
+   // console.log(cs);
 
     inputSet.data = cs;
 };
@@ -80,14 +84,36 @@ mergeSurfaceCharges = function (anionCharges, cationCharges, anion, cation, volt
         var anionWeight = 0.5 + tanh(gamma * u1) / 2;
 
         var cationWeight = 0.5 - tanh(gamma * u1) / 2;
+        
+        //for some reason, in certain domains the built-in tanh calculation fails
+        //we will use an approximation for those areas
+        if(isNaN(anionWeight)) {
+            anionWeight = 0.5 + rational_tanh(gamma * u1) / 2;
+        }
+        if(isNaN(cationWeight)) {
+            cationWeight = 0.5 - rational_tanh(gamma * u1) / 2;
+        }
+        
 
         var charge = anionCharges[i] * anionWeight + cationCharges[i] * cationWeight;
 
         values.push(charge);
+        
     }
 
     return values;
 };
+
+//Taken from http://stackoverflow.com/questions/6118028/fast-hyperbolic-tangent-approximation-in-javascript
+rational_tanh = function (x)
+{
+    if( x < -3 )
+        return -1;
+    else if( x > 3 )
+        return 1;
+    else
+        return x * ( 27 + x * x ) / ( 27 + 9 * x * x );
+}
 
 calculateU2s = function (surfaceCharges, electrode, epsilon) {
     //Constant value

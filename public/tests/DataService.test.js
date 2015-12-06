@@ -45,7 +45,7 @@ describe("DataService tests", function () {
     });
     
     it("getLiquids() should make GET-request", function () {
-        httpBackend.whenGET("/api/liquids").respond({mockLiquid: "mockResponce"});
+        httpBackend.whenGET("/api/ionicliquids").respond({mockLiquid: "mockResponce"});
         var responseData;
         DataService.getLiquids()
                 .then(function (data) {

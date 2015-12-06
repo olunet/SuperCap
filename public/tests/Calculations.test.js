@@ -20,20 +20,15 @@ describe('Calculations tests', function () {
 
     it('calculateU2s must return correct value.', function () {
         expect(calculateU2s([1, 2], {"f1": 1, "f2": 2, "f3": 2, "g1": 0.0,
-            "g2": 0.0, "g3": 1000000}, 2)).toEqual([-0.7663545781054755,
-            -1.6652899597541926]);
+            "g2": 0.0, "g3": 1000000}, 2)).toEqual([-0.6709687766493518, -1.3557220399277596]);
         expect(calculateU2s([-1, -2], {"f1": -1, "f2": -2, "f3": -2, "g1": -0.0,
-            "g2": -0.0, "g3": -1000000}, -2)).toEqual([0.7663545781054755,
-            1.6652899597541926]);
+            "g2": -0.0, "g3": -1000000}, -2)).toEqual([0.6709687766493518, 1.3557220399277596]);
         expect(calculateU2s([1, 2], {"f1": 1, "f2": 2, "f3": 2, "g1": 2.0,
-            "g2": 3.0, "g3": 10}, 2)).toEqual([-0.6991214500636465,
-            -1.4396519875378324]);
+            "g2": 3.0, "g3": 10}, 2)).toEqual([-0.6356286351085139, -1.28175701429197]);
         expect(calculateU2s([999, 999], {"f1": 999, "f2": 999, "f3": 999, "g1": 999.0,
-            "g2": 999.0, "g3": 999999}, 2)).toEqual([-441383.4813705682,
-            -441383.4813705682]);
+            "g2": 999.0, "g3": 999999}, 2)).toEqual([-441823.92087026255, -441823.92087026255]);
         expect(calculateU2s([-999, -999], {"f1": -999, "f2": -999, "f3": -999, "g1": -999.0,
-            "g2": -999.0, "g3": -999999}, 2)).toEqual([-441383.4813705682,
-            -441383.4813705682]);
+            "g2": -999.0, "g3": -999999}, 2)).toEqual([-441823.92087026255, -441823.92087026255]);
     });
 
     it('calculateCs must return correct value.', function () {
@@ -73,13 +68,13 @@ describe('Calculations tests', function () {
                 "g2": 0.0, "g3": 1000000
             }, e: 1.6, color: '#ff0000', "a0Anion": 1, "a0Cation": 1, "gammaAnion": 1, "gammaCation": 1};
         updateCalculations(inputSet, [1, 2]);
-        expect(inputSet.data).toEqual([-1.134144660236044]);
+        expect(inputSet.data).toEqual([-1.1980279733316337]);
         updateCalculations(inputSet, [-1, 2]);
-        expect(inputSet.data).toEqual([-1.3303051352943522]);
+        expect(inputSet.data).toEqual([-1.357486227226484]);
         updateCalculations(inputSet, [0, -2]);
-        expect(inputSet.data).toEqual([-2.0147121472660396]);
+        expect(inputSet.data).toEqual([-1.7002495776544786]);
         updateCalculations(inputSet, [-1, -2]);
-        expect(inputSet.data).toEqual([-2.0148465618110887]);
+        expect(inputSet.data).toEqual([-1.8473251068015493]);
         updateCalculations(inputSet, [9, 9]);
         expect(inputSet.data).toMatch([NaN]);
     });

@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var Anion = require('./models/anion');
 var Cation = require('./models/cation');
 var Electrode = require('./models/electrode');
-var Liquid = require('./models/liquid');
+var IonicLiquid = require('./models/ionicliquid');
 
 var config = require('./config.js');
 mongoose.connect(config.db);
@@ -13,6 +13,8 @@ mongoose.connect(config.db);
 var app = express();
 app.use(bodyParser.json());
 app.use(express.static(__dirname+'/public'));
+
+//Here is some sample code on how to add and edit data in the database if the need ever rises:
 
 ////add more books
 //app.post('/api/books', function(req, res) {
@@ -51,6 +53,18 @@ app.use(express.static(__dirname+'/public'));
 
 /** OUR APPLICATION **/
 
+app.post('/api/generateData', function(req, res) {
+    var cation = req.body.cation;
+    var anion = req.body.anion;
+    
+    //HTTP 200 - OK
+    return res.status(200).end();
+    
+    //HTTP 400 - Bad Request (invalid data)
+    //return res.status(400).end();
+    
+});
+
 //Fetches all the available anions
 app.get('/api/anions', function(req, res) {
     Anion.find({}, function(err, anions) {
@@ -73,9 +87,9 @@ app.get('/api/electrodes', function(req, res) {
 });
 
 //Fetches all the available casnumbers
-app.get('/api/liquids', function(req, res) {
-    Liquid.find({}, function(err, liquids) {
-        return res.json(liquids);
+app.get('/api/ionicliquids', function(req, res) {
+    IonicLiquid.find({}, function(err, ionicliquids) {
+        return res.json(ionicliquids);
     });
 });
 

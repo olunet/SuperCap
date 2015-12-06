@@ -13,6 +13,6 @@ angular.module('SuperCap').service('DataService', function ($http) {
     };
 
     this.getLiquids = function () {
-        return $http({method: 'GET', url: '/api/liquids'});
+        return $http({method: 'GET', url: '/api/ionicliquids'});
     };
 });
