@@ -1,4 +1,6 @@
 angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService) {
+    
+    $("#caserrormessage").hide();
     $scope.myCas = '';
     //All possible line colors
     $scope.colors = ["#ff0000", "#00ff00", "#0000ff", "#111111", "#ff6600", "#aa00aa", "#00aaaa"];
@@ -76,9 +78,28 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
     $scope.$watch('myCas', function (val, old) {
         if (angular.isObject(val)) {
             $scope.selectedLiquid = val;
-            $scope.casChanged();
+            $scope.casChanged();          
         } else {
-            $scope.selectedLiquid = val;
+            
+            function filterByCAS(obj) {
+               if ('number' in obj && obj.number.indexOf($scope.myCas) > -1) {
+                return true;
+               } else {
+                return false;
+            }
+                }
+                
+            if($scope.ionicliquids != null) {
+                if($scope.ionicliquids.filter(filterByCAS).length === 0) {
+                    $("#caserrormessage").show();
+                } else {
+                    $("#caserrormessage").hide();
+                }
+            } else {
+                $("#caserrormessage").hide();
+            }
+            
+            $scope.selectedLiquid = val;        
         }
     }
     );
@@ -103,7 +124,7 @@ angular.module('SuperCap').controller('DataCtrl', function ($scope, DataService)
                 }
             }
             if ((foundCation === false) || (foundAnion === false)) {
-                console.log("Selected CAS-number does not match with anion/cation dataset");
+                console.log("Selected CAS-number does not match with anion/cation dataset");              
             } else {
                 
                 $scope.selectedAnion = casanion;

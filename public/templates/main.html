@@ -76,6 +76,9 @@
                         placeholder="Enter a CAS number">
                                   
                     </cas-input>
+                    <div id="caserrormessage">
+                        <h5>No such CAS number found</h5>
+                    </div>
                 </div>
                 <hr>
                 <select id ="selectElectrode" class="form-control"  data-width="100%" ng-model="selectedElectrode" ng-options="electrode.label for electrode in electrodes" ng-change="inputChanged();
