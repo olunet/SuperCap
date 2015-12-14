@@ -41,15 +41,15 @@ calculateSurfaceCharges = function (r, a0, gamma, electrode, epsilon, voltages) 
     //Constant value
     var c1 = 16.02177;
     //Constant value
-    var c2 = 0.8854188;//[F/nm]
+    var c2 = 0.8854188;
     //constant value
     var e = 2.718282;
 
     //theta max is equal to c1 / r^2
     var thetaMax = c1 / Math.pow(r, 2); //[1e/nm2]
 
-    //u max is equal to theta max * (d + r) * c2 / epsilon
-    var uMax = thetaMax * (electrode.d + r) * c2 / epsilon; //[1e/nm*]
+    //u max is equal to theta max * (d + r) / c2 / epsilon
+    var uMax = thetaMax * (electrode.d + r) / c2 / epsilon;
 
     var values = [];
 
@@ -81,19 +81,9 @@ mergeSurfaceCharges = function (anionCharges, cationCharges, anion, cation, volt
     for (var i = 0; i < voltages.length; i++) {
         var u1 = voltages[i];
 
-        var anionWeight = 0.5 + tanh(gamma * u1) / 2;
+        var anionWeight = 0.5 + rational_tanh(gamma * u1) / 2;
 
-        var cationWeight = 0.5 - tanh(gamma * u1) / 2;
-        
-        //for some reason, in certain domains the built-in tanh calculation fails
-        //we will use an approximation for those areas
-        if(isNaN(anionWeight)) {
-            anionWeight = 0.5 + rational_tanh(gamma * u1) / 2;
-        }
-        if(isNaN(cationWeight)) {
-            cationWeight = 0.5 - rational_tanh(gamma * u1) / 2;
-        }
-        
+        var cationWeight = 0.5 - rational_tanh(gamma * u1) / 2;
 
         var charge = anionCharges[i] * anionWeight + cationCharges[i] * cationWeight;
 
@@ -126,11 +116,11 @@ calculateU2s = function (surfaceCharges, electrode, epsilon) {
 
         var sigma = surfaceCharges[i];
 
-        var f_sigma = electrode.f1 + (electrode.f2 - electrode.f1) * (tanh(sigma / c1 / electrode.f3) + 1) / 2;
+        var f_sigma = electrode.f1 + (electrode.f2 - electrode.f1) * (rational_tanh(sigma / c1 / electrode.f3) + 1) / 2;
 
         var g_sigma = electrode.g1 * Math.pow((sigma / c1 - electrode.g2), 2) + electrode.g3;
 
-        var u2 = -sigma / (1 / f_sigma + 1 / g_sigma) * c2 / epsilon;
+        var u2 = -sigma / (1 / f_sigma + 1 / g_sigma) / 10 / c2 / epsilon;
 
         values.push(u2);
     }
