@@ -81,10 +81,9 @@ mergeSurfaceCharges = function (anionCharges, cationCharges, anion, cation, volt
     for (var i = 0; i < voltages.length; i++) {
         var u1 = voltages[i];
 
-        var anionWeight = 0.5 + rational_tanh(gamma * u1) / 2;
+        var anionWeight = 0.5 + rational_tanh(gamma / 50 * u1) / 2;
 
-        var cationWeight = 0.5 - rational_tanh(gamma * u1) / 2;
-
+        var cationWeight = 0.5 - rational_tanh(gamma / 50 * u1) / 2;
         var charge = anionCharges[i] * anionWeight + cationCharges[i] * cationWeight;
 
         values.push(charge);
