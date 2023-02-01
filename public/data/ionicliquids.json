@@ -1,0 +1,163 @@
+[
+  {
+    "ced89bc5-dd84-4c15-8b15-e167eda629de": {
+      "longcationname": "1-Butyl-3-methylimidazolium", 
+      "e": 1.6, 
+      "lumo": "0.4828", 
+      "cationname": "BMIm", 
+      "longanionname": "tetrafluoroborate", 
+      "number": "174501-65-6", 
+      "anionname": "BF4", 
+      "homo": "-9.1689"
+    }, 
+    "48aa3a38-2f12-4006-808f-6c8612c2bf79": {
+      "longcationname": "1-Butyl-3-methylimidazolium", 
+      "e": 1.6, 
+      "anionname": "PF6", 
+      "cationname": "BMIm", 
+      "longanionname": "hexafluorophosphate", 
+      "number": "174501-64-5", 
+      "lumo": "0.3256", 
+      "homo": "-9.2460"
+    }, 
+    "896b49b1-8cb0-47b6-977a-ffca1a50f5db": {
+      "longcationname": "1-Butyl-1-methylpyrrolidinium", 
+      "e": 1.6, 
+      "lumo": "0.9046", 
+      "cationname": "BMPyr", 
+      "longanionname": "bis(trifluoromethylsulfonyl)imide", 
+      "number": "223437-11-4", 
+      "anionname": "TFSI", 
+      "homo": "-9.2027"
+    }, 
+    "f01d4e53-7df2-4da2-8825-65b530dc013d": {
+      "longcationname": "N,N,N-triethyl-1-Propanaminium", 
+      "e": 1.6, 
+      "anionname": "FSI", 
+      "cationname": "TEPA", 
+      "longanionname": "bis(fluorosulfonyl)imide", 
+      "number": "missing", 
+      "lumo": "0.9130", 
+      "homo": "-9.2057"
+    }, 
+    "c83ea8db-e7b6-4122-b68b-a04aef93bf5e": {
+      "longcationname": "N,N,N-triethyl-1-Propanaminium", 
+      "e": 1.6, 
+      "anionname": "PF6", 
+      "cationname": "TEPA", 
+      "longanionname": "hexafluorophosphate", 
+      "number": "missing", 
+      "lumo": "0.7960", 
+      "homo": "-11.2559"
+    }, 
+    "68c96263-4195-49a4-b770-da842643497e": {
+      "longcationname": "N,N,N-triethyl-1-Propanaminium", 
+      "e": 1.6, 
+      "lumo": "0.9493", 
+      "cationname": "TEPA", 
+      "longanionname": "tetrafluoroborate", 
+      "number": "213993-07-8", 
+      "anionname": "BF4", 
+      "homo": "-10.6997"
+    }, 
+    "cb5ed895-a1eb-48fd-aaab-41b6528119a3": {
+      "longcationname": "1-Butyl-3-methylimidazolium", 
+      "e": 1.6, 
+      "anionname": "FSI", 
+      "cationname": "BMIm", 
+      "longanionname": "bis(fluorosulfonyl)imide", 
+      "number": "1235234-58-8", 
+      "lumo": "0.1883", 
+      "homo": "-8.9943"
+    }, 
+    "1cfee801-0258-49d7-a7ab-ab70f8828849": {
+      "longcationname": "1-Butylpyridinium", 
+      "e": 1.6, 
+      "anionname": "FSI", 
+      "cationname": "BPy", 
+      "longanionname": "bis(fluorosulfonyl)imide", 
+      "number": "missing", 
+      "lumo": "-1.5334", 
+      "homo": "-9.2141"
+    }, 
+    "c9e3d37b-a58b-4f02-94dc-68676bf8c0d4": {
+      "longcationname": "1-Butyl-1-methylpyrrolidinium", 
+      "e": 1.6, 
+      "anionname": "FSI", 
+      "cationname": "BMPyr", 
+      "longanionname": "dicyanamide", 
+      "number": "370865-80-8", 
+      "lumo": "0.8723", 
+      "homo": "-9.0431"
+    }, 
+    "b5e3b43e-a095-4134-8221-06079d267d57": {
+      "longcationname": "1-Butylpyridinium", 
+      "e": 1.6, 
+      "lumo": "-1.5111", 
+      "cationname": "BPy", 
+      "longanionname": "hexafluorophosphate", 
+      "number": "186088-50-6", 
+      "anionname": "PF6", 
+      "homo": "-9.8600"
+    }, 
+    "cda14980-c2f5-4dcf-b6a8-8b45d249acf0": {
+      "longcationname": "1-Butylpyridinium", 
+      "e": 1.6, 
+      "lumo": "-1.3312", 
+      "cationname": "BPy", 
+      "longanionname": "tetrafluoroborate", 
+      "number": "203389-28-0", 
+      "anionname": "BF4", 
+      "homo": "-9.6580"
+    }, 
+    "98173225-e33b-4008-851a-4ebf69d111dd": {
+      "longcationname": "N,N,N-triethyl-1-Propanaminium", 
+      "e": 1.6, 
+      "anionname": "TFSI", 
+      "cationname": "TEPA", 
+      "longanionname": "bis(trifluoromethylsulfonyl)imide", 
+      "number": "missing", 
+      "lumo": "0.8269", 
+      "homo": "-9.0553"
+    }, 
+    "d31d7daa-c2bd-48aa-986b-c70ad9e63292": {
+      "longcationname": "1-Butyl-1-methylpyrrolidinium", 
+      "lumo": "0.9789", 
+      "cationname": "BMPyr", 
+      "longanionname": "tetrafluoroborate", 
+      "number": "missing", 
+      "anionname": "BF4", 
+      "homo": "-10.8428"
+    }, 
+    "7b494c61-f94b-4568-a524-4df53a698752": {
+      "longcationname": "1-Butylpyridinium", 
+      "e": 1.6, 
+      "anionname": "BF4", 
+      "cationname": "BPy", 
+      "longanionname": "tetrafluoroborate", 
+      "number": "203389-28-0", 
+      "lumo": "-1.3312", 
+      "homo": "-9.6580"
+    }, 
+    "bfe741c6-e540-48a1-ba85-d13de5f2d36f": {
+      "longcationname": "1-Butyl-3-methylimidazolium", 
+      "e": 1.6, 
+      "lumo": "0.1848", 
+      "cationname": "BMIm", 
+      "longanionname": "bis(trifluoromethylsulfonyl)imide", 
+      "number": "174899-83-3", 
+      "anionname": "TFSI", 
+      "homo": "-9.0070"
+    }, 
+    "713f4b72-376b-45c5-be0e-67ce9d9ddcb4": {
+      "longcationname": "1-Butylpyridinium", 
+      "e": 1.6, 
+      "lumo": "-1.5336", 
+      "cationname": "BPy", 
+      "longanionname": "bis(trifluoromethylsulfonyl)imide", 
+      "number": "187863-42-9", 
+      "anionname": "TFSI", 
+      "homo": "-9.0656"
+    }
+  }
+]
